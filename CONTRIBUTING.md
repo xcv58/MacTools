@@ -53,6 +53,7 @@ Thanks for your interest in MacTools. Please keep each contribution small and cl
 - Full test command: `xcodebuild -project MacTools.xcodeproj -scheme MacTools -configuration Debug -derivedDataPath build/DerivedData test -quiet`.
 - Single test class: append `-only-testing:MacToolsTests/<TestClassName>` to the full test command.
 - File system tests should use temporary directories or fake stores. Disk cleanup tests must not delete real user directories.
+- A manual GitHub Actions `Build` run uploads a 14-day `MacTools-Debug` development snapshot containing `MacTools Dev.app` and plugins built from the same commit. Maintainers may enable the daily `06:00 UTC` schedule with the repository variable `ENABLE_NIGHTLY_BUILDS=true`; see `docs/github-actions.md` for activation, download, and rollback instructions. This artifact is not Developer ID signed or notarized.
 
 ## Pull Request Checklist
 - Keep the PR focused, and explain the purpose, verification, and user impact.

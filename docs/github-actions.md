@@ -2,12 +2,31 @@
 
 本仓库提供六条流水线：
 
-- `Build`：在 `main` push、Pull Request 和手动触发时运行。执行 XcodeGen、Debug 测试，并在非 PR 场景额外编译 unsigned Release app 做配置校验；不上传不可分发的未签名产物。
+- `Build`：在 `main` push、Pull Request、手动触发，以及可选的每日 Nightly 计划任务中运行。执行 XcodeGen、Debug 测试，并在非 PR 场景额外编译 unsigned Release app 做配置校验；手动运行和已启用的 Nightly 运行还会上传一份包含 App 与同 commit 本地插件的 `MacTools-Debug` 开发快照。
 - `Prepare Release`：在 GitHub Actions 页面手动触发。输入发布类型、目标版本和是否继续发布；它会检查、bump、提交版本变更、创建 tag，并在需要时显式触发 `Release` 或 `Plugin Release`。
 - `Release`：在推送 `v*.*.*` 或 `v*.*.*-*` tag，或手动输入 tag 时运行。构建 Release 版本，使用 Developer ID 签名、公证、打包 DMG，创建或更新 GitHub Release；稳定版会明确标记为 GitHub Latest，并更新官网使用的 `docs/app-release.json`，预发布不会覆盖稳定版下载元数据。
 - `Homebrew Cask Update`：手动输入版本时运行；未输入版本则从稳定 `v*` App Release 中查找同时包含 `MacTools.dmg` 与 `MacTools.sha256` 的最新版，通过 `brew bump-cask-pr` 向官方 `Homebrew/homebrew-cask` 提交 cask bump PR。
 - `Plugin Release`：在推送 `plugins-*` tag，或手动输入插件批次 tag 时运行。它按 PluginKit 版本选择 catalog：v2 保留使用 `docs/plugins/catalog.json`，v3 及以后使用 `docs/plugins/vN/catalog.json`；首次 ABI 升级默认全量构建、签名并提交新版本 catalog。插件批次明确使用 `--latest=false`，不会覆盖 App 的 GitHub Latest。
 - `Deploy Pages`：在 `site/**` 或 `docs/app-release.json` 合入 `main`、`Release` / `Plugin Release` 成功完成，或手动触发时运行。它先构建 `site/` 下的 Astro 官网，再合并 `docs/` 中的 App 发布元数据、appcast、插件 catalog、图标库等静态发布资源并发布到 GitHub Pages；PR 不会触发这条流水线。
+
+## 可选 Nightly 开发快照
+
+`Build` workflow 每天 `06:00 UTC` 接收一次计划任务。计划任务默认只产生一个 skipped job；只有仓库变量 `ENABLE_NIGHTLY_BUILDS` 严格等于 `true` 时，才会占用 macOS runner 并上传开发快照。合并 workflow 变更本身不会自动开始 Nightly 构建。
+
+Nightly 使用现有 Debug 构建链路，不读取发布 Secrets，也不创建 tag、GitHub Release、appcast、Homebrew 更新或生产插件 catalog。产物使用 ad-hoc 签名，没有 Developer ID 签名或 Apple 公证，只适合贡献者测试，不应作为普通用户安装包或稳定更新渠道。
+
+### 合并后的维护者操作
+
+1. 进入仓库 `Actions` → `Build` → `Run workflow`，先手动运行一次。手动运行不依赖 `ENABLE_NIGHTLY_BUILDS`。
+2. 等待 `Build and test` 成功，在 run 页面底部下载 `MacTools-Debug` artifact。解压 GitHub 下载的外层 archive 后，确认其中包含工作流生成的 `MacTools-Debug.zip`。
+3. 再解压内层 `MacTools-Debug.zip`，在 Terminal 进入 `MacTools-Debug` 目录并运行 `./run-debug.sh`。脚本会把同一 commit 构建的插件同步到独立的 `~/Library/Application Support/MacTools Dev`，然后启动 `MacTools Dev.app`。
+4. 如果 Gatekeeper 阻止启动，按 artifact 内 `README.txt` 的说明，仅对该解压目录中的 `MacTools Dev.app` 移除 quarantine 后重试。
+5. 确认手动产物可用后，进入 `Settings` → `Secrets and variables` → `Actions` → `Variables`，创建 repository variable：名称 `ENABLE_NIGHTLY_BUILDS`，值 `true`。
+6. 下一个 `06:00 UTC` 计划任务会构建并上传 `MacTools-Debug`；artifact 保留 14 天。artifact 内的 `README.txt` 会记录源 commit 和 Actions run URL，测试反馈应同时提供这两项。
+
+停用 Nightly 时，删除 `ENABLE_NIGHTLY_BUILDS`，或把值改为非 `true` 的内容。之后每日计划任务会安全跳过，不需要修改 workflow。仍可随时通过 `Run workflow` 手动生成开发快照。
+
+如果后续需要面向普通用户的签名、公证和自动更新 Nightly，应单独设计隔离的 App 身份、插件数据与更新 feed；不要直接给当前 `Release` workflow 加计划任务，因为预发布流程仍会写入生产 `docs/appcast.xml`。
 
 ## 需要配置的 Secrets
 

@@ -5,13 +5,15 @@ on:
     branches:
       - main
   pull_request:
+  schedule:
+    - cron: "0 6 * * *"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: build-${{ github.workflow }}-${{ github.ref }}
+  group: build-${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -23,6 +25,7 @@ env:
 jobs:
   build:
     name: Build and test
+    if: github.event_name != 'schedule' || vars.ENABLE_NIGHTLY_BUILDS == 'true'
     runs-on: macos-26
     timeout-minutes: 30
 
@@ -67,7 +70,7 @@ jobs:
             -quiet
 
       - name: Package Debug app artifact
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
         run: |
           set -euo pipefail
           PRODUCTS_DIR="${DERIVED_DATA}/Build/Products/Debug"
@@ -136,8 +139,11 @@ jobs:
           EOF
           chmod +x "$ARTIFACT_ROOT/run-debug.sh"
 
-          cat > "$ARTIFACT_ROOT/README.txt" <<'EOF'
-          This is an unsigned Debug build for local testing.
+          cat > "$ARTIFACT_ROOT/README.txt" <<EOF
+          This is an ad-hoc-signed Debug build for local testing. It is not Developer ID signed or notarized.
+
+          Source commit: ${GITHUB_SHA}
+          Actions run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
 
           Run ./run-debug.sh to launch MacTools Dev with the bundled local plugin catalog.
           If macOS blocks the app because it was downloaded from the internet, remove quarantine:
@@ -150,12 +156,13 @@ jobs:
           (cd build/debug-artifact && ditto -c -k --sequesterRsrc --keepParent MacTools-Debug MacTools-Debug.zip)
 
       - name: Upload Debug app artifact
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
         uses: actions/upload-artifact@v4
         with:
           name: MacTools-Debug
           path: build/debug-artifact/MacTools-Debug.zip
           if-no-files-found: error
+          retention-days: 14
 
       - name: Build unsigned Release app
         if: github.event_name != 'pull_request'
