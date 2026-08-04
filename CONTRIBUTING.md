@@ -53,7 +53,6 @@ Thanks for your interest in MacTools. Please keep each contribution small and cl
 - Full test command: `xcodebuild -project MacTools.xcodeproj -scheme MacTools -configuration Debug -derivedDataPath build/DerivedData test -quiet`.
 - Single test class: append `-only-testing:MacToolsTests/<TestClassName>` to the full test command.
 - File system tests should use temporary directories or fake stores. Disk cleanup tests must not delete real user directories.
-- A manual GitHub Actions `Build` run uploads a 14-day `MacTools-Debug` development snapshot containing `MacTools Dev.app` and plugins built from the same commit. Maintainers may schedule that snapshot daily at `06:00 UTC` with the repository variable `ENABLE_SCHEDULED_DEV_SNAPSHOTS=true`; see `docs/github-actions.md` for activation, download, and pause instructions. This Debug artifact is not the public, auto-updating MacTools Nightly channel: it is not Developer ID signed or notarized, does not create a GitHub Release or Sparkle appcast, and cannot update in-app. The final Nightly channel is tracked in [issue #243](https://github.com/ggbond268/MacTools/issues/243) and must use its separate `ENABLE_NIGHTLY_RELEASES` publication gate.
 
 ## Pull Request Checklist
 - Keep the PR focused, and explain the purpose, verification, and user impact.
