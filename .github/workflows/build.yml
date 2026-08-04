@@ -69,7 +69,7 @@ jobs:
             test \
             -quiet
 
-      - name: Package Debug app artifact
+      - name: Package development snapshot
         if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
         run: |
           set -euo pipefail
@@ -142,6 +142,9 @@ jobs:
           cat > "$ARTIFACT_ROOT/README.txt" <<EOF
           This is an ad-hoc-signed Debug build for local testing. It is not Developer ID signed or notarized.
 
+          This development snapshot is not the public MacTools Nightly channel. It is not published as a
+          GitHub Release, does not use the Nightly Sparkle feed, and cannot update itself in the app.
+
           Source commit: ${GITHUB_SHA}
           Actions run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
 
@@ -155,7 +158,7 @@ jobs:
 
           (cd build/debug-artifact && ditto -c -k --sequesterRsrc --keepParent MacTools-Debug MacTools-Debug.zip)
 
-      - name: Upload Debug app artifact
+      - name: Upload development snapshot
         if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
         uses: actions/upload-artifact@v4
         with:

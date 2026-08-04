@@ -50,7 +50,7 @@
 - 完整测试：`xcodebuild -project MacTools.xcodeproj -scheme MacTools -configuration Debug -derivedDataPath build/DerivedData test -quiet`。
 - 单个测试类：在完整测试命令后追加 `-only-testing:MacToolsTests/<TestClassName>`。
 - 文件系统测试使用临时目录或 fake store；磁盘清理相关测试不得删除真实用户目录。
-- 手动运行 GitHub Actions `Build` 会上传保留 14 天的 `MacTools-Debug` 开发快照，其中包含同一 commit 构建的 `MacTools Dev.app` 和插件。维护者可通过仓库变量 `ENABLE_NIGHTLY_BUILDS=true` 启用每日 `06:00 UTC` 计划任务；启用、下载与停用步骤见 `docs/github-actions.md`。该 artifact 没有 Developer ID 签名或 Apple 公证。
+- 手动运行 GitHub Actions `Build` 会上传保留 14 天的 `MacTools-Debug` 开发快照，其中包含同一 commit 构建的 `MacTools Dev.app` 和插件。维护者可通过仓库变量 `ENABLE_NIGHTLY_BUILDS=true` 让该快照每天 `06:00 UTC` 生成；启用、下载与暂停步骤见 `docs/github-actions.md`。这个 Debug artifact 不是面向公众、可在应用内更新的 MacTools Nightly：它没有 Developer ID 签名或 Apple 公证，不会创建 GitHub Release 或 Sparkle appcast，也不能在应用内更新。最终 Nightly 渠道由 [issue #243](https://github.com/ggbond268/MacTools/issues/243) 跟踪。
 
 ## Pull Request Checklist
 - PR 范围聚焦，并说明变更目的、验证方式和用户影响。

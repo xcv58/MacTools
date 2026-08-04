@@ -2,31 +2,49 @@
 
 本仓库提供六条流水线：
 
-- `Build`：在 `main` push、Pull Request、手动触发，以及可选的每日 Nightly 计划任务中运行。执行 XcodeGen、Debug 测试，并在非 PR 场景额外编译 unsigned Release app 做配置校验；手动运行和已启用的 Nightly 运行还会上传一份包含 App 与同 commit 本地插件的 `MacTools-Debug` 开发快照。
+- `Build`：在 `main` push、Pull Request、手动触发，以及可选的每日计划任务中运行。执行 XcodeGen、Debug 测试，并在非 PR 场景额外编译 unsigned Release app 做配置校验；手动运行和已启用的计划任务还会上传一份包含 App 与同 commit 本地插件的 `MacTools-Debug` 开发快照。该 artifact 仅是公开 Nightly 渠道的构建基础，不是 Nightly Release。
 - `Prepare Release`：在 GitHub Actions 页面手动触发。输入发布类型、目标版本和是否继续发布；它会检查、bump、提交版本变更、创建 tag，并在需要时显式触发 `Release` 或 `Plugin Release`。
 - `Release`：在推送 `v*.*.*` 或 `v*.*.*-*` tag，或手动输入 tag 时运行。构建 Release 版本，使用 Developer ID 签名、公证、打包 DMG，创建或更新 GitHub Release；稳定版会明确标记为 GitHub Latest，并更新官网使用的 `docs/app-release.json`，预发布不会覆盖稳定版下载元数据。
 - `Homebrew Cask Update`：手动输入版本时运行；未输入版本则从稳定 `v*` App Release 中查找同时包含 `MacTools.dmg` 与 `MacTools.sha256` 的最新版，通过 `brew bump-cask-pr` 向官方 `Homebrew/homebrew-cask` 提交 cask bump PR。
 - `Plugin Release`：在推送 `plugins-*` tag，或手动输入插件批次 tag 时运行。它按 PluginKit 版本选择 catalog：v2 保留使用 `docs/plugins/catalog.json`，v3 及以后使用 `docs/plugins/vN/catalog.json`；首次 ABI 升级默认全量构建、签名并提交新版本 catalog。插件批次明确使用 `--latest=false`，不会覆盖 App 的 GitHub Latest。
 - `Deploy Pages`：在 `site/**` 或 `docs/app-release.json` 合入 `main`、`Release` / `Plugin Release` 成功完成，或手动触发时运行。它先构建 `site/` 下的 Astro 官网，再合并 `docs/` 中的 App 发布元数据、appcast、插件 catalog、图标库等静态发布资源并发布到 GitHub Pages；PR 不会触发这条流水线。
 
-## 可选 Nightly 开发快照
+## 可选计划开发快照（不是公开 Nightly Release）
 
-`Build` workflow 每天 `06:00 UTC` 接收一次计划任务。计划任务默认只产生一个 skipped job；只有仓库变量 `ENABLE_NIGHTLY_BUILDS` 严格等于 `true` 时，才会占用 macOS runner 并上传开发快照。合并 workflow 变更本身不会自动开始 Nightly 构建。
+`Build` workflow 每天 `06:00 UTC` 接收一次计划任务。计划任务默认只产生一个 skipped job；只有仓库变量 `ENABLE_NIGHTLY_BUILDS` 严格等于 `true` 时，才会占用 macOS runner 并上传开发快照。合并 workflow 变更本身不会自动开始计划构建。
 
-Nightly 使用现有 Debug 构建链路，不读取发布 Secrets，也不创建 tag、GitHub Release、appcast、Homebrew 更新或生产插件 catalog。产物使用 ad-hoc 签名，没有 Developer ID 签名或 Apple 公证，只适合贡献者测试，不应作为普通用户安装包或稳定更新渠道。
+这里的“开发快照”和“公开 Nightly 渠道”是两个不同产物：
 
-### 合并后的维护者操作
+- **计划开发快照（当前已实现）**：`MacTools-Debug` Actions artifact，使用 `MacTools Dev.app`、ad-hoc 签名与同 commit 本地插件，仅供贡献者 smoke test。它不读取发布 Secrets，不创建 tag、GitHub Release、appcast、Homebrew 更新或生产插件 catalog，也不能在应用内更新。
+- **公开 Nightly 渠道（尚未实现）**：用户从带有 **Nightly — Unstable** 警告的 GitHub prerelease 首次下载 `MacTools Nightly`，之后通过应用内 Sparkle 更新。它需要独立 App 身份与数据目录、专用 feed、Developer ID 签名、公证，以及与 App 同 commit 的插件快照。完整范围与进度见 [issue #243](https://github.com/ggbond268/MacTools/issues/243) 和 [draft PR #245](https://github.com/ggbond268/MacTools/pull/245)。
+
+在当前 commit 中，`ENABLE_NIGHTLY_BUILDS` 只控制第一种开发快照，不代表公开 Nightly 渠道已经上线。不要把 `MacTools-Debug` artifact 放到 GitHub Releases、普通用户下载页或稳定更新 feed。
+
+### 当前开发快照的维护者操作
 
 1. 进入仓库 `Actions` → `Build` → `Run workflow`，先手动运行一次。手动运行不依赖 `ENABLE_NIGHTLY_BUILDS`。
 2. 等待 `Build and test` 成功，在 run 页面底部下载 `MacTools-Debug` artifact。解压 GitHub 下载的外层 archive 后，确认其中包含工作流生成的 `MacTools-Debug.zip`。
 3. 再解压内层 `MacTools-Debug.zip`，在 Terminal 进入 `MacTools-Debug` 目录并运行 `./run-debug.sh`。脚本会把同一 commit 构建的插件同步到独立的 `~/Library/Application Support/MacTools Dev`，然后启动 `MacTools Dev.app`。
 4. 如果 Gatekeeper 阻止启动，按 artifact 内 `README.txt` 的说明，仅对该解压目录中的 `MacTools Dev.app` 移除 quarantine 后重试。
-5. 确认手动产物可用后，进入 `Settings` → `Secrets and variables` → `Actions` → `Variables`，创建 repository variable：名称 `ENABLE_NIGHTLY_BUILDS`，值 `true`。
+5. 仅当维护者希望持续生成贡献者测试快照时，进入 `Settings` → `Secrets and variables` → `Actions` → `Variables`，创建 repository variable：名称 `ENABLE_NIGHTLY_BUILDS`，值 `true`。这一步不会发布公开 Nightly Release。
 6. 下一个 `06:00 UTC` 计划任务会构建并上传 `MacTools-Debug`；artifact 保留 14 天。artifact 内的 `README.txt` 会记录源 commit 和 Actions run URL，测试反馈应同时提供这两项。
 
-停用 Nightly 时，删除 `ENABLE_NIGHTLY_BUILDS`，或把值改为非 `true` 的内容。之后每日计划任务会安全跳过，不需要修改 workflow。仍可随时通过 `Run workflow` 手动生成开发快照。
+暂停计划开发快照时，删除 `ENABLE_NIGHTLY_BUILDS`，或把值改为非 `true` 的内容。之后每日计划任务会安全跳过，不需要修改 workflow。仍可随时通过 `Run workflow` 手动生成开发快照。
 
-如果后续需要面向普通用户的签名、公证和自动更新 Nightly，应单独设计隔离的 App 身份、插件数据与更新 feed；不要直接给当前 `Release` workflow 加计划任务，因为预发布流程仍会写入生产 `docs/appcast.xml`。
+### 公开 Nightly 渠道的责任边界
+
+公开 Nightly 功能进入可合并状态前，贡献者需要完成并测试：
+
+1. 隔离的 `MacTools Nightly` 配置，包括 App/extension bundle ID、URL scheme、偏好与 Application Support/插件目录。
+2. 可配置的 Nightly Sparkle feed、插件来源与单调递增 build number。
+3. 专用 Nightly 发布 workflow：测试、Release 构建、签名、公证、GitHub prerelease、独立 appcast，并且最后才推进 feed。
+4. App 与插件来自同一 commit；App 更新后插件在加载前自动同步，不依赖用户手动下载。
+5. 稳定 App、稳定 appcast、`docs/app-release.json`、Homebrew、GitHub Latest 与生产插件 catalog 保持不变。
+6. 配置、打包、feed、插件同步与稳定隔离的自动化测试，以及用户可见警告和维护文档。
+
+这些代码合入后、公开计划任务启用前，维护者还需要完成一次凭据相关验收：确认 Developer ID/公证与 Sparkle key，手动发布两个 Nightly build，验证从 N 到 N+1 的应用内更新和插件同步，再设置 `ENABLE_NIGHTLY_BUILDS=true`。凭据验收无法在没有仓库 Secrets 的 contributor fork 中完成，不应伪装成贡献者 CI 已验证。
+
+不要直接给当前 `Release` workflow 加计划任务，因为预发布流程仍会写入生产 `docs/appcast.xml`。公开 Nightly 必须使用独立发布路径。
 
 ## 需要配置的 Secrets
 
