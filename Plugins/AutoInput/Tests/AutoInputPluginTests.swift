@@ -2081,7 +2081,8 @@ final class InputSourceHUDControllerTests: XCTestCase {
 
         let presentedFrame = try XCTUnwrap(controller.presentedPanelForTests).frame
         XCTAssertTrue(presentedFrame.contains(pointerLocation))
-        XCTAssertEqual(presentedFrame.maxY, pointerLocation.y + 8)
+        XCTAssertEqual(presentedFrame.maxX, pointerLocation.x + 8)
+        XCTAssertEqual(presentedFrame.minY, pointerLocation.y - 8)
 
         pointerLocation = CGPoint(x: 900, y: 200)
 

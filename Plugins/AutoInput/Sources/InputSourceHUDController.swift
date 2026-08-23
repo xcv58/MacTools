@@ -475,8 +475,8 @@ final class InputSourceHUDController: InputSourceHUDPresenting {
             visibleFrames: displayFrames
         ) else {
             return CGRect(
-                x: pointerLocation.x - panelSize.width / 2,
-                y: pointerLocation.y - panelSize.height + pointerHitInset,
+                x: pointerLocation.x - panelSize.width + pointerHitInset,
+                y: pointerLocation.y - pointerHitInset,
                 width: panelSize.width,
                 height: panelSize.height
             ).integral
@@ -484,14 +484,14 @@ final class InputSourceHUDController: InputSourceHUDPresenting {
 
         let minX = displayFrame.minX
         let maxX = displayFrame.maxX - panelSize.width
-        let preferredX = pointerLocation.x - panelSize.width / 2
+        let preferredX = pointerLocation.x - panelSize.width + pointerHitInset
         let x = maxX >= minX
             ? min(max(preferredX, minX), maxX)
             : displayFrame.midX - panelSize.width / 2
 
         let minY = displayFrame.minY
         let maxY = displayFrame.maxY - panelSize.height
-        let preferredY = pointerLocation.y - panelSize.height + pointerHitInset
+        let preferredY = pointerLocation.y - pointerHitInset
         let y = maxY >= minY
             ? min(max(preferredY, minY), maxY)
             : displayFrame.midY - panelSize.height / 2
