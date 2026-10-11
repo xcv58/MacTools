@@ -163,16 +163,22 @@ final class TrackpadScaleModel: ObservableObject {
 
     func tare() { calibrationError = false; _ = measurement.zero() }
 
-    func calibrate(_ text: String) {
+    func calibrate(_ text: String, locale: Locale = PluginRuntimeLocalization.locale) {
         let formatter = NumberFormatter()
-        formatter.locale = .current
+        formatter.locale = locale
         formatter.numberStyle = .decimal
         // Reject partial parsing (NumberFormatter can accept a valid prefix).
         let cleaned = text.trimmingCharacters(in: .whitespacesAndNewlines)
         let separator = formatter.decimalSeparator ?? "."
-        let normalized = cleaned.replacingOccurrences(of: separator, with: ".")
-        guard !normalized.isEmpty, normalized.allSatisfy({ $0.isASCII && ($0.isNumber || $0 == ".") }),
-              let value = Double(normalized), measurement.calibrate(knownGrams: value) else {
+        let characters = cleaned.replacingOccurrences(of: separator, with: ".")
+        let normalized = characters.compactMap { character -> String? in
+            if character == "." { return "." }
+            guard character.unicodeScalars.allSatisfy({ $0.properties.generalCategory == .decimalNumber }),
+                  let digit = character.wholeNumberValue, (0...9).contains(digit) else { return nil }
+            return String(digit)
+        }
+        guard !normalized.isEmpty, normalized.count == characters.count,
+              let value = Double(normalized.joined()), measurement.calibrate(knownGrams: value) else {
             calibrationError = true
             return
         }

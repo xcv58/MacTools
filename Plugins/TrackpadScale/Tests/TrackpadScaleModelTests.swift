@@ -120,6 +120,28 @@ final class TrackpadScaleModelTests: XCTestCase {
         model.stop()
     }
 
+    func testCalibrationAcceptsLocaleNumbersAndRejectsPartialInput() {
+        for (locale, weight) in [(Locale(identifier: "de_DE"), "30,5"),
+                                (Locale(identifier: "ar_EG@numbers=arab"), "٣٠٫٥")] {
+            let scheduler = ScaleTestScheduler()
+            let service = ScaleTestService()
+            let model = TrackpadScaleModel(storage: ScaleTestStorage(), schedule: { scheduler.enqueue($0) })
+            model.setService(service)
+            model.start()
+            settle(service, scheduler, pressure: 10, from: 0)
+            model.tare()
+            settle(service, scheduler, pressure: 20, from: 0.8)
+            model.calibrate(weight + "junk", locale: locale)
+            XCTAssertTrue(model.calibrationError)
+            XCTAssertEqual(model.measurement.factor, 1)
+            model.calibrate(weight, locale: locale)
+            XCTAssertFalse(model.calibrationError)
+            XCTAssertEqual(model.measurement.factor, 3.05, accuracy: 0.01)
+            XCTAssertEqual(service.handlers.count, 1)
+            model.stop()
+        }
+    }
+
     func testCoalescingPreservesPressureSpikesAndInvalidSamples() {
         let scheduler = ScaleTestScheduler()
         let service = ScaleTestService()

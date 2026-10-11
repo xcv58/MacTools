@@ -1437,6 +1437,7 @@ final class PluginHost: ObservableObject {
         }
         panelCoordinator.clearWidgetViews()
         settingsViewCache.removeAll()
+        dynamicPluginManager?.refreshLocalization()
         syncPluginManagementState()
         menuBarIconCoordinator.refreshPrimaryIconOwner(
             pluginTitle: menuBarIconCoordinator.primaryIconOwner.flatMap {
@@ -3251,10 +3252,11 @@ final class PluginHost: ObservableObject {
     }
 
     @discardableResult
-    private func rebuildPermissionProjections(plugins: [any MacToolsPlugin]) -> Set<String> {
+    private func rebuildPermissionProjections(descriptors: [PluginDescriptor]) -> Set<String> {
         var permissionCenterRequirements: [PermissionCenterRequirement] = []
         var missingPermissionCardIDs = Set<String>()
-        permissionCards = plugins.flatMap { plugin -> [PluginPermissionCard] in
+        permissionCards = descriptors.flatMap { descriptor -> [PluginPermissionCard] in
+            let plugin = descriptor.plugin
             let requirements = guardedValue(
                 for: plugin,
                 operation: "read permission requirements",
@@ -3281,7 +3283,7 @@ final class PluginHost: ObservableObject {
                 permissionCenterRequirements.append(
                     PermissionCenterRequirement(
                         pluginID: plugin.metadata.id,
-                        pluginTitle: plugin.metadata.title,
+                        pluginTitle: descriptor.metadata.title,
                         permissionID: requirement.id,
                         kind: hostKind,
                         description: requirement.description,
@@ -3348,7 +3350,7 @@ final class PluginHost: ObservableObject {
             }
         }
         synchronizePanelLayout(pluginOrder: orderedDescriptors.map(\.metadata.id))
-        let missingPermissionCardIDs = rebuildPermissionProjections(plugins: orderedDescriptors.map(\.plugin))
+        let missingPermissionCardIDs = rebuildPermissionProjections(descriptors: orderedDescriptors)
 
         synchronizeActionRegistry(descriptors: orderedDescriptors)
 
@@ -4596,12 +4598,21 @@ final class PluginHost: ObservableObject {
 
             let shortcutGroupPresentation = descriptor.plugin as?
                 any PluginShortcutSettingsGroupPresentationProviding
+            let description: String
+            if let pageDescription = page?.description,
+               pageDescription != descriptor.plugin.metadata.defaultDescription {
+                description = pageDescription
+            } else {
+                // A page can inherit metadata captured when the plugin initialized.
+                // Use the current manifest locale while preserving custom introductions.
+                description = descriptor.metadata.defaultDescription
+            }
 
             return PluginSettingsPageItem(
                 id: pluginID,
                 pluginID: pluginID,
                 title: descriptor.metadata.title,
-                description: page?.description ?? descriptor.metadata.defaultDescription,
+                description: description,
                 iconName: descriptor.metadata.iconName,
                 iconTint: descriptor.metadata.iconTint,
                 installedAt: dynamicPluginInstalledAtByID[pluginID],

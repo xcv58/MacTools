@@ -17,8 +17,15 @@ private struct TrackpadScalePluginProvider: PluginProvider {
 
 @MainActor
 final class TrackpadScalePlugin: MacToolsPlugin, PluginSettingsPresenting,
-    TrackpadInputServiceConsuming, PluginApplicationActivityStateHandling {
-    let metadata: PluginMetadata
+    TrackpadInputServiceConsuming, PluginApplicationActivityStateHandling, PluginRuntimeLocalizationRefreshing {
+    var metadata: PluginMetadata {
+        PluginMetadata(
+            id: "trackpad-scale",
+            title: localization.string("metadata.title", defaultValue: "触控板称重"),
+            iconName: "scalemass", iconTint: .accentColor, order: 215,
+            defaultDescription: localization.string("metadata.description", defaultValue: "用内置 Force Touch 触控板估算小物件重量（实验性）")
+        )
+    }
     let model: TrackpadScaleModel
     private let localization: PluginLocalization
     var onStateChange: (() -> Void)?
@@ -29,12 +36,11 @@ final class TrackpadScalePlugin: MacToolsPlugin, PluginSettingsPresenting,
     init(context: PluginRuntimeContext) {
         localization = PluginLocalization(bundle: context.resourceBundle)
         model = TrackpadScaleModel(storage: context.storage)
-        metadata = PluginMetadata(
-            id: "trackpad-scale",
-            title: localization.string("metadata.title", defaultValue: "触控板称重"),
-            iconName: "scalemass", iconTint: .accentColor, order: 215,
-            defaultDescription: localization.string("metadata.description", defaultValue: "用内置 Force Touch 触控板估算小物件重量（实验性）")
-        )
+    }
+
+    func refreshLocalization() {
+        model.objectWillChange.send()
+        onStateChange?()
     }
 
     var panelItems: [PluginPanelItem] {

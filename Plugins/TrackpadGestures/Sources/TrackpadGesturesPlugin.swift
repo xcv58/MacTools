@@ -61,7 +61,19 @@ final class TrackpadGesturesPlugin: MacToolsPlugin, TrackpadInputServiceConsumin
         static let inputMonitoring = "input-monitoring"
     }
 
-    let metadata: PluginMetadata
+    var metadata: PluginMetadata {
+        PluginMetadata(
+            id: "trackpad-gestures",
+            title: localization.string("metadata.title", defaultValue: "触控板手势"),
+            iconName: "hand.draw",
+            iconTint: Color(nsColor: .systemIndigo),
+            order: 57,
+            defaultDescription: localization.string(
+                "metadata.description",
+                defaultValue: "将触控板手势映射为 MacTools 操作、快捷键或中键点击"
+            )
+        )
+    }
     let rowDescriptor: PluginPanelRowDescriptor
     private let settingsSearchFocusController = TrackpadSettingsSearchFocusController()
 
@@ -110,7 +122,34 @@ final class TrackpadGesturesPlugin: MacToolsPlugin, TrackpadInputServiceConsumin
     private let openURL: (URL) -> Void
     private var isAccessibilityGranted: Bool
     private var isInputMonitoringGranted: Bool
-    private var lastErrorMessage: String?
+    private enum RuntimeError {
+        case listenerUnavailable
+        case accessibilityRequired
+        case inputMonitoringRequired
+    }
+
+    private var runtimeError: RuntimeError?
+
+    private var lastErrorMessage: String? {
+        guard let runtimeError else { return nil }
+        switch runtimeError {
+        case .listenerUnavailable:
+            return localization.string(
+                "error.listenerUnavailable",
+                defaultValue: "无法启动手势监听，请检查权限后重试。"
+            )
+        case .accessibilityRequired:
+            return localization.string(
+                "error.accessibilityRequired",
+                defaultValue: "触控板手势需要辅助功能权限。"
+            )
+        case .inputMonitoringRequired:
+            return localization.string(
+                "error.inputMonitoringRequired",
+                defaultValue: "触控板手势需要输入监控权限。"
+            )
+        }
+    }
     private var listenerActivationFailed = false
     private var applicationActivationObserver: NSObjectProtocol?
     private var externalGestureClaims: Set<TrackpadGesture> = []
@@ -171,17 +210,6 @@ final class TrackpadGesturesPlugin: MacToolsPlugin, TrackpadInputServiceConsumin
                 resolvedLocalization.string("panel.button.settings", defaultValue: "设置")
             }
         )
-        self.metadata = PluginMetadata(
-            id: "trackpad-gestures",
-            title: resolvedLocalization.string("metadata.title", defaultValue: "触控板手势"),
-            iconName: "hand.draw",
-            iconTint: Color(nsColor: .systemIndigo),
-            order: 57,
-            defaultDescription: resolvedLocalization.string(
-                "metadata.description",
-                defaultValue: "将触控板手势映射为 MacTools 操作、快捷键或中键点击"
-            )
-        )
         if store.didPersistPortablePreferencesDuringInitialization {
             persistentPreferencesChanges.didPersist()
         }
@@ -202,13 +230,10 @@ final class TrackpadGesturesPlugin: MacToolsPlugin, TrackpadInputServiceConsumin
             }
             if isAvailable, self.isAccessibilityGranted, self.isInputMonitoringGranted {
                 self.listenerActivationFailed = false
-                self.lastErrorMessage = nil
+                self.runtimeError = nil
             } else if !isAvailable, self.isAccessibilityGranted, self.isInputMonitoringGranted {
                 self.listenerActivationFailed = true
-                self.lastErrorMessage = self.localization.string(
-                    "error.listenerUnavailable",
-                    defaultValue: "无法启动手势监听，请检查权限后重试。"
-                )
+                self.runtimeError = .listenerUnavailable
             }
             self.onStateChange?()
         }
@@ -493,7 +518,7 @@ final class TrackpadGesturesPlugin: MacToolsPlugin, TrackpadInputServiceConsumin
             isInputMonitoringGranted = inputMonitoringGrantedNow
             session.deactivate()
             testingModel.clearSnapshots()
-            lastErrorMessage = permissionErrorMessage
+            runtimeError = permissionError
             onStateChange?()
             return
         }
@@ -573,9 +598,9 @@ final class TrackpadGesturesPlugin: MacToolsPlugin, TrackpadInputServiceConsumin
         if recognitionNeeded && (!isAccessibilityGranted || !isInputMonitoringGranted) {
             session.deactivate()
             testingModel.clearSnapshots()
-            lastErrorMessage = permissionErrorMessage
+            runtimeError = permissionError
         } else {
-            lastErrorMessage = nil
+            runtimeError = nil
             applyConfiguration()
         }
 
@@ -608,7 +633,7 @@ final class TrackpadGesturesPlugin: MacToolsPlugin, TrackpadInputServiceConsumin
 
     private func ensurePermissionsIfNeeded() -> Bool {
         guard recognitionNeeded else {
-            lastErrorMessage = nil
+            runtimeError = nil
             return true
         }
 
@@ -619,16 +644,16 @@ final class TrackpadGesturesPlugin: MacToolsPlugin, TrackpadInputServiceConsumin
         isInputMonitoringGranted = inputMonitoringStatus() == .granted
 
         guard isAccessibilityGranted else {
-            lastErrorMessage = permissionErrorMessage
+            runtimeError = permissionError
             requestPermissionGuidance?(PermissionID.accessibility)
             return false
         }
         guard isInputMonitoringGranted else {
-            lastErrorMessage = permissionErrorMessage
+            runtimeError = permissionError
             requestPermissionGuidance?(PermissionID.inputMonitoring)
             return false
         }
-        lastErrorMessage = nil
+        runtimeError = nil
         return true
     }
 
@@ -703,10 +728,7 @@ final class TrackpadGesturesPlugin: MacToolsPlugin, TrackpadInputServiceConsumin
         }
         guard session.activate(gestures: gestures) else {
             listenerActivationFailed = true
-            lastErrorMessage = localization.string(
-                "error.listenerUnavailable",
-                defaultValue: "无法启动手势监听，请检查权限后重试。"
-            )
+            runtimeError = .listenerUnavailable
             logger.error("failed to start multitouch session")
             return
         }
@@ -742,17 +764,8 @@ final class TrackpadGesturesPlugin: MacToolsPlugin, TrackpadInputServiceConsumin
         !isTrackpadGestureOwnershipManaged || ownedLocalGestures.contains(gesture)
     }
 
-    private var permissionErrorMessage: String {
-        if !isAccessibilityGranted {
-            return localization.string(
-                "error.accessibilityRequired",
-                defaultValue: "触控板手势需要辅助功能权限。"
-            )
-        }
-        return localization.string(
-            "error.inputMonitoringRequired",
-            defaultValue: "触控板手势需要输入监控权限。"
-        )
+    private var permissionError: RuntimeError {
+        isAccessibilityGranted ? .inputMonitoringRequired : .accessibilityRequired
     }
 
     private var panelSubtitle: String {

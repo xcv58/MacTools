@@ -14,6 +14,66 @@
             "state": "translated",
             "value": "估算重量 · 实验性"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geschätztes Gewicht · Experimentell"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peso estimado · Experimental"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poids estimé · Expérimental"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peso estimado · Experimental"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оценка веса · Экспериментально"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "推定重量 · 実験的"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "추정 무게 · 실험적"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "估算重量 · 實驗性"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الوزن التقديري · تجريبي"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tahmini ağırlık · Deneysel"
+          }
         }
       }
     },
@@ -29,6 +89,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "稳定"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stabil"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estable"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stable"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estável"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стабильно"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "安定"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "안정"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "穩定"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مستقر"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kararlı"
           }
         }
       }
@@ -46,6 +166,66 @@
             "state": "translated",
             "value": "未稳定"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instabil"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inestable"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instable"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instável"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нестабильно"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不安定"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "불안정"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未穩定"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غير مستقر"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kararsız"
+          }
         }
       }
     },
@@ -61,6 +241,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "开始"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starten"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Démarrer"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開始"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "시작"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開始"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بدء"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Başlat"
           }
         }
       }
@@ -78,6 +318,66 @@
             "state": "translated",
             "value": "停止"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stoppen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detener"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrêter"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parar"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остановить"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "중지"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إيقاف"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Durdur"
+          }
         }
       }
     },
@@ -94,6 +394,66 @@
             "state": "translated",
             "value": "归零"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tarieren"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tarar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tarer"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tarar"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обнулить"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ゼロ設定"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "영점 조정"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歸零"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تصفير"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıfırla"
+          }
         }
       }
     },
@@ -109,6 +469,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "保持一根手指轻触触控板，等待读数稳定后归零，再轻放小物件。手指不要抬起或更换。"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berühren Sie das Trackpad leicht mit einem Finger. Warten Sie auf Stabilität, tarieren Sie und legen Sie dann einen kleinen Gegenstand vorsichtig auf. Heben oder wechseln Sie den Finger nicht."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantén un dedo en contacto suave con el trackpad. Espera a que se estabilice, tara y coloca un objeto pequeño con cuidado. No levantes ni cambies el dedo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gardez un doigt en contact léger avec le trackpad. Attendez la stabilité, tarez, puis posez doucement un petit objet. Ne levez pas et ne changez pas de doigt."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantenha um dedo tocando levemente o trackpad. Aguarde a estabilidade, tare e coloque um objeto pequeno com cuidado. Não levante nem troque o dedo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Легко касайтесь трекпада одним пальцем. Дождитесь стабильности, обнулите показания и осторожно положите небольшой предмет. Не поднимайте и не меняйте палец."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "指1本でトラックパッドに軽く触れ続けてください。安定したらゼロ設定し、小物をそっと置きます。指を離したり、入れ替えたりしないでください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "손가락 하나로 트랙패드를 가볍게 터치한 상태를 유지하세요. 안정되면 영점을 조정하고 작은 물체를 살짝 올리세요. 손가락을 떼거나 바꾸지 마세요."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保持一根手指輕觸觸控板，等讀數穩定後歸零，再輕放小物件。手指不要抬起或更換。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أبقِ إصبعًا واحدًا يلامس لوحة التتبع برفق. انتظر الاستقرار، ثم صفّر القراءة وضع جسمًا صغيرًا برفق. لا ترفع إصبعك ولا تستبدله."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trackpad’e bir parmağınızla hafifçe dokunmaya devam edin. Kararlı olmasını bekleyin, sıfırlayın ve küçük bir nesneyi nazikçe yerleştirin. Parmağınızı kaldırmayın veya değiştirmeyin."
           }
         }
       }
@@ -180,6 +600,12 @@
             "state": "translated",
             "value": "已知重量校準"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bilinen ağırlıkla kalibrasyon"
+          }
         }
       }
     },
@@ -250,6 +676,12 @@
             "state": "translated",
             "value": "先在沒有物件時歸零，再放置已知重量的物件（1–100 g）。保持同一根手指輕觸，穩定後儲存。"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nesne olmadan sıfırlayın, ardından ağırlığı bağımsız olarak bilinen bir nesne (1–100 g) yerleştirin. Aynı parmakla hafifçe dokunmaya devam edin ve kararlı olduğunda kaydedin."
+          }
         }
       }
     },
@@ -265,6 +697,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "已知重量"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekanntes Gewicht"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peso conocido"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poids connu"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peso conhecido"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Известный вес"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "既知の重量"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "알려진 무게"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已知重量"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الوزن المعروف"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bilinen ağırlık"
           }
         }
       }
@@ -282,6 +774,66 @@
             "state": "translated",
             "value": "保存校准"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalibrieren"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibrar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Étalonner"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibrar"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Калибровать"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "校正を保存"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "보정 저장"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "儲存校準"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حفظ المعايرة"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalibre Et"
+          }
         }
       }
     },
@@ -297,6 +849,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "重置校准"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zurücksetzen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redefinir"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "校正をリセット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "보정 초기화"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置校準"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعادة الضبط"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıfırla"
           }
         }
       }
@@ -314,6 +926,66 @@
             "state": "translated",
             "value": "未校准：原始压力差仅作为经验估算。"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nicht kalibriert: Die rohe Druckdifferenz liefert nur eine empirische Schätzung."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin calibrar: la diferencia de presión sin procesar es solo una estimación empírica."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non étalonné : la différence de pression brute n’est qu’une estimation empirique."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem calibração: a diferença de pressão bruta é apenas uma estimativa empírica."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Без калибровки: разница необработанного давления — лишь эмпирическая оценка."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未校正：生の圧力差は経験的な推定にすぎません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "보정되지 않음: 원시 압력 차이는 경험적인 추정값일 뿐입니다."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未校準：原始壓力差僅作為經驗估算。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غير معاير: فرق الضغط الخام مجرد تقدير تجريبي."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalibre edilmedi: ham basınç farkı yalnızca deneysel bir tahmindir."
+          }
         }
       }
     },
@@ -329,6 +1001,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "已校准：校准仍不能保证准确度。"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalibriert: Die Genauigkeit ist weiterhin nicht garantiert."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibrado: la precisión sigue sin estar garantizada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Étalonné : la précision reste sans garantie."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibrado: a precisão ainda não é garantida."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Откалибровано: точность по-прежнему не гарантируется."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "校正済み：精度は引き続き保証されません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "보정됨: 정확도는 여전히 보장되지 않습니다."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已校準：校準仍不能保證準確度。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تمت المعايرة: لا تزال الدقة غير مضمونة."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalibre edildi: doğruluk yine de garanti edilmez."
           }
         }
       }
@@ -346,6 +1078,66 @@
             "state": "translated",
             "value": "设备标识不可用，校准仅在本次会话有效。"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerätekennung nicht verfügbar; die Kalibrierung gilt nur für diese Sitzung."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identidad del dispositivo no disponible; la calibración solo dura esta sesión."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identité de l’appareil indisponible ; l’étalonnage ne vaut que pour cette session."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identidade do dispositivo indisponível; a calibração dura apenas esta sessão."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Идентификатор устройства недоступен; калибровка действует только в этом сеансе."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "デバイスの識別情報がないため、校正はこのセッションのみ有効です。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기기 식별 정보를 사용할 수 없어 보정은 이 세션에서만 유효합니다."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "裝置識別碼無法使用，校準僅在本次工作階段有效。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هوية الجهاز غير متاحة؛ المعايرة صالحة لهذه الجلسة فقط."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aygıt kimliği kullanılamıyor; kalibrasyon yalnızca bu oturum için geçerlidir."
+          }
         }
       }
     },
@@ -361,6 +1153,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "请输入 1–100 g 的有效重量，并等待有物件的读数稳定后重试。"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geben Sie ein gültiges Gewicht von 1–100 g ein und warten Sie auf eine stabile Anzeige mit dem Gegenstand, bevor Sie es erneut versuchen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Introduce un peso válido de 1–100 g y espera a una lectura estable con el objeto antes de reintentar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saisissez un poids valide de 1–100 g et attendez une mesure stable avec l’objet avant de réessayer."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insira um peso válido de 1–100 g e aguarde uma leitura estável com o objeto antes de tentar novamente."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Введите допустимый вес от 1 до 100 г и дождитесь стабильных показаний с предметом, затем повторите попытку."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1–100 gの有効な重量を入力し、物を置いた状態で安定してから再試行してください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1–100 g의 유효한 무게를 입력하고 물체를 올린 상태에서 값이 안정되면 다시 시도하세요."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "請輸入 1–100 g 的有效重量，並等待有物件的讀數穩定後重試。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل وزنًا صالحًا من 1 إلى 100 غ وانتظر قراءة مستقرة مع الجسم قبل المحاولة مجددًا."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1–100 g arasında geçerli bir ağırlık girin ve yeniden denemeden önce nesneyle kararlı bir okuma bekleyin."
           }
         }
       }
@@ -378,6 +1230,66 @@
             "state": "translated",
             "value": "仅轻放小物件，勿用尖锐或重物。不可用于关键测量。"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legen Sie nur kleine Gegenstände vorsichtig auf. Keine scharfen oder schweren Gegenstände. Nicht für kritische Messungen verwenden."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coloca solo objetos pequeños con cuidado. No uses objetos afilados ni pesados. No lo uses para mediciones críticas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Posez doucement uniquement de petits objets. Aucun objet lourd ou pointu. Ne pas utiliser pour des mesures critiques."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coloque apenas objetos pequenos com cuidado. Não use itens afiados ou pesados. Não use para medições críticas."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Осторожно кладите только небольшие предметы. Не используйте острые или тяжёлые предметы. Не используйте для критически важных измерений."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "小物だけをそっと置いてください。鋭利な物や重い物は使わないでください。重要な測定には使用しないでください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "작은 물체만 살짝 올리세요. 날카롭거나 무거운 물체는 사용하지 마세요. 중요한 측정에 사용하지 마세요."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "僅輕放小物件，勿用尖銳或重物。不可用於關鍵測量。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ضع أجسامًا صغيرة فقط برفق. لا تستخدم أجسامًا حادة أو ثقيلة. لا تستخدمه للقياسات الحرجة."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yalnızca küçük nesneleri nazikçe yerleştirin. Keskin veya ağır nesneler kullanmayın. Kritik ölçümler için kullanmayın."
+          }
         }
       }
     },
@@ -393,6 +1305,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "仅支持内置 Force Touch 触控板。称重时暂停 MacTools 触控板手势；停止或关闭页面后恢复。依赖 macOS 私有 API，兼容性可能变化。"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nur integrierte Force Touch Trackpads. MacTools-Trackpad-Gesten pausieren beim Wiegen und werden nach dem Stoppen oder Schließen dieser Seite fortgesetzt. Verwendet private macOS-APIs; die Kompatibilität kann sich ändern."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo trackpads Force Touch integrados. Los gestos de MacTools se pausan al pesar y se reanudan al detener o cerrar esta página. Usa API privadas de macOS; la compatibilidad puede cambiar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trackpads Force Touch intégrés uniquement. Les gestes MacTools sont suspendus pendant la pesée et reprennent à l’arrêt ou à la fermeture de cette page. Utilise des API privées de macOS ; la compatibilité peut changer."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apenas trackpads Force Touch integrados. Os gestos do MacTools pausam durante a pesagem e retornam ao parar ou fechar esta página. Usa APIs privadas do macOS; a compatibilidade pode mudar."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Только встроенные трекпады Force Touch. Жесты MacTools приостанавливаются при взвешивании и возобновляются после остановки или закрытия страницы. Используются частные API macOS; совместимость может измениться."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "内蔵Force Touchトラックパッドのみ対応。計量中はMacToolsのトラックパッドジェスチャが一時停止し、停止またはページを閉じると再開します。macOSの非公開APIを使用しているため、互換性は変わる可能性があります。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "내장 Force Touch 트랙패드만 지원합니다. 측정 중에는 MacTools 트랙패드 제스처가 일시 중지되며 중지하거나 이 페이지를 닫으면 재개됩니다. macOS 비공개 API를 사용하므로 호환성이 변경될 수 있습니다."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "僅支援內建 Force Touch 觸控板。稱重時暫停 MacTools 觸控板手勢；停止或關閉頁面後恢復。依賴 macOS 私有 API，相容性可能變更。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لوحات Force Touch المدمجة فقط. تتوقف إيماءات MacTools أثناء الوزن وتستأنف عند الإيقاف أو إغلاق الصفحة. يستخدم واجهات macOS خاصة؛ قد يتغير التوافق."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yalnızca yerleşik Force Touch trackpad’ler. MacTools hareketleri tartım sırasında duraklatılır, durdurulduğunda veya bu sayfa kapatıldığında devam eder. Özel macOS API’lerini kullanır; uyumluluk değişebilir."
           }
         }
       }
@@ -410,6 +1382,66 @@
             "state": "translated",
             "value": "点按“开始”以称重。"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klicken Sie auf Starten, um zu wiegen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haz clic en Iniciar para pesar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cliquez sur Démarrer pour peser."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clique em Iniciar para pesar."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите «Начать» для взвешивания."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「開始」をクリックして計量します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "시작을 클릭하여 측정하세요."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按一下「開始」以稱重。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انقر على بدء للوزن."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tartmak için Başlat’a tıklayın."
+          }
         }
       }
     },
@@ -425,6 +1457,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "未检测到支持压力读取的内置 Force Touch 触控板。"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kein integriertes Force Touch Trackpad mit Druckunterstützung erkannt."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se detectó ningún trackpad Force Touch integrado con soporte de presión."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun trackpad Force Touch intégré prenant en charge la pression n’a été détecté."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum trackpad Force Touch integrado com suporte à pressão foi detectado."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Встроенный трекпад Force Touch с поддержкой давления не обнаружен."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "圧力に対応した内蔵Force Touchトラックパッドが見つかりません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "압력을 지원하는 내장 Force Touch 트랙패드를 찾을 수 없습니다."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未偵測到支援壓力讀取的內建 Force Touch 觸控板。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم تُكتشف لوحة Force Touch مدمجة تدعم الضغط."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Basınç desteği olan yerleşik Force Touch trackpad algılanmadı."
           }
         }
       }
@@ -442,6 +1534,66 @@
             "state": "translated",
             "value": "请保持一根手指轻触触控板。"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berühren Sie das Trackpad leicht mit einem Finger."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantén un dedo en contacto suave con el trackpad."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gardez un doigt en contact léger avec le trackpad."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantenha um dedo tocando levemente o trackpad."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Легко касайтесь трекпада одним пальцем."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "指1本でトラックパッドに軽く触れ続けてください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "손가락 하나로 트랙패드를 가볍게 터치한 상태를 유지하세요."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "請保持一根手指輕觸觸控板。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أبقِ إصبعًا واحدًا يلامس لوحة التتبع برفق."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trackpad’e bir parmağınızla hafifçe dokunmaya devam edin."
+          }
         }
       }
     },
@@ -457,6 +1609,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "检测到多个触点。请只保留一根手指，然后重新归零。"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mehrere Kontakte erkannt. Lassen Sie nur einen Finger aufliegen und tarieren Sie erneut."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se detectaron varios contactos. Deja solo un dedo y vuelve a tarar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plusieurs contacts détectés. Gardez un seul doigt et tarez à nouveau."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vários contatos detectados. Mantenha apenas um dedo e tare novamente."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обнаружено несколько касаний. Оставьте один палец и снова обнулите показания."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "複数の接触を検出しました。指を1本だけにして、再度ゼロ設定してください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "여러 접촉이 감지되었습니다. 손가락 하나만 유지하고 영점을 다시 조정하세요."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "偵測到多個觸點。請只保留一根手指，然後重新歸零。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم اكتشاف عدة نقاط لمس. أبقِ إصبعًا واحدًا فقط وصفّر مجددًا."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Birden fazla temas algılandı. Yalnızca bir parmak bırakın ve yeniden sıfırlayın."
           }
         }
       }
@@ -474,6 +1686,66 @@
             "state": "translated",
             "value": "等待读数稳定，然后归零。"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warten Sie auf Stabilität und tarieren Sie dann."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espera a que se estabilice y tara."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attendez la stabilité, puis tarez."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aguarde a estabilidade e tare."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дождитесь стабильности и обнулите показания."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "安定してからゼロ設定してください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "안정될 때까지 기다린 다음 영점을 조정하세요."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "等讀數穩定，然後歸零。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انتظر الاستقرار ثم صفّر القراءة."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kararlı olmasını bekleyin, ardından sıfırlayın."
+          }
         }
       }
     },
@@ -489,6 +1761,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "保持手指位置和力度不变；读数仅供参考。"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Halten Sie Fingerposition und Druck konstant. Die Werte sind Schätzungen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantén constantes la posición y la presión del dedo. Las lecturas son aproximadas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gardez la position et la pression du doigt constantes. Les mesures sont approximatives."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantenha a posição e a pressão do dedo constantes. As leituras são aproximadas."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохраняйте положение пальца и силу нажатия. Показания приблизительные."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "指の位置と圧力を一定に保ってください。表示は概算です。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "손가락 위치와 압력을 일정하게 유지하세요. 측정값은 대략적인 값입니다."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保持手指位置和力度不變；讀數僅供參考。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حافظ على موضع إصبعك وضغطه ثابتين. القراءات تقريبية."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parmağınızın konumunu ve basıncını sabit tutun. Okumalar yaklaşık değerlerdir."
           }
         }
       }
@@ -506,6 +1838,66 @@
             "state": "translated",
             "value": "压力读数无效。请重新轻触并归零。"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ungültiger Druckwert. Berühren Sie das Trackpad erneut leicht und tarieren Sie."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lectura de presión no válida. Vuelve a tocar suavemente y tara."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mesure de pression invalide. Touchez à nouveau légèrement et tarez."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leitura de pressão inválida. Toque levemente novamente e tare."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недопустимые показания давления. Снова легко коснитесь трекпада и обнулите показания."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "圧力値が無効です。再度軽く触れ、ゼロ設定してください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "유효하지 않은 압력 값입니다. 다시 가볍게 터치하고 영점을 조정하세요."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "壓力讀數無效。請重新輕觸並歸零。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قراءة الضغط غير صالحة. المس برفق مجددًا وصفّر القراءة."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçersiz basınç okuması. Yeniden hafifçe dokunun ve sıfırlayın."
+          }
         }
       }
     },
@@ -521,6 +1913,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "会话已中断。请重新开始并归零。"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sitzung unterbrochen. Starten Sie erneut und tarieren Sie."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sesión interrumpida. Inicia de nuevo y tara."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session interrompue. Redémarrez et tarez."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessão interrompida. Inicie novamente e tare."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сеанс прерван. Начните заново и обнулите показания."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セッションが中断しました。再度開始し、ゼロ設定してください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "세션이 중단되었습니다. 다시 시작하고 영점을 조정하세요."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工作階段已中斷。請重新開始並歸零。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انقطعت الجلسة. ابدأ مجددًا وصفّر القراءة."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oturum kesintiye uğradı. Yeniden başlatın ve sıfırlayın."
           }
         }
       }
@@ -592,6 +2044,12 @@
             "state": "translated",
             "value": "觸控板稱重"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trackpad Terazisi"
+          }
         }
       }
     },
@@ -662,6 +2120,12 @@
             "state": "translated",
             "value": "用內建 Force Touch 觸控板估算小物件重量（實驗性）"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yerleşik Force Touch trackpad ile küçük nesnelerin ağırlığını tahmin edin (deneysel)"
+          }
         }
       }
     },
@@ -678,6 +2142,66 @@
             "state": "translated",
             "value": "打开"
           }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffnen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrir"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開く"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "열기"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打開"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فتح"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aç"
+          }
         }
       }
     },
@@ -693,6 +2217,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "称重"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Messung"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medición"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mesure"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medição"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Измерение"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "計量"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "측정"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "稱重"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "القياس"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ölçüm"
           }
         }
       }

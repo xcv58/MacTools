@@ -46,6 +46,10 @@
     "zh-Hant": {
       "displayName": "觸控板稱重",
       "summary": "用內建 Force Touch 觸控板估算小物件重量（實驗性）"
+    },
+    "tr": {
+      "displayName": "Trackpad Terazisi",
+      "summary": "Yerleşik Force Touch trackpad ile küçük nesnelerin ağırlığını tahmin edin (deneysel)"
     }
   },
   "productStrings": {
@@ -55,7 +59,7 @@
     "setup.description": "@localizable.calibration.instructions"
   },
   "version": "1.0.0",
-  "minHostVersion": "2.0.0",
+  "minHostVersion": "2.0.2",
   "pluginKitVersion": 7,
   "bundleRelativePath": "TrackpadScale.bundle",
   "factoryClass": "TrackpadScalePlugin.TrackpadScalePluginFactory",
@@ -126,6 +130,9 @@
       ],
       "zh-Hant": [
         "觸控板稱重"
+      ],
+      "tr": [
+        "Trackpad Terazisi"
       ]
     },
     "useCases": [

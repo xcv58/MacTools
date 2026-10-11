@@ -1,6 +1,6 @@
 # Trackpad Scale (experimental)
 
-Trackpad Scale is an optional plugin for estimating small object weights on a **built-in Force Touch trackpad**. It requires MacTools 2.0.0. Capability checks require the private runtime to report both built-in status and force support; model age is never used. Missing optional capability symbols fail closed. External Magic Trackpads are not supported or advertised.
+Trackpad Scale is an optional plugin for estimating small object weights on a **built-in Force Touch trackpad**. It requires MacTools 2.0.2. Capability checks require the private runtime to report both built-in status and force support; model age is never used. Missing optional capability symbols fail closed. External Magic Trackpads are not supported or advertised.
 
 ## Try it
 
@@ -20,6 +20,8 @@ The settings measurement section uses native controls in light and dark appearan
 ![Trackpad Scale settings in light appearance, stopped with no sensor readings](images/trackpad-scale-light.png)
 
 ![Trackpad Scale settings in dark appearance, stopped with no sensor readings](images/trackpad-scale-dark.png)
+
+![Trackpad Scale Arabic settings in dark appearance with right-to-left layout, stopped with no sensor readings](images/trackpad-scale-ar-dark.png)
 
 ## Measurement and recovery
 
@@ -43,16 +45,18 @@ The host invalidates callback generations on stop/restart, observes device arriv
 
 | Check | Result |
 | --- | --- |
-| Focused XCTest: measurement, persistence, subscriber lifecycle, ABI layout, both gesture consumers, and existing recognition/coordinator boundaries | Passed: 74 tests, zero failures |
-| `make ci`: full XCTest, script checks, and frozen PluginKit v7 binary client | Passed: 2,668 XCTest tests passed, four skipped, zero failures; 221 script checks passed |
-| `make script-tests` (includes changelog, generated plugin data, and minimum-host inventory) | Passed: 221 checks |
+| Focused XCTest: scale-model calibration, persistence, stale/coalesced frames, and locale-specific numeric input | Passed: four tests, zero failures |
+| `make ci`: full XCTest, script checks, and frozen PluginKit v7 binary client | Passed: 2,727 XCTest tests passed, four skipped, zero failures; 229 script checks passed |
+| `make script-tests` (includes changelog, generated plugin data, localization, and minimum-host inventory) | Passed: 229 checks |
 | Frozen PluginKit v7 binary client against the built framework | Passed |
 | Unsigned Debug host and plugin build using the repository Xcode wrapper | Passed |
 | `make build` | Blocked by missing `LocalConfig.xcconfig`; no signing configuration was created or changed |
-| Static native UI snapshots: English/Chinese, light/dark, 450-point narrow content | Passed: no clipping in inspected layouts; no sensor readings supplied |
+| Static native UI snapshots: English/Chinese, light/dark, German/Turkish narrow content, and Arabic right-to-left layout | Passed: no clipping in inspected layouts; no sensor readings supplied |
 | Real sensor and accuracy validation | Untested: available Mac mini enumerated zero multitouch devices |
 
-Focused test command:
+Focused model test command: `make test TEST_FILTER=TrackpadScaleModelTests`.
+
+To run the broader feature tests:
 
 ```bash
 make test TEST_FILTER='TrackpadScaleMeasurementTests TrackpadScaleModelTests SharedTrackpadInputServiceTests TrackpadGesturesPluginTests TrackpadGestureRecognizerTests TrackpadMiddleClickArbiterTests TrackpadMiddleClickCoordinatorTests MiddleClickPluginTests TrackpadTypingSuppressionGateTests'
@@ -76,6 +80,6 @@ Current hardware evidence: a read-only probe on the available Mac mini enumerate
 | Sleep/wake, screen lock, device re-enumeration | Session interrupts, weight clears, gestures recover; weighing requires explicit restart/tare | Untested |
 | Gestures enabled | Configured Trackpad Gestures actions and Middle Click pause during weighing, resume after stop/close and finger lift; saved preferences unchanged | Untested |
 | Gestures disabled | Weighing still receives pressure; stopping releases the only listener | Untested |
-| UI/accessibility | Check Chinese/English, light/dark, narrow settings window, keyboard/focus, VoiceOver, and disabled controls | Untested |
+| UI/accessibility | Check supported languages including Arabic right-to-left layout, light/dark, narrow settings window, keyboard/focus, VoiceOver, and disabled controls | Untested |
 
 Mark a check **Passed** only after observing its expected outcome. Record **Failed** with reproduction details when it differs, and keep unavailable hardware/physical actions **Untested**.
