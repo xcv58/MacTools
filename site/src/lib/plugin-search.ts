@@ -36,11 +36,23 @@ type Discovery = {
 };
 
 export function normalizeSearch(value: string): string {
-  return value.normalize("NFC").trim().toLowerCase();
+  // Turkish capital dotted I uses the same search letter as lowercase i.
+  return value.normalize("NFC").trim().replaceAll("İ", "i").toLowerCase();
 }
 
 function terms(values: Array<string | null | undefined>): string {
   return normalizeSearch(values.filter((value) => value?.trim()).join(" "));
+}
+
+function caseVariants(locale: string, value: string | null | undefined): string[] {
+  if (!value) return [];
+  return locale === "tr"
+    ? [value, value.toLocaleLowerCase("tr"), value.toLocaleUpperCase("tr")]
+    : [value];
+}
+
+function localizedValues(value: LocalizedValue | undefined): string[] {
+  return Object.entries(value ?? {}).flatMap(([locale, text]) => caseVariants(locale, text));
 }
 
 function localizedText(value: LocalizedValue | undefined, fallback = ""): LocalizedText {
@@ -58,10 +70,12 @@ export function buildPluginSearch(plugins: Plugin[], entries: StaticActionEntry[
     search.set(plugin.id, {
       terms: terms([
         text.zh.displayName, text.zh.summary, text.en.displayName, text.en.summary,
-        ...Object.values(plugin.localizedMetadata ?? {}).flatMap((metadata) => [metadata?.displayName, metadata?.summary]),
+        ...Object.entries(plugin.localizedMetadata ?? {}).flatMap(([locale, metadata]) => [
+          ...caseVariants(locale, metadata?.displayName), ...caseVariants(locale, metadata?.summary),
+        ]),
         ...(discovery?.keywords ?? []),
-        ...Object.values(discovery?.localizedSynonyms ?? {}).flat(),
-        ...(discovery?.useCases ?? []).flatMap((item) => Object.values(item.title ?? {})),
+        ...Object.entries(discovery?.localizedSynonyms ?? {}).flatMap(([locale, values]) => values.flatMap((value) => caseVariants(locale, value))),
+        ...(discovery?.useCases ?? []).flatMap((item) => localizedValues(item.title)),
       ]),
       actions: [],
     });
@@ -77,9 +91,9 @@ export function buildPluginSearch(plugins: Plugin[], entries: StaticActionEntry[
       route: entry.route,
       title,
       description,
-      titleTerms: terms([...Object.values(entry.action.title ?? {}), title.zh, title.en]),
+      titleTerms: terms([...localizedValues(entry.action.title), title.zh, title.en]),
       keywordTerms: terms(entry.action.keywords ?? []),
-      descriptionTerms: terms(Object.values(entry.action.description ?? {})),
+      descriptionTerms: terms(localizedValues(entry.action.description)),
     });
   }
   return search;

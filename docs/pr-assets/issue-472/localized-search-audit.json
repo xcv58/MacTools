@@ -4288,5 +4288,19 @@
       },
       "sourceEvidence": "Plugins/Screenshot/Sources/Overlay.swift:1215"
     }
-  ]
+  ],
+  "caseVariantValidation": {
+    "kind": "native lowercase forms of every declared capability/name/summary query",
+    "queries": 3408,
+    "passed": 3408,
+    "localeCount": 12,
+    "turkishBrowserOwnerQueries": [
+      "iç içe klasörler",
+      "istem şablonu",
+      "imleci izle",
+      "izleme dörtgeni hareketi",
+      "işlemler"
+    ],
+    "syntheticCoverage": "Turkish dotted/dotless-I lower/upper forms in metadata and action title/description; canonical Unicode equivalence"
+  }
 }

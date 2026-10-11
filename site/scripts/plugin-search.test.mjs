@@ -60,6 +60,11 @@ test('implemented capabilities and device names discover their owners without in
     ['Целевые обороты', 'fan-control'],
     ['Lire la traduction', 'translator'],
     ['barkod', 'screenshot'],
+    ['iç içe klasörler', 'action-grid'],
+    ['istem şablonu', 'ai-assistant'],
+    ['imleci izle', 'display-volume'],
+    ['izleme dörtgeni hareketi', 'input-remapping'],
+    ['işlemler', 'system-status'],
     ['lunar calendar', 'calendar'],
     ['AirPods', 'device-battery'],
     ['CPU', 'system-status'],
@@ -102,17 +107,24 @@ test('optional discovery and blank translations preserve fallback and action ide
   assert.equal(normalizeSearch('  LEFT HALF  '), 'left half');
 });
 
-test('all declared metadata locales are searchable with canonical Unicode equivalence', () => {
+test('declared metadata locales support canonical Unicode and native capitalization', () => {
   const plugin = { id: 'fixture', displayName: 'Base', summary: 'Base summary', localizedMetadata: {
     fr: { displayName: 'Souris', summary: 'Défilement fluide' },
     'zh-Hant': { displayName: '滑鼠', summary: '平滑滾動' },
     ja: { displayName: 'マウス', summary: 'スムーズスクロール' },
     ar: { displayName: 'الماوس', summary: 'التمرير السلس' },
+    tr: { displayName: 'Işık', summary: 'İç içe klasörler' },
   } };
   const index = buildPluginSearch([plugin], []);
-  for (const query of ['souris', 'De\u0301filement fluide', '滑鼠', '平滑滾動', 'スムーズスクロール', 'التمرير السلس']) {
+  for (const query of ['souris', 'De\u0301filement fluide', '滑鼠', '平滑滾動', 'スムーズスクロール', 'التمرير السلس', 'iç içe klasörler', 'İÇ İÇE KLASÖRLER', 'ışık', 'IŞIK']) {
     assert.ok(index.get('fixture').terms.includes(normalizeSearch(query)), query);
   }
+  const action = { pluginID: 'fixture', providerID: 'fixture', route: '/fixture/', action: {
+    id: 'light', title: { tr: 'Işığı aç' }, description: { tr: 'İç mekân ışığı' },
+  } };
+  const entry = buildPluginSearch([plugin], [action]).get('fixture').actions[0];
+  assert.equal(actionMatchRank(entry, normalizeSearch('ışığı aç')), 3);
+  assert.equal(actionMatchRank(entry, normalizeSearch('İÇ MEKÂN IŞIĞI')), 1);
   assert.equal(index.get('fixture').actions.length, 0);
 });
 
