@@ -54,12 +54,21 @@ test('implemented capabilities and device names discover their owners without in
     ['平滑滚动', 'mouse-enhancer'],
     ['launch agents', 'launch-control'],
     ['RPM', 'fan-control'],
+    ['Défilement', 'activity-bar'],
+    ['スクリーンタイム', 'activity-bar'],
+    ['سرعة الدوران المستهدفة', 'fan-control'],
+    ['Целевые обороты', 'fan-control'],
+    ['Lire la traduction', 'translator'],
+    ['barkod', 'screenshot'],
     ['lunar calendar', 'calendar'],
     ['AirPods', 'device-battery'],
     ['CPU', 'system-status'],
   ]) {
     const entry = search.get(pluginID);
     assert.ok(entry.terms.includes(normalizeSearch(query)), `${query} -> ${pluginID}`);
+  }
+  for (const [query, pluginID] of [['Parchemins', 'activity-bar'], ['巻物', 'activity-bar'], ['Целевой доход на тысячу показов', 'fan-control'], ['العائد لكل ألف ظهور المستهدف', 'fan-control']]) {
+    assert.equal(search.get(pluginID).terms.includes(normalizeSearch(query)), false, `${query} must not advertise ${pluginID}`);
   }
   for (const query of ['tiptap', 'tip tap']) {
     const tipTapOwners = [...search].filter(([, entry]) => entry.terms.includes(query));

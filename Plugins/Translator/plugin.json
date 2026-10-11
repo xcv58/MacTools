@@ -61,7 +61,20 @@
     "action.select-translation.description": "@localizable.shortcut.selectTranslation.description",
     "action.screenshot-translation.title": "@localizable.shortcut.screenshotTranslation.title",
     "action.screenshot-translation.description": "@localizable.shortcut.screenshotTranslation.description",
-    "discovery.speak-translation": "@localizable.panel.result.speakHelp",
+    "discovery.speak-translation": {
+      "ar": "تحدث الترجمة",
+      "de": "Übersetzung sprechen",
+      "en": "Speak translation",
+      "es": "Hablar traducción",
+      "fr": "Lire la traduction",
+      "ja": "翻訳を話す",
+      "ko": "번역 말하기",
+      "pt": "Falar tradução",
+      "ru": "Произнесите перевод",
+      "tr": "Çeviriyi seslendir",
+      "zh-Hans": "朗读译文",
+      "zh-Hant": "朗讀譯文"
+    },
     "discovery.openai-translation": "@localizable.openAIClient.providerTitle",
     "discovery.selection-translation": "@localizable.shortcut.selectTranslation.title",
     "discovery.screenshot-translation": "@localizable.shortcut.screenshotTranslation.title"

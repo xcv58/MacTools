@@ -1,6 +1,6 @@
 # Twelve-locale discovery and search layout audit
 
-This follow-up starts from `a0cc1406997135edf79804fd87d862e50cda1e22`. The complete [query matrix and source provenance](localized-search-audit.json) records every selected capability label, its owning plugin, its 12 translated queries, and before/after membership. All 64 plugins were audited; 47 manifests gain 156 capability labels. Of these, 124 reuse current translations (113 through owning-catalog references and 11 copied from existing catalogs), and 32 use authored complete locale tables. Existing literal terms are preserved.
+This follow-up starts from `a0cc1406997135edf79804fd87d862e50cda1e22`. The complete [query matrix and source provenance](localized-search-audit.json) records every selected capability label, its owning plugin, its 12 translated queries, and before/after membership. All 64 plugins were audited; 47 manifests gain 156 capability labels. Of these, 119 reuse current translations (108 through owning-catalog references and 11 copied from existing catalogs), and 37 use complete discovery-specific locale tables. Those tables include five corrected native-label tables; their 12 incorrect or incomplete values are replaced while their other values are retained. Existing literal terms are preserved.
 
 The 12 locales describe searchable metadata. Website presentation supports English and simplified Chinese. Search has one index across locales; changing its display language preserves owners/actions, counts, query, category filter and expansion. Labels and alphabetical ordering can change, including which tied actions appear first. NFC normalization handles canonically equivalent Unicode, without translation, diacritic removal or Chinese-script conversion.
 
@@ -35,6 +35,8 @@ Searching `window` returns the same 5 plugins and 43 actions before and after. T
 
 The comparison PNGs combine genuine Chromium captures made on 2026-10-10 with the same 1440×1100 viewport, light appearance and reduced motion. The row comparison uses Chinese display and query `window`; the capability comparison uses English display and query `平滑滾動`. Before captures use the built baseline above. After captures represent the source change containing these artifacts. Images are resized and placed side by side with comparison labels; page contents are not edited. Earlier issue 472 captures keep their original provenance.
 
+The terminology pass reviewed all 156 labels across 12 locales, including all 124 initially reused labels. Five reused tables needed discovery-specific corrections: Activity Bar scrolling had been translated as parchment scrolls in seven locales, Japanese screen time as film running time, Arabic/Russian fan RPM as advertising revenue, French speech output as speaking in translation, and Turkish barcode recognition as QR-only recognition. Correct capability queries such as `Défilement`, `スクリーンタイム`, `Целевые обороты`, `Lire la traduction` and `barkod` now match their owners. Representative production checks also reject the new wrong-domain associations. Existing native UI resource files are preserved.
+
 ## Authoring and safeguards
 
 `discovery.localizedSynonymRefs` reuses complete `productStrings` entries backed by active native labels or complete authored translations. Projection merges resolved values into ordinary per-locale synonym arrays and strips all source-only references before packaging/catalog/website output. Missing keys/locales and invalid reference shapes fail validation; existing literal aliases remain supported.
@@ -46,10 +48,10 @@ Native Marketplace receives the expanded multilingual aliases through its existi
 ## Validation
 
 - Manifest/projector tests: 34 passed, including reference expansion, merge/deduplication, missing-reference/locale rejection and source-only-field removal. The release fixture includes the resource catalog now required by its manifest.
-- Repository script suite: 231 passed with system access; generated-data, complete localization and changelog validation passed. Initial sandbox checks exposed Swift module-cache/process-inspection restrictions; the complete permitted run passed.
+- Repository script suite: 231 passed with system access; generated-data, complete localization and changelog validation passed. Initial sandbox checks exposed Swift module-cache/process-inspection restrictions; the complete permitted run passed. A language-switch browser timeout passed identical diagnostic flows and its single permitted retry; the final flow waits for rendered layout before each pointer toggle.
 - Production matcher: 1,872 capability queries, 1,536 translated name/summary queries and all previous 284 owner/query pairs passed.
 - Website checks: 6 focused tests and all 14 site tests passed; build produced 203 pages with zero errors, warnings or hints.
-- Chromium/WebKit: 60 localized query checks and 12 layout flows across 1440/760/390 widths and both display languages passed. Actual pointer and keyboard disclosure, overflow-action navigation, card containment, matching/count/state preservation and category filtering passed without page errors.
+- Chromium/WebKit: 84 localized query checks and 12 layout flows across 1440/760/390 widths and both display languages passed. Actual pointer and keyboard disclosure, overflow-action navigation, card containment, matching/count/state preservation and category filtering passed without page errors.
 - Runtime/source envelopes, original product strings and literal aliases remain intact; the 135-action generated projection is byte-identical to baseline. Relevant existing issue 472 browser flows, diff checks and final stable source review are required before publication.
 - Validation covers website behavior and metadata projection. It does not run native app actions or hardware acceptance, publish plugin packages, or deploy the website.
 

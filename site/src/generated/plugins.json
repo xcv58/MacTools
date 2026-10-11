@@ -537,7 +537,7 @@
               "وقت النظر إلى الشاشة",
               "ضغطات المفاتيح",
               "النقرات",
-              "مخطوطات",
+              "التمرير",
               "وقت عمل الذكاء الاصطناعي"
             ],
             "de": [
@@ -545,7 +545,7 @@
               "Bildschirmzeit",
               "Tastenanschläge",
               "Klicks",
-              "Schriftrollen",
+              "Scrollen",
               "KI-Arbeitszeit"
             ],
             "en": [
@@ -561,7 +561,7 @@
               "Tiempo de pantalla",
               "Pulsiones de teclas",
               "Clics",
-              "Pergaminos",
+              "Desplazamiento",
               "Tiempo de trabajo de IA"
             ],
             "fr": [
@@ -569,15 +569,15 @@
               "Temps d'écran",
               "Frappes au clavier",
               "Clics",
-              "Parchemins",
+              "Défilement",
               "Temps de travail de l'IA"
             ],
             "ja": [
               "アクティビティ統計",
-              "上映時間",
+              "スクリーンタイム",
               "キーストローク",
               "クリック数",
-              "巻物",
+              "スクロール",
               "AI の作業時間"
             ],
             "ko": [
@@ -593,7 +593,7 @@
               "Tempo de uso",
               "Pressionamentos de teclas",
               "Cliques",
-              "Pergaminhos",
+              "Rolagem",
               "Tempo de trabalho da IA"
             ],
             "ru": [
@@ -601,7 +601,7 @@
               "Экранное время",
               "Нажатия клавиш",
               "Клики",
-              "Свитки",
+              "Прокрутка",
               "Время работы ИИ"
             ],
             "tr": [
@@ -11215,7 +11215,7 @@
               "التحكم بالمراوح",
               "السرعة الكاملة",
               "الإعدادات المسبقة المخصصة",
-              "العائد لكل ألف ظهور المستهدف"
+              "سرعة الدوران المستهدفة"
             ],
             "de": [
               "Lüftersteuerung",
@@ -11263,7 +11263,7 @@
               "Управление вентиляторами",
               "Полная скорость",
               "Пользовательские настройки",
-              "Целевой доход на тысячу показов"
+              "Целевые обороты в минуту"
             ],
             "tr": [
               "Fan Kontrolü",
@@ -19333,7 +19333,7 @@
               "Kaydırmalı Ekran Görüntüsü",
               "Görseli ekrana sabitle",
               "Metni Çıkar",
-              "QR Kodu Tanı",
+              "QR kodlarını ve barkodları tanı",
               "Açıklama ekleme",
               "Ekran kaydı"
             ],
@@ -23080,7 +23080,7 @@
             ],
             "fr": [
               "Traducteur",
-              "Parler en traduction",
+              "Lire la traduction",
               "Traduction OpenAI",
               "Traduire la sélection",
               "Traduire la capture d'écran"

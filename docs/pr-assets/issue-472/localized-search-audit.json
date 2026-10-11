@@ -3,8 +3,8 @@
   "pluginsAudited": 64,
   "changedManifests": 47,
   "capabilityLabels": 156,
-  "existingTranslations": 124,
-  "authoredTranslations": 32,
+  "existingTranslations": 119,
+  "authoredTranslations": 37,
   "capabilityQueries": 1872,
   "metadataQueries": 1536,
   "perLocale": {
@@ -362,7 +362,7 @@
       "labels": [
         {
           "concept": "screen time",
-          "source": "Plugins/ActivityBar/Resources/Localizable.xcstrings#component.metric.screenTime",
+          "source": "authored discovery translation; unsuitable native Plugins/ActivityBar/Resources/Localizable.xcstrings#component.metric.screenTime",
           "evidence": "Plugins/ActivityBar/Sources/ActivityBarComponentView.swift:350",
           "queries": {
             "ar": "وقت النظر إلى الشاشة",
@@ -370,7 +370,7 @@
             "en": "Screen Time",
             "es": "Tiempo de pantalla",
             "fr": "Temps d'écran",
-            "ja": "上映時間",
+            "ja": "スクリーンタイム",
             "ko": "스크린 타임",
             "pt": "Tempo de uso",
             "ru": "Экранное время",
@@ -434,18 +434,18 @@
         },
         {
           "concept": "scrolls",
-          "source": "Plugins/ActivityBar/Resources/Localizable.xcstrings#component.metric.scrolls",
+          "source": "authored discovery translation; unsuitable native Plugins/ActivityBar/Resources/Localizable.xcstrings#component.metric.scrolls",
           "evidence": "Plugins/ActivityBar/Sources/ActivityBarComponentView.swift:345",
           "queries": {
-            "ar": "مخطوطات",
-            "de": "Schriftrollen",
+            "ar": "التمرير",
+            "de": "Scrollen",
             "en": "Scrolls",
-            "es": "Pergaminos",
-            "fr": "Parchemins",
-            "ja": "巻物",
+            "es": "Desplazamiento",
+            "fr": "Défilement",
+            "ja": "スクロール",
             "ko": "스크롤",
-            "pt": "Pergaminhos",
-            "ru": "Свитки",
+            "pt": "Rolagem",
+            "ru": "Прокрутка",
             "tr": "Kaydırma",
             "zh-Hans": "滚动",
             "zh-Hant": "滾動"
@@ -1450,10 +1450,10 @@
         },
         {
           "concept": "custom RPM target",
-          "source": "Plugins/FanControl/Resources/Localizable.xcstrings#panel.slider.targetRPM",
+          "source": "authored discovery translation; unsuitable native Plugins/FanControl/Resources/Localizable.xcstrings#panel.slider.targetRPM",
           "evidence": "Plugins/FanControl/Sources/FanControlPlugin.swift:687",
           "queries": {
-            "ar": "العائد لكل ألف ظهور المستهدف",
+            "ar": "سرعة الدوران المستهدفة",
             "de": "Ziel-RPM",
             "en": "Target RPM",
             "es": "RPM objetivo",
@@ -1461,7 +1461,7 @@
             "ja": "目標 RPM",
             "ko": "목표 RPM",
             "pt": "RPM desejado",
-            "ru": "Целевой доход на тысячу показов",
+            "ru": "Целевые обороты в минуту",
             "tr": "Hedef RPM",
             "zh-Hans": "目标转速",
             "zh-Hant": "目標轉速"
@@ -3030,7 +3030,7 @@
         },
         {
           "concept": "QR recognition",
-          "source": "Plugins/Screenshot/Resources/Localizable.xcstrings#overlay.recognition.barcode",
+          "source": "authored discovery translation; unsuitable native Plugins/Screenshot/Resources/Localizable.xcstrings#overlay.recognition.barcode",
           "evidence": "Plugins/Screenshot/Sources/Overlay.swift:1215",
           "queries": {
             "ar": "التعرّف على رموز QR والرموز الشريطية",
@@ -3042,7 +3042,7 @@
             "ko": "QR 코드 및 바코드 인식",
             "pt": "Reconhecer códigos QR e de barras",
             "ru": "Распознать QR-коды и штрихкоды",
-            "tr": "QR Kodu Tanı",
+            "tr": "QR kodlarını ve barkodları tanı",
             "zh-Hans": "识别二维码与条形码",
             "zh-Hant": "辨識 QR 碼與條碼"
           },
@@ -3802,14 +3802,14 @@
       "labels": [
         {
           "concept": "speak translation",
-          "source": "Plugins/Translator/Resources/Localizable.xcstrings#panel.result.speakHelp",
+          "source": "authored discovery translation; unsuitable native Plugins/Translator/Resources/Localizable.xcstrings#panel.result.speakHelp",
           "evidence": "Plugins/Translator/Sources/Panel/TranslatorPanelView.swift:212",
           "queries": {
             "ar": "تحدث الترجمة",
             "de": "Übersetzung sprechen",
             "en": "Speak translation",
             "es": "Hablar traducción",
-            "fr": "Parler en traduction",
+            "fr": "Lire la traduction",
             "ja": "翻訳を話す",
             "ko": "번역 말하기",
             "pt": "Falar tradução",
@@ -4228,6 +4228,65 @@
           "afterAllQueriesMatch": true
         }
       ]
+    }
+  ],
+  "translationCorrections": [
+    {
+      "id": "LS-R1-A1",
+      "directory": "ActivityBar",
+      "concept": "screen time",
+      "nativeKey": "component.metric.screenTime",
+      "correctedValues": {
+        "ja": "スクリーンタイム"
+      },
+      "sourceEvidence": "Plugins/ActivityBar/Sources/ActivityBarComponentView.swift:350"
+    },
+    {
+      "id": "LS-R1-A1",
+      "directory": "ActivityBar",
+      "concept": "scrolls",
+      "nativeKey": "component.metric.scrolls",
+      "correctedValues": {
+        "ar": "التمرير",
+        "de": "Scrollen",
+        "es": "Desplazamiento",
+        "fr": "Défilement",
+        "ja": "スクロール",
+        "pt": "Rolagem",
+        "ru": "Прокрутка"
+      },
+      "sourceEvidence": "Plugins/ActivityBar/Sources/ActivityBarComponentView.swift:345"
+    },
+    {
+      "id": "LS-R1-A2",
+      "directory": "FanControl",
+      "concept": "custom RPM target",
+      "nativeKey": "panel.slider.targetRPM",
+      "correctedValues": {
+        "ar": "سرعة الدوران المستهدفة",
+        "ru": "Целевые обороты в минуту"
+      },
+      "sourceEvidence": "Plugins/FanControl/Sources/FanControlPlugin.swift:687"
+    },
+    {
+      "id": "TERM-TTS-001",
+      "directory": "Translator",
+      "concept": "speak translation",
+      "nativeKey": "panel.result.speakHelp",
+      "correctedValues": {
+        "fr": "Lire la traduction"
+      },
+      "sourceEvidence": "Plugins/Translator/Sources/Panel/TranslatorPanelView.swift:212"
+    },
+    {
+      "id": "TERM-BARCODE-001",
+      "directory": "Screenshot",
+      "concept": "QR recognition",
+      "nativeKey": "overlay.recognition.barcode",
+      "correctedValues": {
+        "tr": "QR kodlarını ve barkodları tanı"
+      },
+      "sourceEvidence": "Plugins/Screenshot/Sources/Overlay.swift:1215"
     }
   ]
 }

@@ -112,7 +112,20 @@
     "discovery.scrolling-screenshot": "@localizable.overlay.mode.scroll",
     "discovery.pin-image": "@localizable.overlay.action.pin",
     "discovery.ocr-text-extraction": "@localizable.overlay.recognition.text",
-    "discovery.qr-recognition": "@localizable.overlay.recognition.barcode",
+    "discovery.qr-recognition": {
+      "ar": "التعرّف على رموز QR والرموز الشريطية",
+      "de": "QR-Codes und Barcodes erkennen",
+      "en": "Recognize QR Codes and Barcodes",
+      "es": "Reconocer códigos QR y de barras",
+      "fr": "Reconnaître les codes QR et les codes-barres",
+      "ja": "QR コードとバーコードを認識",
+      "ko": "QR 코드 및 바코드 인식",
+      "pt": "Reconhecer códigos QR e de barras",
+      "ru": "Распознать QR-коды и штрихкоды",
+      "tr": "QR kodlarını ve barkodları tanı",
+      "zh-Hans": "识别二维码与条形码",
+      "zh-Hant": "辨識 QR 碼與條碼"
+    },
     "discovery.annotation": {
       "ar": "تعليقات توضيحية",
       "de": "Anmerkungen",
