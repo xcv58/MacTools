@@ -36,23 +36,17 @@ type Discovery = {
 };
 
 export function normalizeSearch(value: string): string {
-  // Turkish capital dotted I uses the same search letter as lowercase i.
-  return value.normalize("NFC").trim().replaceAll("İ", "i").toLowerCase();
+  // Keep matching independent of the display language, including Turkish I and German sharp-S.
+  return value.normalize("NFC").trim().toLowerCase()
+    .replaceAll("i\u0307", "i").replaceAll("ı", "i").replaceAll("ß", "ss");
 }
 
 function terms(values: Array<string | null | undefined>): string {
   return normalizeSearch(values.filter((value) => value?.trim()).join(" "));
 }
 
-function caseVariants(locale: string, value: string | null | undefined): string[] {
-  if (!value) return [];
-  return locale === "tr"
-    ? [value, value.toLocaleLowerCase("tr"), value.toLocaleUpperCase("tr")]
-    : [value];
-}
-
-function localizedValues(value: LocalizedValue | undefined): string[] {
-  return Object.entries(value ?? {}).flatMap(([locale, text]) => caseVariants(locale, text));
+function localizedValues(value: LocalizedValue | undefined): Array<string | null | undefined> {
+  return Object.values(value ?? {});
 }
 
 function localizedText(value: LocalizedValue | undefined, fallback = ""): LocalizedText {
@@ -70,11 +64,11 @@ export function buildPluginSearch(plugins: Plugin[], entries: StaticActionEntry[
     search.set(plugin.id, {
       terms: terms([
         text.zh.displayName, text.zh.summary, text.en.displayName, text.en.summary,
-        ...Object.entries(plugin.localizedMetadata ?? {}).flatMap(([locale, metadata]) => [
-          ...caseVariants(locale, metadata?.displayName), ...caseVariants(locale, metadata?.summary),
+        ...Object.values(plugin.localizedMetadata ?? {}).flatMap((metadata) => [
+          metadata?.displayName, metadata?.summary,
         ]),
         ...(discovery?.keywords ?? []),
-        ...Object.entries(discovery?.localizedSynonyms ?? {}).flatMap(([locale, values]) => values.flatMap((value) => caseVariants(locale, value))),
+        ...Object.values(discovery?.localizedSynonyms ?? {}).flat(),
         ...(discovery?.useCases ?? []).flatMap((item) => localizedValues(item.title)),
       ]),
       actions: [],

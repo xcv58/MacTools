@@ -4290,7 +4290,7 @@
     }
   ],
   "caseVariantValidation": {
-    "kind": "native lowercase forms of every declared capability/name/summary query",
+    "kind": "locale-specific lowercase forms of every declared capability/name/summary query evaluated by website matcher",
     "queries": 3408,
     "passed": 3408,
     "localeCount": 12,
@@ -4301,6 +4301,63 @@
       "izleme dörtgeni hareketi",
       "işlemler"
     ],
-    "syntheticCoverage": "Turkish dotted/dotless-I lower/upper forms in metadata and action title/description; canonical Unicode equivalence"
+    "syntheticCoverage": "Turkish dotted/dotless-I sentence, mixed, lower/upper forms; German sharp-S/SS/capital sharp-S in metadata/action matching; canonical Unicode with ordinary accents preserved"
+  },
+  "caseFoldingFollowUp": {
+    "baselineCommit": "a7d4fe3f28ee135c86b04b63391df2b0ce390872",
+    "websitePairs": [
+      {
+        "owner": "night-shift",
+        "workingBefore": "ışığı azaltın",
+        "missingBefore": "Işığı azaltın"
+      },
+      {
+        "owner": "display-true-color",
+        "workingBefore": "ortam ışığına",
+        "missingBefore": "Ortam Işığına"
+      },
+      {
+        "owner": "launchpad",
+        "action": "launchpad/toggleLaunchpad",
+        "workingBefore": "uygulama ızgarasını",
+        "missingBefore": "Uygulama Izgarasını"
+      },
+      {
+        "owner": "window-layouts",
+        "action": "window-layouts/increase-height",
+        "workingBefore": "Fensterhöhe vergrößern",
+        "missingBefore": "FENSTERHÖHE VERGRÖSSERN"
+      },
+      {
+        "owner": "window-layouts",
+        "action": "window-layouts/reasonable-size",
+        "workingBefore": "Angemessene Größe",
+        "missingBefore": "ANGEMESSENE GRÖSSE"
+      }
+    ],
+    "nativeAliases": [
+      {
+        "owner": "action-grid",
+        "declaredAlias": "İç içe klasörler",
+        "query": "iç içe klasörler"
+      },
+      {
+        "owner": "ai-assistant",
+        "declaredAlias": "İstem Şablonu",
+        "query": "istem şablonu"
+      },
+      {
+        "owner": "display-volume",
+        "declaredAlias": "İmleci İzle",
+        "query": "imleci izle"
+      },
+      {
+        "owner": "input-remapping",
+        "declaredAlias": "İzleme Dörtgeni Hareketi",
+        "query": "izleme dörtgeni hareketi"
+      }
+    ],
+    "normalization": "NFC, trim, lowercase, i plus combining dot to i, dotless i to i, sharp-S to ss; other accents preserved",
+    "nativeScope": "Existing marketplace haystacks and query matching only; active-language prose selection remains unchanged"
   }
 }

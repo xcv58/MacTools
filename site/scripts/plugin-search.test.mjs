@@ -65,6 +65,8 @@ test('implemented capabilities and device names discover their owners without in
     ['imleci izle', 'display-volume'],
     ['izleme dörtgeni hareketi', 'input-remapping'],
     ['işlemler', 'system-status'],
+    ['Işığı azaltın', 'night-shift'],
+    ['Ortam Işığına', 'display-true-color'],
     ['lunar calendar', 'calendar'],
     ['AirPods', 'device-battery'],
     ['CPU', 'system-status'],
@@ -79,6 +81,14 @@ test('implemented capabilities and device names discover their owners without in
     const tipTapOwners = [...search].filter(([, entry]) => entry.terms.includes(query));
     assert.deepEqual(tipTapOwners.map(([id]) => id).sort(), ['input-remapping', 'trackpad-gestures']);
     assert.ok(tipTapOwners.every(([, entry]) => entry.actions.every(action => actionMatchRank(action, query) === 0)));
+  }
+  for (const [query, pluginID, actionID, rank] of [
+    ['Uygulama Izgarasını', 'launchpad', 'launchpad/toggleLaunchpad', 1],
+    ['FENSTERHÖHE VERGRÖSSERN', 'window-layouts', 'window-layouts/increase-height', 3],
+    ['ANGEMESSENE GRÖSSE', 'window-layouts', 'window-layouts/reasonable-size', 3],
+  ]) {
+    const action = search.get(pluginID).actions.find(action => action.id === actionID);
+    assert.equal(actionMatchRank(action, normalizeSearch(query)), rank, query);
   }
 });
 
@@ -113,19 +123,24 @@ test('declared metadata locales support canonical Unicode and native capitalizat
     'zh-Hant': { displayName: '滑鼠', summary: '平滑滾動' },
     ja: { displayName: 'マウス', summary: 'スムーズスクロール' },
     ar: { displayName: 'الماوس', summary: 'التمرير السلس' },
-    tr: { displayName: 'Işık', summary: 'İç içe klasörler' },
+    tr: { displayName: 'Işık', summary: 'İç içe klasörler; Ortam ışığına uyum' },
   } };
   const index = buildPluginSearch([plugin], []);
-  for (const query of ['souris', 'De\u0301filement fluide', '滑鼠', '平滑滾動', 'スムーズスクロール', 'التمرير السلس', 'iç içe klasörler', 'İÇ İÇE KLASÖRLER', 'ışık', 'IŞIK']) {
+  for (const query of ['souris', 'De\u0301filement fluide', '滑鼠', '平滑滾動', 'スムーズスクロール', 'التمرير السلس', 'iç içe klasörler', 'İÇ İÇE KLASÖRLER', 'I\u0307ç içe', 'ışık', 'IŞIK', 'Ortam Işığına']) {
     assert.ok(index.get('fixture').terms.includes(normalizeSearch(query)), query);
   }
   const action = { pluginID: 'fixture', providerID: 'fixture', route: '/fixture/', action: {
-    id: 'light', title: { tr: 'Işığı aç' }, description: { tr: 'İç mekân ışığı' },
+    id: 'light', title: { tr: 'Işığı aç', de: 'Angemessene Größe' }, description: { tr: 'İç mekân ışığı' },
   } };
   const entry = buildPluginSearch([plugin], [action]).get('fixture').actions[0];
   assert.equal(actionMatchRank(entry, normalizeSearch('ışığı aç')), 3);
+  assert.equal(actionMatchRank(entry, normalizeSearch('Işığı aç')), 3);
+  assert.equal(actionMatchRank(entry, normalizeSearch('ANGEMESSENE GRÖSSE')), 3);
+  assert.equal(actionMatchRank(entry, normalizeSearch('ANGEMESSENE GRÖẞE')), 3);
   assert.equal(actionMatchRank(entry, normalizeSearch('İÇ MEKÂN IŞIĞI')), 1);
   assert.equal(index.get('fixture').actions.length, 0);
+  assert.equal(index.get('fixture').terms.includes(normalizeSearch('Defilement')), false);
+  assert.equal(index.get('fixture').terms.includes(normalizeSearch('isik')), false);
 });
 
 function element(dataset = {}) {
