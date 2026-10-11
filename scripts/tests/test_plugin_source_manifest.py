@@ -922,6 +922,45 @@ class PluginSourceManifestTests(unittest.TestCase):
             with self.assertRaisesRegex(ManifestValidationError, "dimensions must not exceed"):
                 validate_and_project_manifest(manifest, path, {"asset-demo"})
 
+    def test_catalog_rejects_discovery_authoring_references_without_source(self) -> None:
+        source = PLUGINS_ROOT / "AutoHideDock" / "plugin.json"
+        projected, _ = validate_and_project_manifest(
+            json.loads(source.read_text(encoding="utf-8")),
+            source,
+            load_known_plugin_ids(PLUGINS_ROOT),
+        )
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = pathlib.Path(temporary_directory)
+            package = root / "auto-hide-dock.mactoolsplugin"
+            package.mkdir()
+            catalog = root / "catalog.json"
+            website = root / "website" / "plugins.json"
+            for refs in (["@productStrings.missing"], {"en": "not-an-array"}):
+                with self.subTest(refs=refs):
+                    invalid = copy.deepcopy(projected)
+                    invalid["discovery"]["localizedSynonymRefs"] = refs
+                    package.joinpath("plugin.json").write_text(
+                        json.dumps(invalid), encoding="utf-8"
+                    )
+                    result = subprocess.run(
+                        [
+                            sys.executable,
+                            str(SCRIPTS_ROOT / "generate-plugin-catalog.py"),
+                            "--mode", "debug",
+                            "--package", str(package),
+                            "--plugins-root", str(root / "missing-sources"),
+                            "--output", str(catalog),
+                            "--website-output", str(website),
+                        ],
+                        check=False,
+                        capture_output=True,
+                        text=True,
+                    )
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn("discovery.localizedSynonymRefs", result.stderr)
+                    self.assertFalse(catalog.exists())
+                    self.assertFalse(website.exists())
+
     def test_catalog_and_website_generation_are_deterministic(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = pathlib.Path(temporary_directory)

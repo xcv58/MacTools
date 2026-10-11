@@ -39,7 +39,7 @@ The terminology pass reviewed all 156 labels across 12 locales, including all 12
 
 ## Authoring and safeguards
 
-`discovery.localizedSynonymRefs` reuses complete `productStrings` entries backed by active native labels or complete authored translations. Projection merges resolved values into ordinary per-locale synonym arrays and strips all source-only references before packaging/catalog/website output. Missing keys/locales and invalid reference shapes fail validation; existing literal aliases remain supported.
+`discovery.localizedSynonymRefs` reuses complete `productStrings` entries backed by active native labels or complete authored translations. Projection merges resolved values into ordinary per-locale synonym arrays and strips all source-only references before packaging/catalog/website output. Missing keys/locales and invalid reference shapes fail validation; existing literal aliases remain supported. Projected-package validation also rejects leftover authoring references, including when catalog generation has no source manifest, before writing either catalog or website output.
 
 Only reviewed implemented concepts are selected. Resource existence alone is insufficient: obsolete Translator provider labels, Mouse Enhancer middle-click labels, unsupported trackpad pinch/rotation/swipe/force-click, fan temperature curves, Night Shift schedule/temperature controls and refresh-rate selection remain excluded. System Data aliases refer to supported container/VM storage groups, without promising generic VM inventory or cleanup. The [earlier audit](search-metadata-audit.md) records original exclusions and hardware boundaries.
 
@@ -47,8 +47,8 @@ Native Marketplace receives the expanded multilingual aliases through its existi
 
 ## Validation
 
-- Manifest/projector tests: 34 passed, including reference expansion, merge/deduplication, missing-reference/locale rejection and source-only-field removal. The release fixture includes the resource catalog now required by its manifest.
-- Repository script suite: 231 passed with system access; generated-data, complete localization and changelog validation passed. Initial sandbox checks exposed Swift module-cache/process-inspection restrictions; the complete permitted run passed. A language-switch browser timeout passed identical diagnostic flows and its single permitted retry; the final flow waits for rendered layout before each pointer toggle.
+- Manifest/projector tests: 35 passed, including reference expansion, merge/deduplication, missing-reference/locale rejection, source-only-field removal and source-less catalog rejection without output. The release fixture includes the resource catalog now required by its manifest.
+- Repository script suite: 232 passed with system access; generated-data, complete localization and changelog validation passed. Initial sandbox checks exposed Swift module-cache/process-inspection restrictions; the complete permitted run passed. A language-switch browser timeout passed identical diagnostic flows and its single permitted retry; the final flow waits for rendered layout before each pointer toggle.
 - Production matcher: 1,872 capability queries, 1,536 translated name/summary queries and all previous 284 owner/query pairs passed. All 3,408 native lowercase variants also pass across 12 locales; Turkish dotted/dotless-I capitalization is covered in plugin metadata and action title/description checks.
 - Website checks: 6 focused tests and all 14 site tests passed; build produced 203 pages with zero errors, warnings or hints.
 - Chromium/WebKit: 104 localized query checks and 12 layout flows across 1440/760/390 widths and both display languages passed. Actual pointer and keyboard disclosure, overflow-action navigation, card containment, matching/count/state preservation and category filtering passed without page errors.

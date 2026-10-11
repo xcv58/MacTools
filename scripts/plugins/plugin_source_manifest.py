@@ -1402,6 +1402,13 @@ def validate_projected_manifest(
             "productStrings",
             "must be removed from a projected package manifest",
         )
+    discovery = manifest.get("discovery")
+    if isinstance(discovery, dict) and "localizedSynonymRefs" in discovery:
+        _fail(
+            manifest.get("id", manifest_path.parent.name),
+            "discovery.localizedSynonymRefs",
+            "must be removed from a projected package manifest",
+        )
     projected, _ = _validate_manifest(
         manifest,
         manifest_path,
