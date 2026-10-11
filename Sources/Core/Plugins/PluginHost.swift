@@ -882,6 +882,7 @@ final class PluginHost: ObservableObject {
     }
 
     func deactivateAllPlugins(reason: PluginDeactivationReason = .hostShutdown) {
+        trackpadInputService.shutdown()
         menuBarIconCoordinator.deactivateAll(reason: reason)
         pluginStateChangeRebuildTask?.cancel()
         pluginStateChangeRebuildTask = nil
@@ -3112,6 +3113,10 @@ final class PluginHost: ObservableObject {
             if let actionGridConsumer = plugin as? any ActionGridHostContextConsuming {
                 actionGridConsumer.actionGridHostContext = makeActionGridHostContext()
             }
+            if let sensorConsumer = plugin as? any TrackpadInputServiceConsuming {
+                trackpadInputService.setActivityState(applicationActivityState)
+                sensorConsumer.setTrackpadInputService(trackpadInputService)
+            }
             if let trackpadActionConsumer = plugin as? any TrackpadActionHostContextConsuming {
                 trackpadActionConsumer.trackpadActionHostContext = makeTrackpadActionHostContext()
             }
@@ -3137,6 +3142,17 @@ final class PluginHost: ObservableObject {
         menuBarIconCoordinator.synchronize(with: activePlugins, pendingPluginIDs: pendingIconPluginIDs)
     }
 
+    private lazy var trackpadInputService: SharedTrackpadInputService = {
+        let service = SharedTrackpadInputService()
+        service.onGesturePauseChange = { [weak self] paused in
+            guard let self else { return }
+            for plugin in self.activePlugins {
+                (plugin as? any TrackpadInputServiceConsuming)?.trackpadInputPauseDidChange(paused)
+            }
+        }
+        return service
+    }()
+
     private let trackpadGestureBridge = TrackpadGestureBridge()
 
     private func configureTrackpadGestureBridge() {
@@ -3151,6 +3167,7 @@ final class PluginHost: ObservableObject {
         let previousState = applicationActivityState
         guard previousState != state else { return }
         applicationActivityState = state
+        trackpadInputService.setActivityState(state)
 
         if previousState == .waking {
             switch state {

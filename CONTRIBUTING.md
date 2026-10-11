@@ -71,6 +71,8 @@ Follow the [plugin development standards](docs/plugins/development-guidelines.md
 - **Keep background work economical.** Use cached snapshots, event-driven updates, bounded asynchronous work, and visibility-aware presentation. Preserve intentional monitoring while hidden; stop owned work on deactivation. See [performance requirements](docs/plugins/development-guidelines.md#performance-and-energy).
 - **Preserve user control.** Handle denied permissions, cancellation, unsupported hardware, and system changes. Keep existing confirmations, recovery paths, and destructive-operation safeguards.
 
+Trackpad input is owned by the host through `TrackpadInputService` (host 2.0.0). Trackpad Gestures, Middle Click, and the optional [experimental Trackpad Scale](docs/plugins/trackpad-scale.md) subscribe to the same listener; preserve temporary gesture suspension and callback lifecycle boundaries when extending this path.
+
 Shared filesystem metadata code lives in `Sources/MacToolsFileSystem`. Disk Clean and Storage Explorer link this static module into their bundles; their core targets use it as a build dependency. Keep cleanup policy in the owning plugin and run both plugins' filesystem tests after changing the shared parser.
 
 ## Validation

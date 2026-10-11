@@ -1,0 +1,702 @@
+{
+  "sourceLanguage": "zh-Hans",
+  "strings": {
+    "approximate": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimated weight · Experimental"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "估算重量 · 实验性"
+          }
+        }
+      }
+    },
+    "stable": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stable"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "稳定"
+          }
+        }
+      }
+    },
+    "unstable": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unstable"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未稳定"
+          }
+        }
+      }
+    },
+    "start": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始"
+          }
+        }
+      }
+    },
+    "stop": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止"
+          }
+        }
+      }
+    },
+    "tare": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tare"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "归零"
+          }
+        }
+      }
+    },
+    "instructions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep one finger lightly touching the trackpad. Wait for stability, tare, then gently place a small object. Do not lift or replace your finger."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保持一根手指轻触触控板，等待读数稳定后归零，再轻放小物件。手指不要抬起或更换。"
+          }
+        }
+      }
+    },
+    "calibration": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Known-weight calibration"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已知重量校准"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معايرة بوزن معروف"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalibrierung mit bekanntem Gewicht"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibración con peso conocido"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Étalonnage avec un poids connu"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "既知の重量で校正"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "알려진 무게로 보정"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibração com peso conhecido"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Калибровка известным весом"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已知重量校準"
+          }
+        }
+      }
+    },
+    "calibration.instructions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tare without an object, then place an independently known weight (1–100 g). Keep the same finger lightly touching and save when stable."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "先在没有物件时归零，再放置已知重量的物件（1–100 g）。保持同一根手指轻触，稳定后保存。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صفّر دون جسم، ثم ضع وزنًا معروفًا مستقلًا (1–100 غ). أبقِ الإصبع نفسه ملامسًا بخفة واحفظ عند الاستقرار."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ohne Gegenstand tarieren, dann ein unabhängig bekanntes Gewicht (1–100 g) auflegen. Denselben Finger leicht auflegen und bei stabilem Wert speichern."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tara sin un objeto y coloca un peso conocido de forma independiente (1–100 g). Mantén el mismo dedo apoyado suavemente y guarda cuando la lectura sea estable."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faites la tare sans objet, puis posez un poids connu indépendamment (1–100 g). Gardez le même doigt légèrement posé et enregistrez quand la mesure est stable."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "物を置かずにゼロ調整し、別途確認した重り（1–100 g）を置きます。同じ指を軽く触れたまま、安定してから保存してください。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "물체 없이 영점을 맞춘 다음 별도로 확인한 무게(1–100 g)를 올리세요. 같은 손가락을 가볍게 대고 안정되면 저장하세요."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zere sem objeto e coloque um peso conhecido de forma independente (1–100 g). Mantenha o mesmo dedo tocando levemente e salve quando estabilizar."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обнулите без предмета, затем положите предмет с независимо известным весом (1–100 г). Слегка касайтесь тем же пальцем и сохраните после стабилизации."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "先在沒有物件時歸零，再放置已知重量的物件（1–100 g）。保持同一根手指輕觸，穩定後儲存。"
+          }
+        }
+      }
+    },
+    "knownWeight": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Known weight"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已知重量"
+          }
+        }
+      }
+    },
+    "saveCalibration": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save Calibration"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存校准"
+          }
+        }
+      }
+    },
+    "resetCalibration": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset Calibration"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置校准"
+          }
+        }
+      }
+    },
+    "uncalibrated": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uncalibrated: raw pressure difference is only an empirical estimate."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未校准：原始压力差仅作为经验估算。"
+          }
+        }
+      }
+    },
+    "calibrated": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibrated: accuracy is still not guaranteed."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已校准：校准仍不能保证准确度。"
+          }
+        }
+      }
+    },
+    "temporaryCalibration": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Device identity unavailable; calibration lasts only for this session."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设备标识不可用，校准仅在本次会话有效。"
+          }
+        }
+      }
+    },
+    "calibrationError": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter a valid weight from 1–100 g and wait for a stable reading with the object before retrying."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请输入 1–100 g 的有效重量，并等待有物件的读数稳定后重试。"
+          }
+        }
+      }
+    },
+    "safeUse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gently place small objects only. No sharp or heavy items. Do not use for critical measurements."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅轻放小物件，勿用尖锐或重物。不可用于关键测量。"
+          }
+        }
+      }
+    },
+    "limitations": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Built-in Force Touch trackpads only. MacTools trackpad gestures pause while weighing and resume on stop or closing this page. Uses private macOS APIs; compatibility may change."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅支持内置 Force Touch 触控板。称重时暂停 MacTools 触控板手势；停止或关闭页面后恢复。依赖 macOS 私有 API，兼容性可能变化。"
+          }
+        }
+      }
+    },
+    "state.stopped": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click Start to weigh."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "点按“开始”以称重。"
+          }
+        }
+      }
+    },
+    "state.unsupported": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No built-in Force Touch trackpad with pressure support was detected."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未检测到支持压力读取的内置 Force Touch 触控板。"
+          }
+        }
+      }
+    },
+    "state.noContact": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep one finger lightly touching the trackpad."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请保持一根手指轻触触控板。"
+          }
+        }
+      }
+    },
+    "state.multipleContacts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multiple contacts detected. Keep only one finger and tare again."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "检测到多个触点。请只保留一根手指，然后重新归零。"
+          }
+        }
+      }
+    },
+    "state.needsTare": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait for stability, then tare."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "等待读数稳定，然后归零。"
+          }
+        }
+      }
+    },
+    "state.measuring": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep your finger position and pressure steady. Readings are approximate."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保持手指位置和力度不变；读数仅供参考。"
+          }
+        }
+      }
+    },
+    "state.invalidSample": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid pressure reading. Lightly touch again and tare."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "压力读数无效。请重新轻触并归零。"
+          }
+        }
+      }
+    },
+    "state.interrupted": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session interrupted. Start again and tare."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会话已中断。请重新开始并归零。"
+          }
+        }
+      }
+    },
+    "metadata.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trackpad Scale"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "触控板称重"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ميزان لوحة التتبع"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trackpad-Waage"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Báscula del trackpad"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balance du trackpad"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "トラックパッド計量"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "트랙패드 저울"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balança do trackpad"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Весы на трекпаде"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "觸控板稱重"
+          }
+        }
+      }
+    },
+    "metadata.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimate small object weights with a built-in Force Touch trackpad (experimental)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用内置 Force Touch 触控板估算小物件重量（实验性）"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قدّر وزن الأجسام الصغيرة باستخدام لوحة Force Touch المدمجة (تجريبي)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schätzt das Gewicht kleiner Gegenstände mit dem integrierten Force Touch Trackpad (experimentell)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estima el peso de objetos pequeños con el trackpad Force Touch integrado (experimental)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimez le poids de petits objets avec le trackpad Force Touch intégré (expérimental)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "内蔵Force Touchトラックパッドで小物の重さを推定します（実験的）"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "내장 Force Touch 트랙패드로 작은 물체의 무게를 추정합니다 (실험적)"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estime o peso de pequenos objetos com o trackpad Force Touch integrado (experimental)"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оценка веса небольших предметов встроенным трекпадом Force Touch (экспериментально)"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用內建 Force Touch 觸控板估算小物件重量（實驗性）"
+          }
+        }
+      }
+    },
+    "open": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开"
+          }
+        }
+      }
+    },
+    "measurement": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measurement"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "称重"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

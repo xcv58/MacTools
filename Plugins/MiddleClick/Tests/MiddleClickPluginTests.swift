@@ -122,6 +122,22 @@ final class MiddleClickPluginTests: XCTestCase {
         XCTAssertTrue(plugin.store.isEnabled)
     }
 
+    func testWeighingPausesAndRestoresWithoutChangingEnabledPreference() {
+        let storage = MiddleClickMemoryStorage()
+        storage.values["middle-click.enabled"] = true
+        let session = MockMiddleClickSession()
+        let plugin = makePlugin(storage: storage, session: session)
+        plugin.activate(context: PluginRuntimeContext(pluginID: "middle-click"))
+        plugin.trackpadInputPauseDidChange(true)
+        XCTAssertEqual(session.deactivateCallCount, 1)
+        XCTAssertTrue(plugin.store.isEnabled)
+        plugin.refresh()
+        XCTAssertEqual(session.activateCallCount, 1)
+        plugin.trackpadInputPauseDidChange(false)
+        XCTAssertEqual(session.activateCallCount, 2)
+        XCTAssertEqual(storage.values["middle-click.enabled"] as? Bool, true)
+    }
+
     func testUpdateDeactivationStopsSessionWithoutClearingEnabledPreference() {
         let storage = MiddleClickMemoryStorage()
         storage.values["middle-click.enabled"] = true
