@@ -89,7 +89,8 @@
     "keywords": [
       "action",
       "grid",
-      "system"
+      "system",
+      "nested folders"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -123,7 +124,8 @@
         "Eylem Izgarası"
       ],
       "zh-Hans": [
-        "操作网格"
+        "操作网格",
+        "多级网格"
       ],
       "zh-Hant": [
         "操作網格"

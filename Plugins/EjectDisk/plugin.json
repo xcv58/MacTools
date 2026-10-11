@@ -93,7 +93,9 @@
       "eject",
       "disk",
       "disks",
-      "storage"
+      "storage",
+      "eject drives",
+      "external drive"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -127,7 +129,9 @@
         "Disk Çıkarma"
       ],
       "zh-Hans": [
-        "推出磁盘"
+        "推出磁盘",
+        "弹出磁盘",
+        "移动硬盘"
       ],
       "zh-Hant": [
         "退出磁碟"

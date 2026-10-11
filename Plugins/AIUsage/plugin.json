@@ -94,7 +94,9 @@
       "quota",
       "codex",
       "claude",
-      "subscription"
+      "subscription",
+      "remaining quota",
+      "quota pace"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -128,7 +130,9 @@
         "Yapay Zekâ Kullanımı"
       ],
       "zh-Hans": [
-        "AI 用量"
+        "AI 用量",
+        "剩余额度",
+        "额度消耗"
       ],
       "zh-Hant": [
         "AI 用量"

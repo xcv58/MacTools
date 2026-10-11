@@ -124,7 +124,10 @@
       "history",
       "paste",
       "OCR",
-      "export"
+      "export",
+      "keyword expansion",
+      "text expansion",
+      "clipboard backup"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -158,7 +161,10 @@
         "Pano"
       ],
       "zh-Hans": [
-        "剪贴板历史"
+        "剪贴板历史",
+        "关键词展开",
+        "文本展开",
+        "剪贴板备份"
       ],
       "zh-Hant": [
         "剪貼簿記錄"

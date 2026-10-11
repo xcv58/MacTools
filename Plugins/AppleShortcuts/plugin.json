@@ -107,7 +107,9 @@
     "keywords": [
       "apple",
       "shortcuts",
-      "productivity"
+      "productivity",
+      "run shortcuts",
+      "shortcut folders"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -141,7 +143,9 @@
         "Apple Shortcuts"
       ],
       "zh-Hans": [
-        "Apple 快捷指令"
+        "Apple 快捷指令",
+        "运行快捷指令",
+        "快捷指令文件夹"
       ],
       "zh-Hant": [
         "Apple 捷徑"

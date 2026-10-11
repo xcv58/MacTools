@@ -106,7 +106,9 @@
       "disk",
       "usage",
       "analyzer",
-      "space"
+      "space",
+      "treemap",
+      "space map"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -152,7 +154,8 @@
       "zh-Hans": [
         "存储空间分析",
         "磁盘分析",
-        "空间占用"
+        "空间占用",
+        "空间图"
       ],
       "zh-Hant": [
         "儲存空間分析",

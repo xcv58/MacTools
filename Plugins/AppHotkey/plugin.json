@@ -96,7 +96,8 @@
       "app",
       "hotkey",
       "hotkeys",
-      "productivity"
+      "productivity",
+      "hide app"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -130,7 +131,8 @@
         "Uygulama Kısayolları"
       ],
       "zh-Hans": [
-        "应用快捷键"
+        "应用快捷键",
+        "隐藏应用"
       ],
       "zh-Hant": [
         "應用程式快速鍵"

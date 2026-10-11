@@ -112,7 +112,9 @@
   "discovery": {
     "keywords": [
       "sidecar",
-      "display"
+      "display",
+      "wired",
+      "cable"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -146,7 +148,9 @@
         "Sidecar"
       ],
       "zh-Hans": [
-        "Sidecar"
+        "Sidecar",
+        "有线连接",
+        "仅有线"
       ],
       "zh-Hant": [
         "Sidecar"

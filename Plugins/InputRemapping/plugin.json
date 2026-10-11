@@ -102,7 +102,14 @@
       "keyboard",
       "trackpad",
       "mouse",
-      "productivity"
+      "productivity",
+      "TipTap",
+      "trackpad gestures",
+      "scroll wheel",
+      "mouse side buttons",
+      "double-click",
+      "long press",
+      "single key"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -136,7 +143,13 @@
         "Özel Kısayollar: Klavye, Trackpad, Fare"
       ],
       "zh-Hans": [
-        "自定义快捷操作：键盘、触控板、鼠标"
+        "自定义快捷操作：键盘、触控板、鼠标",
+        "触控板手势",
+        "鼠标侧键",
+        "滚轮",
+        "双击",
+        "长按",
+        "单键"
       ],
       "zh-Hant": [
         "自訂快速操作：鍵盤、觸控板、滑鼠"

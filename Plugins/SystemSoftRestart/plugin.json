@@ -97,7 +97,9 @@
     "keywords": [
       "system",
       "soft",
-      "restart"
+      "restart",
+      "reopen apps",
+      "preserve Dock layout"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -131,7 +133,10 @@
         "Sistem Yumuşak Yeniden Başlatma"
       ],
       "zh-Hans": [
-        "系统软重启"
+        "系统软重启",
+        "重启用户服务",
+        "重新打开应用",
+        "保留 Dock 布局"
       ],
       "zh-Hant": [
         "系統軟重啟"

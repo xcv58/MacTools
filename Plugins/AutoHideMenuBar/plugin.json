@@ -104,7 +104,9 @@
       "hide",
       "menu",
       "bar",
-      "display"
+      "display",
+      "menu bar visibility",
+      "show menu bar"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -138,7 +140,9 @@
         "Menü Çubuğunu Otomatik Gizleme"
       ],
       "zh-Hans": [
-        "自动隐藏菜单栏"
+        "自动隐藏菜单栏",
+        "菜单栏显示",
+        "显示菜单栏"
       ],
       "zh-Hant": [
         "自動隱藏選單列"

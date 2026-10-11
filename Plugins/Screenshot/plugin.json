@@ -135,7 +135,9 @@
       "QR",
       "scrolling screenshot",
       "screen recording",
-      "pin"
+      "pin",
+      "blur",
+      "pixelate"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -179,7 +181,9 @@
       ],
       "zh-Hans": [
         "截图",
-        "快速截图"
+        "快速截图",
+        "模糊",
+        "马赛克"
       ],
       "zh-Hant": [
         "截圖",

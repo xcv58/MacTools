@@ -93,7 +93,10 @@
     "keywords": [
       "middle",
       "click",
-      "productivity"
+      "productivity",
+      "three-finger tap",
+      "four-finger tap",
+      "five-finger tap"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -127,7 +130,11 @@
         "Orta Tıklama"
       ],
       "zh-Hans": [
-        "模拟鼠标中键"
+        "模拟鼠标中键",
+        "中键点击",
+        "三指轻点",
+        "四指轻点",
+        "五指轻点"
       ],
       "zh-Hant": [
         "模擬滑鼠中鍵"

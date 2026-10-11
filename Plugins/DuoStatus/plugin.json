@@ -93,7 +93,10 @@
       "volume",
       "network",
       "menu bar",
-      "status"
+      "status",
+      "Wi-Fi signal",
+      "battery percentage",
+      "Bluetooth audio"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -127,7 +130,10 @@
         "Duo Durumu"
       ],
       "zh-Hans": [
-        "Duo 状态"
+        "Duo 状态",
+        "Wi-Fi 信号",
+        "电量百分比",
+        "蓝牙音频"
       ],
       "zh-Hant": [
         "Duo 狀態"

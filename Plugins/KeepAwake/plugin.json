@@ -104,7 +104,11 @@
     "keywords": [
       "keep",
       "awake",
-      "system"
+      "system",
+      "prevent sleep",
+      "closed lid",
+      "keep screen sharing awake",
+      "keep remote control awake"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -138,7 +142,10 @@
         "Uyanık Tutma"
       ],
       "zh-Hans": [
-        "阻止休眠"
+        "阻止休眠",
+        "防止休眠",
+        "屏幕共享保持唤醒",
+        "远程控制保持唤醒"
       ],
       "zh-Hant": [
         "防止睡眠"

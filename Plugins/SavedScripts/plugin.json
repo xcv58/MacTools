@@ -105,7 +105,10 @@
     "keywords": [
       "saved",
       "scripts",
-      "productivity"
+      "productivity",
+      "bash",
+      "zsh",
+      "script library"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -139,7 +142,8 @@
         "Kayıtlı Betikler"
       ],
       "zh-Hans": [
-        "已存脚本"
+        "已存脚本",
+        "脚本库"
       ],
       "zh-Hant": [
         "已儲存腳本"

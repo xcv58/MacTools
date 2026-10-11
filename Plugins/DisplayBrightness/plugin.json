@@ -100,7 +100,9 @@
   "discovery": {
     "keywords": [
       "display",
-      "brightness"
+      "brightness",
+      "DDC/CI",
+      "software brightness"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -134,7 +136,8 @@
         "Ekran Parlaklığı"
       ],
       "zh-Hans": [
-        "显示器亮度"
+        "显示器亮度",
+        "软件亮度"
       ],
       "zh-Hant": [
         "顯示器亮度"

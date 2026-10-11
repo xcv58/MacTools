@@ -92,7 +92,10 @@
       "xcode",
       "clean",
       "cleanup",
-      "storage"
+      "storage",
+      "simulator caches",
+      "preview caches",
+      "dSYM"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -126,7 +129,9 @@
         "Xcode Temizliği"
       ],
       "zh-Hans": [
-        "Xcode 清理"
+        "Xcode 清理",
+        "模拟器缓存",
+        "预览缓存"
       ],
       "zh-Hant": [
         "Xcode 清理"

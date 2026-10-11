@@ -91,7 +91,8 @@
   "discovery": {
     "keywords": [
       "display",
-      "sleep"
+      "sleep",
+      "turn off displays"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -125,7 +126,9 @@
         "Ekran Uykusu"
       ],
       "zh-Hans": [
-        "显示器休眠"
+        "显示器休眠",
+        "关闭显示器",
+        "息屏"
       ],
       "zh-Hant": [
         "顯示器睡眠"

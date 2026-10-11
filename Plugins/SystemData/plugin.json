@@ -88,7 +88,20 @@
     "license": "GPL-3.0-only"
   },
   "discovery": {
-    "keywords": ["system data", "storage", "disk usage", "cache", "inventory"],
+    "keywords": [
+      "system data",
+      "storage",
+      "disk usage",
+      "cache",
+      "inventory",
+      "AI models",
+      "iOS backups",
+      "app data",
+      "containers & VMs",
+      "virtual machines",
+      "logs & diagnostics",
+      "developer tool data"
+    ],
     "localizedSynonyms": {
       "ar": ["بيانات النظام"],
       "de": ["Systemdaten", "Festplattenbelegung"],
@@ -100,7 +113,16 @@
       "pt": ["Dados do sistema"],
       "ru": ["Системные данные"],
       "tr": ["Sistem Verileri"],
-      "zh-Hans": ["系统数据", "空间占用"],
+      "zh-Hans": [
+        "系统数据",
+        "空间占用",
+        "AI 模型",
+        "iOS 设备备份",
+        "应用数据",
+        "容器与虚拟机",
+        "日志与诊断",
+        "开发工具数据"
+      ],
       "zh-Hant": ["系統資料", "空間佔用"]
     },
     "useCases": [

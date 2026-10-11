@@ -40,6 +40,27 @@ test('task queries discover the owning static action and existing names still ma
   for (const term of ['theme', 'dark mode', 'switch the system']) assert.ok(search.get('appearance').terms.includes(term));
 });
 
+test('implemented capabilities and device names discover their owners without inventing actions', () => {
+  for (const [query, pluginID] of [
+    ['  TiPtAp  ', 'trackpad-gestures'],
+    ['tiptap', 'input-remapping'],
+    ['三指轻点', 'trackpad-gestures'],
+    ['smooth scrolling', 'mouse-enhancer'],
+    ['平滑滚动', 'mouse-enhancer'],
+    ['launch agents', 'launch-control'],
+    ['RPM', 'fan-control'],
+    ['lunar calendar', 'calendar'],
+    ['AirPods', 'device-battery'],
+    ['CPU', 'system-status'],
+  ]) {
+    const entry = search.get(pluginID);
+    assert.ok(entry.terms.includes(normalizeSearch(query)), `${query} -> ${pluginID}`);
+  }
+  const tipTapOwners = [...search].filter(([, entry]) => entry.terms.includes('tiptap'));
+  assert.deepEqual(tipTapOwners.map(([id]) => id).sort(), ['input-remapping', 'trackpad-gestures']);
+  assert.ok(tipTapOwners.every(([, entry]) => entry.actions.every(action => actionMatchRank(action, 'tiptap') === 0)));
+});
+
 test('optional discovery and blank translations preserve fallback and action identity', () => {
   const plugin = { id: 'fixture', displayName: 'Base Plugin', summary: 'Base summary', localizedMetadata: { en: { displayName: ' ' } } };
   const enriched = { ...plugin, id: 'enriched', product: { discovery: {

@@ -194,7 +194,10 @@
     "keywords": [
       "fan",
       "control",
-      "system"
+      "system",
+      "RPM",
+      "full speed",
+      "fan presets"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -228,7 +231,9 @@
         "Fan Kontrolü"
       ],
       "zh-Hans": [
-        "风扇控制"
+        "风扇控制",
+        "风扇预设",
+        "自定义转速"
       ],
       "zh-Hant": [
         "風扇控制"

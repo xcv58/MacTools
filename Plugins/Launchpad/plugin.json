@@ -91,7 +91,11 @@
   "discovery": {
     "keywords": [
       "launchpad",
-      "system"
+      "system",
+      "app launcher",
+      "hot corner",
+      "app folders",
+      "fuzzy search"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -125,7 +129,11 @@
         "Launchpad"
       ],
       "zh-Hans": [
-        "启动台"
+        "启动台",
+        "应用启动器",
+        "热区唤起",
+        "应用文件夹",
+        "模糊搜索"
       ],
       "zh-Hant": [
         "啟動台"

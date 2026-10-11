@@ -100,7 +100,8 @@
       "auto",
       "hide",
       "dock",
-      "display"
+      "display",
+      "show dock"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -134,7 +135,8 @@
         "Dock'u Otomatik Gizleme"
       ],
       "zh-Hans": [
-        "自动隐藏程序坞"
+        "自动隐藏程序坞",
+        "显示程序坞"
       ],
       "zh-Hant": [
         "自動隱藏 Dock"

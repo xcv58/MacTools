@@ -230,7 +230,11 @@
       "window switcher",
       "application switcher",
       "keyboard",
-      "shortcut"
+      "shortcut",
+      "search windows",
+      "window preview",
+      "cycle windows",
+      "minimized windows"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -274,7 +278,11 @@
       ],
       "zh-Hans": [
         "窗口切换",
-        "窗口快捷键"
+        "窗口快捷键",
+        "搜索窗口",
+        "窗口预览",
+        "连续切换",
+        "最小化窗口"
       ],
       "zh-Hant": [
         "視窗切換",

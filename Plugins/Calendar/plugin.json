@@ -95,7 +95,9 @@
   "discovery": {
     "keywords": [
       "calendar",
-      "productivity"
+      "productivity",
+      "lunar calendar",
+      "recent events"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -129,7 +131,9 @@
         "Takvim"
       ],
       "zh-Hans": [
-        "日历"
+        "日历",
+        "农历",
+        "近期日程"
       ],
       "zh-Hant": [
         "行事曆"

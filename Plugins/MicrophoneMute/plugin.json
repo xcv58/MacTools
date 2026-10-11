@@ -97,7 +97,8 @@
     "keywords": [
       "microphone",
       "mute",
-      "audio"
+      "audio",
+      "unmute microphone"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -131,7 +132,8 @@
         "Mikrofon Sessize Alma"
       ],
       "zh-Hans": [
-        "麦克风静音"
+        "麦克风静音",
+        "恢复麦克风"
       ],
       "zh-Hant": [
         "麥克風靜音"

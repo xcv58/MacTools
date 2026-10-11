@@ -108,7 +108,9 @@
   "discovery": {
     "keywords": [
       "display",
-      "resolution"
+      "resolution",
+      "HiDPI",
+      "refresh rate"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -142,7 +144,8 @@
         "Ekran Çözünürlüğü"
       ],
       "zh-Hans": [
-        "显示器分辨率"
+        "显示器分辨率",
+        "刷新率"
       ],
       "zh-Hant": [
         "顯示器解析度"

@@ -223,7 +223,13 @@
       "settings",
       "preferences",
       "profiles",
-      "accessibility"
+      "accessibility",
+      "System Preferences",
+      "Finder settings",
+      "Dock settings",
+      "screenshot format",
+      "key repeat rate",
+      "three-finger drag"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -257,7 +263,13 @@
         "Mac Ayarları"
       ],
       "zh-Hans": [
-        "搜索 Mac 设置"
+        "搜索 Mac 设置",
+        "系统设置",
+        "访达设置",
+        "程序坞设置",
+        "截屏格式",
+        "按键重复速度",
+        "三指拖移"
       ],
       "zh-Hant": [
         "搜尋 Mac 設定"

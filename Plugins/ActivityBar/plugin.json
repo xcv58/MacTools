@@ -100,7 +100,12 @@
       "activity",
       "bar",
       "stats",
-      "monitoring"
+      "monitoring",
+      "screen time",
+      "keystrokes",
+      "mouse clicks",
+      "scrolls",
+      "AI work time"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -134,7 +139,12 @@
         "Etkinlik İstatistikleri"
       ],
       "zh-Hans": [
-        "活动统计"
+        "活动统计",
+        "屏幕时间",
+        "按键统计",
+        "点击统计",
+        "滚动统计",
+        "AI 工作时长"
       ],
       "zh-Hant": [
         "活動統計"

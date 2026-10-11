@@ -102,7 +102,10 @@
     "keywords": [
       "homebrew",
       "manager",
-      "system"
+      "system",
+      "install packages",
+      "uninstall packages",
+      "pin version"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -136,7 +139,10 @@
         "Homebrew Yöneticisi"
       ],
       "zh-Hans": [
-        "Homebrew 管理"
+        "Homebrew 管理",
+        "安装软件包",
+        "卸载软件包",
+        "锁定版本"
       ],
       "zh-Hant": [
         "Homebrew 管理"

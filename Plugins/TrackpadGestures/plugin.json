@@ -97,7 +97,13 @@
     "keywords": [
       "trackpad",
       "gestures",
-      "productivity"
+      "productivity",
+      "TipTap",
+      "tip tap",
+      "three-finger tap",
+      "double tap",
+      "touch and hold",
+      "physical click"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -131,7 +137,11 @@
         "Trackpad Hareketleri"
       ],
       "zh-Hans": [
-        "触控板手势"
+        "触控板手势",
+        "三指轻点",
+        "双击",
+        "长触",
+        "按下点击"
       ],
       "zh-Hant": [
         "觸控板手勢"

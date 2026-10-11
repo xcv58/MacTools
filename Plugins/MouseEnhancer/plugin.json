@@ -97,7 +97,11 @@
     "keywords": [
       "mouse",
       "enhancer",
-      "productivity"
+      "productivity",
+      "smooth scrolling",
+      "scroll speed",
+      "scroll step",
+      "reverse scrolling"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -131,7 +135,11 @@
         "Fare Geliştirici"
       ],
       "zh-Hans": [
-        "鼠标增强"
+        "鼠标增强",
+        "平滑滚动",
+        "滚动速度",
+        "滚动步长",
+        "反转滚动"
       ],
       "zh-Hant": [
         "滑鼠增強"

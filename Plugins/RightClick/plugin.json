@@ -103,7 +103,13 @@
     "keywords": [
       "right",
       "click",
-      "productivity"
+      "productivity",
+      "new file",
+      "new folder",
+      "open in terminal",
+      "open with",
+      "copy path",
+      "copy file name"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -137,7 +143,11 @@
         "Sağ Tıklama"
       ],
       "zh-Hans": [
-        "右键工具"
+        "右键工具",
+        "在终端打开",
+        "用应用打开",
+        "复制路径",
+        "复制文件名"
       ],
       "zh-Hant": [
         "右鍵工具"

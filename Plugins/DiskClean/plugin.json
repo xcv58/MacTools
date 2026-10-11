@@ -108,7 +108,11 @@
       "disk",
       "clean",
       "cleanup",
-      "storage"
+      "storage",
+      "app caches",
+      "browser caches",
+      "logs",
+      "diagnostic reports"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -142,7 +146,10 @@
         "Disk Temizliği"
       ],
       "zh-Hans": [
-        "磁盘清理"
+        "磁盘清理",
+        "应用缓存",
+        "浏览器缓存",
+        "日志与诊断报告"
       ],
       "zh-Hant": [
         "磁碟清理"

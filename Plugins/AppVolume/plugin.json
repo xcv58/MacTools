@@ -204,7 +204,8 @@
       "application volume",
       "audio",
       "mute",
-      "mixer"
+      "mixer",
+      "per-app volume"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -248,7 +249,8 @@
       ],
       "zh-Hans": [
         "应用音量",
-        "音频混音"
+        "音频混音",
+        "应用静音"
       ],
       "zh-Hant": [
         "App 音量",

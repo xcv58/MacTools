@@ -108,7 +108,12 @@
     "keywords": [
       "zsh",
       "config",
-      "productivity"
+      "productivity",
+      "alias",
+      "environment variable",
+      "PATH directory",
+      ".zprofile",
+      ".zshenv"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -142,7 +147,10 @@
         "zsh Yapılandırması"
       ],
       "zh-Hans": [
-        "zsh 配置"
+        "zsh 配置",
+        "别名",
+        "环境变量",
+        "PATH 路径"
       ],
       "zh-Hant": [
         "zsh 設定"

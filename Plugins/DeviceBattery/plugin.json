@@ -95,7 +95,12 @@
       "battery",
       "monitoring",
       "rapoo",
-      "mchose"
+      "mchose",
+      "AirPods",
+      "iPhone",
+      "iPad",
+      "Apple Watch",
+      "low battery notifications"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -129,7 +134,8 @@
         "Aygıt Pili"
       ],
       "zh-Hans": [
-        "设备电量"
+        "设备电量",
+        "低电量通知"
       ],
       "zh-Hant": [
         "裝置電量"

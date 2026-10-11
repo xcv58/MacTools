@@ -202,7 +202,11 @@
       "IP address",
       "network diagnostics",
       "public IP",
-      "local IP"
+      "local IP",
+      "DNS leak test",
+      "WebRTC leak test",
+      "IPv6",
+      "speed test"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -246,7 +250,10 @@
       ],
       "zh-Hans": [
         "IP 地址",
-        "网络诊断"
+        "网络诊断",
+        "DNS 泄漏测试",
+        "WebRTC 泄露测试",
+        "IPv6 地址"
       ],
       "zh-Hant": [
         "IP 位址",

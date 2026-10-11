@@ -183,7 +183,10 @@
       "productivity",
       "translate",
       "summarize",
-      "polish"
+      "polish",
+      "prompt template",
+      "custom prompts",
+      "clipboard text"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -217,7 +220,10 @@
         "Yapay Zekâ Asistanı"
       ],
       "zh-Hans": [
-        "AI 助手"
+        "AI 助手",
+        "提示词模板",
+        "自定义模板",
+        "剪贴板文本"
       ],
       "zh-Hant": [
         "AI 助手"

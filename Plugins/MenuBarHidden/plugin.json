@@ -98,7 +98,9 @@
       "menu bar",
       "icons",
       "hide",
-      "layout"
+      "layout",
+      "always hidden",
+      "menu bar layout"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -132,7 +134,9 @@
         "Menü Çubuğu Simgelerini Gizleme"
       ],
       "zh-Hans": [
-        "隐藏菜单栏图标"
+        "隐藏菜单栏图标",
+        "永久隐藏",
+        "菜单栏布局"
       ],
       "zh-Hant": [
         "隱藏選單列圖示"

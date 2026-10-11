@@ -96,7 +96,9 @@
   "discovery": {
     "keywords": [
       "display",
-      "volume"
+      "volume",
+      "monitor volume",
+      "DDC/CI"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -130,7 +132,10 @@
         "Ekran Sesi"
       ],
       "zh-Hans": [
-        "显示器音量"
+        "显示器音量",
+        "外接显示器音量",
+        "音量快捷键",
+        "跟随鼠标"
       ],
       "zh-Hant": [
         "顯示器音量"

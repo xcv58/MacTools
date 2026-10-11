@@ -104,7 +104,9 @@
     "keywords": [
       "auto",
       "input",
-      "productivity"
+      "productivity",
+      "input source HUD",
+      "input source shortcuts"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -138,7 +140,9 @@
         "Otomatik Giriş Kaynağı"
       ],
       "zh-Hans": [
-        "自动切换输入法"
+        "自动切换输入法",
+        "输入法提示",
+        "输入法快捷键"
       ],
       "zh-Hant": [
         "自動切換輸入法"

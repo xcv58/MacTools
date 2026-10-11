@@ -133,7 +133,18 @@
     "keywords": [
       "system",
       "status",
-      "monitoring"
+      "monitoring",
+      "CPU",
+      "GPU",
+      "memory",
+      "RAM",
+      "disk",
+      "battery",
+      "network",
+      "processes",
+      "temperature",
+      "battery health",
+      "memory pressure"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -167,7 +178,15 @@
         "Sistem Durumu"
       ],
       "zh-Hans": [
-        "系统状态"
+        "系统状态",
+        "内存",
+        "磁盘",
+        "电量",
+        "网络",
+        "进程",
+        "温度",
+        "电池健康",
+        "内存压力"
       ],
       "zh-Hant": [
         "系統狀態"

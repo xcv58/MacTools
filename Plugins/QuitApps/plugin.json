@@ -92,7 +92,8 @@
     "keywords": [
       "quit",
       "apps",
-      "productivity"
+      "productivity",
+      "quit all apps"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -126,7 +127,8 @@
         "Uygulamalardan Çıkma"
       ],
       "zh-Hans": [
-        "退出应用"
+        "退出应用",
+        "退出全部应用"
       ],
       "zh-Hant": [
         "結束 App"

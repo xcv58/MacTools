@@ -107,7 +107,9 @@
       "cloudflare",
       "r2",
       "upload",
-      "productivity"
+      "productivity",
+      "object storage",
+      "public link"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -141,7 +143,9 @@
         "Cloudflare R2 Karşıya Yükleme"
       ],
       "zh-Hans": [
-        "Cloudflare R2 上传"
+        "Cloudflare R2 上传",
+        "对象存储",
+        "公开链接"
       ],
       "zh-Hant": [
         "Cloudflare R2 上傳"

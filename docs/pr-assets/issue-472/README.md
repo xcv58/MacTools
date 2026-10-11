@@ -49,3 +49,13 @@ ordinary browsing.
   filters, counts including collapsed actions, disclosure reset, clear/empty
   states, keyboard focus, action-to-plugin navigation, and prerequisite rows.
 - `git diff --check` passed.
+
+## Follow-up capability metadata audit
+
+The [source-backed audit](search-metadata-audit.md) reviewed all 64 plugins and
+fixed 285 missing plugin/query pairs across 51 manifests. It records the added
+English and Chinese terms, source evidence, capability limits, excluded claims,
+and validation. The follow-up starts from `1183819756c3aa6c3e9f5ea7b95531c57bfdf788`;
+the earlier comparisons above retain their original capture provenance.
+
+![TipTap discovery before and after the metadata fixes](tiptap-before-after.png)

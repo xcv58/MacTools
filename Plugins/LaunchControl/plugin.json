@@ -179,7 +179,12 @@
       "launch",
       "control",
       "items",
-      "productivity"
+      "productivity",
+      "launch agents",
+      "LaunchAgents",
+      "launch daemons",
+      "LaunchDaemons",
+      "background services"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -213,7 +218,8 @@
         "Başlangıç Öğeleri"
       ],
       "zh-Hans": [
-        "启动项"
+        "启动项",
+        "后台服务"
       ],
       "zh-Hant": [
         "啟動項目"
