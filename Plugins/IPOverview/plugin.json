@@ -164,7 +164,10 @@
       "tr": "Genel IP algılaması ağ bağlantısı gerektirir.",
       "zh-Hans": "检测公网 IP 需要网络连接。",
       "zh-Hant": "偵測公網 IP 需要網路連線。"
-    }
+    },
+    "discovery.dns-leak-test": "@localizable.dns.title",
+    "discovery.webrtc-leak-test": "@localizable.webrtc.title",
+    "discovery.network-speed-test": "@localizable.speed.title"
   },
   "version": "2.0.1",
   "minHostVersion": "2.0.1",
@@ -274,7 +277,12 @@
     "relatedPluginIDs": [
       "system-status"
     ],
-    "alternativePluginIDs": []
+    "alternativePluginIDs": [],
+    "localizedSynonymRefs": [
+      "@productStrings.discovery.dns-leak-test",
+      "@productStrings.discovery.webrtc-leak-test",
+      "@productStrings.discovery.network-speed-test"
+    ]
   },
   "requirements": {
     "architectures": [

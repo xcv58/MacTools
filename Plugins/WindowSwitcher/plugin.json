@@ -192,7 +192,11 @@
       "tr": "Etkin uygulamanın bir penceresini bulun ve seçin.",
       "zh-Hans": "搜索和选择当前应用的窗口。",
       "zh-Hant": "搜尋並選取目前 App 的視窗。"
-    }
+    },
+    "discovery.search-windows": "@localizable.chooser.search",
+    "discovery.window-preview": "@localizable.settings.preview.title",
+    "discovery.cycle-windows": "@localizable.chooser.modeCycle",
+    "discovery.minimized-windows": "@localizable.settings.minimized.title"
   },
   "version": "2.0.1",
   "minHostVersion": "2.0.1",
@@ -302,7 +306,13 @@
     "relatedPluginIDs": [
       "app-hotkey"
     ],
-    "alternativePluginIDs": []
+    "alternativePluginIDs": [],
+    "localizedSynonymRefs": [
+      "@productStrings.discovery.search-windows",
+      "@productStrings.discovery.window-preview",
+      "@productStrings.discovery.cycle-windows",
+      "@productStrings.discovery.minimized-windows"
+    ]
   },
   "requirements": {
     "architectures": [

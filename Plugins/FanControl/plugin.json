@@ -152,7 +152,10 @@
       "tr": "Uygulanacak kaydedilmiş fan hazır ayarını seçin.",
       "zh-Hans": "选择要应用的已存风扇预设。",
       "zh-Hant": "選擇要套用的已儲存風扇預設。"
-    }
+    },
+    "discovery.full-speed-fans": "@localizable.preset.fullSpeed.name",
+    "discovery.custom-fan-presets": "@localizable.settings.custom.title",
+    "discovery.custom-rpm-target": "@localizable.panel.slider.targetRPM"
   },
   "version": "2.0.1",
   "minHostVersion": "1.3.1",
@@ -249,7 +252,12 @@
       "system"
     ],
     "relatedPluginIDs": [],
-    "alternativePluginIDs": []
+    "alternativePluginIDs": [],
+    "localizedSynonymRefs": [
+      "@productStrings.discovery.full-speed-fans",
+      "@productStrings.discovery.custom-fan-presets",
+      "@productStrings.discovery.custom-rpm-target"
+    ]
   },
   "requirements": {
     "minimumMacOSVersion": "14.0",

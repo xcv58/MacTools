@@ -77,7 +77,9 @@
     "display-name": "@displayName",
     "summary": "@summary",
     "setup.requirements.title": "@standardSetup.requirements.title",
-    "setup.requirements.description": "@standardSetup.requirements.description"
+    "setup.requirements.description": "@standardSetup.requirements.description",
+    "discovery.always-hidden-icons": "@localizable.section.alwaysHidden",
+    "discovery.menu-bar-layout": "@localizable.settings.layout.title"
   },
   "presentation": {
     "longDescription": "@productStrings.summary",
@@ -152,7 +154,11 @@
       "productivity"
     ],
     "relatedPluginIDs": [],
-    "alternativePluginIDs": []
+    "alternativePluginIDs": [],
+    "localizedSynonymRefs": [
+      "@productStrings.discovery.always-hidden-icons",
+      "@productStrings.discovery.menu-bar-layout"
+    ]
   },
   "requirements": {
     "minimumMacOSVersion": "14.0",

@@ -64,7 +64,9 @@
     "action.set-enabled.parameter-summary": "@standardAction.set-enabled.description",
     "action.select-input-source.title": "@localizable.action.selectSource.definitionTitle",
     "action.select-input-source.description": "@localizable.action.selectSource.description",
-    "action.select-input-source.parameter-summary": "@localizable.action.selectSource.parameterTitle"
+    "action.select-input-source.parameter-summary": "@localizable.action.selectSource.parameterTitle",
+    "discovery.input-source-hud": "@localizable.settings.hud.title",
+    "discovery.input-source-shortcuts": "@localizable.settings.shortcuts.title"
   },
   "version": "2.0.1",
   "minHostVersion": "2.0.1",
@@ -158,7 +160,11 @@
       "productivity"
     ],
     "relatedPluginIDs": [],
-    "alternativePluginIDs": []
+    "alternativePluginIDs": [],
+    "localizedSynonymRefs": [
+      "@productStrings.discovery.input-source-hud",
+      "@productStrings.discovery.input-source-shortcuts"
+    ]
   },
   "requirements": {
     "minimumMacOSVersion": "14.0",

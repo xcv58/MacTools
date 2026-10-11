@@ -41,6 +41,10 @@ test('task queries discover the owning static action and existing names still ma
 });
 
 test('implemented capabilities and device names discover their owners without inventing actions', () => {
+  const smoothLabel = JSON.parse(readFileSync(resolve(site, '../Plugins/MouseEnhancer/Resources/Localizable.xcstrings'), 'utf8')).strings['settings.mouse.smooth.title'];
+  for (const [locale, value] of Object.entries(smoothLabel.localizations)) {
+    assert.ok(search.get('mouse-enhancer').terms.includes(normalizeSearch(value.stringUnit.value)), locale);
+  }
   for (const [query, pluginID] of [
     ['  TiPtAp  ', 'trackpad-gestures'],
     ['tiptap', 'input-remapping'],
@@ -89,6 +93,20 @@ test('optional discovery and blank translations preserve fallback and action ide
   assert.equal(normalizeSearch('  LEFT HALF  '), 'left half');
 });
 
+test('all declared metadata locales are searchable with canonical Unicode equivalence', () => {
+  const plugin = { id: 'fixture', displayName: 'Base', summary: 'Base summary', localizedMetadata: {
+    fr: { displayName: 'Souris', summary: 'Défilement fluide' },
+    'zh-Hant': { displayName: '滑鼠', summary: '平滑滾動' },
+    ja: { displayName: 'マウス', summary: 'スムーズスクロール' },
+    ar: { displayName: 'الماوس', summary: 'التمرير السلس' },
+  } };
+  const index = buildPluginSearch([plugin], []);
+  for (const query of ['souris', 'De\u0301filement fluide', '滑鼠', '平滑滾動', 'スムーズスクロール', 'التمرير السلس']) {
+    assert.ok(index.get('fixture').terms.includes(normalizeSearch(query)), query);
+  }
+  assert.equal(index.get('fixture').actions.length, 0);
+});
+
 function element(dataset = {}) {
   return { dataset, hidden: false, open: false, textContent: '', children: [], listeners: new Map(),
     classList: { toggle() {} }, addEventListener(name, callback) { this.listeners.set(name, callback); }, setAttribute() {},
@@ -107,7 +125,7 @@ function runCatalog() {
   const primary = element(), overflow = element(), more = element(), region = element();
   const moreCount = element(); more.selectors = { '[data-more-count]': [moreCount] };
   const actionNodes = ['One', 'Two', 'Three', 'Four'].map((title, index) => element({
-    titleTerms: `task ${title.toLowerCase()}`, keywordTerms: '', descriptionTerms: '', titleEn: title, titleZh: title, actionId: `provider/${index}`,
+    titleTerms: `task ${title.toLowerCase()}`, keywordTerms: '', descriptionTerms: '', titleEn: title, titleZh: ['丁', '丙', '乙', '甲'][index], actionId: `provider/${index}`,
   }));
   actionNodes.forEach(action => primary.append(action));
   const owner = element({ category: 'display', search: 'owner', pluginNameEn: 'Owner', pluginNameZh: '拥有者', pluginId: 'owner' });
@@ -143,8 +161,12 @@ test('catalog groups action-only matches, counts collapsed results and preserves
   assert.equal(ui.overflow.children.filter(node => !node.hidden).length, 1);
   assert.equal(ui.moreCount.textContent, '1');
   ui.more.open = true;
+  const matchedBefore = [...ui.primary.children, ...ui.overflow.children].filter(node => !node.hidden).map(node => node.dataset.actionId).sort();
+  const primaryBefore = ui.primary.children.filter(node => !node.hidden).map(node => node.dataset.actionId);
   ui.root.dataset.lang = 'zh'; ui.languageChanged();
   assert.equal(ui.input.value, 'task'); assert.equal(ui.more.open, true); assert.equal(ui.input.placeholder, '搜索');
+  assert.deepEqual([...ui.primary.children, ...ui.overflow.children].filter(node => !node.hidden).map(node => node.dataset.actionId).sort(), matchedBefore);
+  assert.notDeepEqual(ui.primary.children.filter(node => !node.hidden).map(node => node.dataset.actionId), primaryBefore);
   ui.filters[1].listeners.get('click')();
   assert.equal(ui.owner.hidden, true); assert.equal(ui.count.textContent, '0'); assert.equal(ui.actionCount.textContent, '0');
   assert.equal(ui.empty.hidden, false); assert.equal(ui.more.open, false);

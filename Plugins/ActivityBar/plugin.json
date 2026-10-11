@@ -59,7 +59,12 @@
     "action.set-tracking-enabled.description": "@standardAction.set-enabled.description",
     "action.set-tracking-enabled.parameter-summary": "@standardAction.set-enabled.description",
     "action.reset-today.title": "@localizable.panel.action.resetToday",
-    "action.reset-today.description": "@localizable.panel.action.resetToday"
+    "action.reset-today.description": "@localizable.panel.action.resetToday",
+    "discovery.screen-time": "@localizable.component.metric.screenTime",
+    "discovery.keystrokes": "@localizable.component.metric.keystrokes",
+    "discovery.mouse-clicks": "@localizable.component.metric.clicks",
+    "discovery.scrolls": "@localizable.component.metric.scrolls",
+    "discovery.ai-work-time": "@localizable.component.ai.title"
   },
   "version": "2.0.1",
   "minHostVersion": "2.0.1",
@@ -160,7 +165,14 @@
       "monitoring"
     ],
     "relatedPluginIDs": [],
-    "alternativePluginIDs": []
+    "alternativePluginIDs": [],
+    "localizedSynonymRefs": [
+      "@productStrings.discovery.screen-time",
+      "@productStrings.discovery.keystrokes",
+      "@productStrings.discovery.mouse-clicks",
+      "@productStrings.discovery.scrolls",
+      "@productStrings.discovery.ai-work-time"
+    ]
   },
   "requirements": {
     "minimumMacOSVersion": "14.0",

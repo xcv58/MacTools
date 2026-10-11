@@ -60,7 +60,11 @@
     "action.select-translation.title": "@localizable.shortcut.selectTranslation.title",
     "action.select-translation.description": "@localizable.shortcut.selectTranslation.description",
     "action.screenshot-translation.title": "@localizable.shortcut.screenshotTranslation.title",
-    "action.screenshot-translation.description": "@localizable.shortcut.screenshotTranslation.description"
+    "action.screenshot-translation.description": "@localizable.shortcut.screenshotTranslation.description",
+    "discovery.speak-translation": "@localizable.panel.result.speakHelp",
+    "discovery.openai-translation": "@localizable.openAIClient.providerTitle",
+    "discovery.selection-translation": "@localizable.shortcut.selectTranslation.title",
+    "discovery.screenshot-translation": "@localizable.shortcut.screenshotTranslation.title"
   },
   "version": "1.0.1",
   "minHostVersion": "2.0.1",
@@ -155,7 +159,13 @@
       "productivity"
     ],
     "relatedPluginIDs": [],
-    "alternativePluginIDs": []
+    "alternativePluginIDs": [],
+    "localizedSynonymRefs": [
+      "@productStrings.discovery.speak-translation",
+      "@productStrings.discovery.openai-translation",
+      "@productStrings.discovery.selection-translation",
+      "@productStrings.discovery.screenshot-translation"
+    ]
   },
   "requirements": {
     "minimumMacOSVersion": "14.0",

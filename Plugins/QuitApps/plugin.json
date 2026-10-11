@@ -54,7 +54,8 @@
   },
   "productStrings": {
     "display-name": "@displayName",
-    "summary": "@summary"
+    "summary": "@summary",
+    "discovery.quit-all-apps": "@localizable.selection.confirm.quitAll"
   },
   "version": "2.0.1",
   "minHostVersion": "2.0.1",
@@ -144,7 +145,10 @@
       "productivity"
     ],
     "relatedPluginIDs": [],
-    "alternativePluginIDs": []
+    "alternativePluginIDs": [],
+    "localizedSynonymRefs": [
+      "@productStrings.discovery.quit-all-apps"
+    ]
   },
   "requirements": {
     "minimumMacOSVersion": "14.0",

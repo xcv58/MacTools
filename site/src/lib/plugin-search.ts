@@ -36,7 +36,7 @@ type Discovery = {
 };
 
 export function normalizeSearch(value: string): string {
-  return value.trim().toLowerCase();
+  return value.normalize("NFC").trim().toLowerCase();
 }
 
 function terms(values: Array<string | null | undefined>): string {
@@ -58,6 +58,7 @@ export function buildPluginSearch(plugins: Plugin[], entries: StaticActionEntry[
     search.set(plugin.id, {
       terms: terms([
         text.zh.displayName, text.zh.summary, text.en.displayName, text.en.summary,
+        ...Object.values(plugin.localizedMetadata ?? {}).flatMap((metadata) => [metadata?.displayName, metadata?.summary]),
         ...(discovery?.keywords ?? []),
         ...Object.values(discovery?.localizedSynonyms ?? {}).flat(),
         ...(discovery?.useCases ?? []).flatMap((item) => Object.values(item.title ?? {})),

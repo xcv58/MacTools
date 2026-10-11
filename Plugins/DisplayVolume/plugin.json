@@ -60,7 +60,9 @@
     "action.display-volume.decrease.title": "@localizable.shortcut.direction.decrease",
     "action.display-volume.decrease.description": "@localizable.shortcut.direction.decrease",
     "action.display-volume.increase.title": "@localizable.shortcut.direction.increase",
-    "action.display-volume.increase.description": "@localizable.shortcut.direction.increase"
+    "action.display-volume.increase.description": "@localizable.shortcut.direction.increase",
+    "discovery.volume-shortcuts": "@localizable.shortcut.settingsGroupTitle",
+    "discovery.follow-mouse-volume-target": "@localizable.settings.shortcutTarget.followsMouse"
   },
   "version": "1.0.1",
   "minHostVersion": "1.3.1",
@@ -151,7 +153,11 @@
       "display"
     ],
     "relatedPluginIDs": [],
-    "alternativePluginIDs": []
+    "alternativePluginIDs": [],
+    "localizedSynonymRefs": [
+      "@productStrings.discovery.volume-shortcuts",
+      "@productStrings.discovery.follow-mouse-volume-target"
+    ]
   },
   "requirements": {
     "minimumMacOSVersion": "14.0",
