@@ -44,6 +44,7 @@ test('implemented capabilities and device names discover their owners without in
   for (const [query, pluginID] of [
     ['  TiPtAp  ', 'trackpad-gestures'],
     ['tiptap', 'input-remapping'],
+    ['tip tap', 'input-remapping'],
     ['三指轻点', 'trackpad-gestures'],
     ['smooth scrolling', 'mouse-enhancer'],
     ['平滑滚动', 'mouse-enhancer'],
@@ -56,9 +57,11 @@ test('implemented capabilities and device names discover their owners without in
     const entry = search.get(pluginID);
     assert.ok(entry.terms.includes(normalizeSearch(query)), `${query} -> ${pluginID}`);
   }
-  const tipTapOwners = [...search].filter(([, entry]) => entry.terms.includes('tiptap'));
-  assert.deepEqual(tipTapOwners.map(([id]) => id).sort(), ['input-remapping', 'trackpad-gestures']);
-  assert.ok(tipTapOwners.every(([, entry]) => entry.actions.every(action => actionMatchRank(action, 'tiptap') === 0)));
+  for (const query of ['tiptap', 'tip tap']) {
+    const tipTapOwners = [...search].filter(([, entry]) => entry.terms.includes(query));
+    assert.deepEqual(tipTapOwners.map(([id]) => id).sort(), ['input-remapping', 'trackpad-gestures']);
+    assert.ok(tipTapOwners.every(([, entry]) => entry.actions.every(action => actionMatchRank(action, query) === 0)));
+  }
 });
 
 test('optional discovery and blank translations preserve fallback and action identity', () => {

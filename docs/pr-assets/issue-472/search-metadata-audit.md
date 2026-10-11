@@ -1,6 +1,6 @@
 # Capability search metadata audit for issue 472
 
-Baseline: `1183819756c3aa6c3e9f5ea7b95531c57bfdf788`, after the search implementation and integration of current main. The audit reviewed all 64 source plugin manifests against current implementation, settings, action declarations, and feature documentation. It found 285 missing owner/query pairs across 51 plugins (280 distinct queries). Every selected pair failed to discover its owner before the metadata changes and succeeds afterward using the production website search helper. This is a focused capability audit, not exhaustive coverage of every natural-language query or every supported language.
+Baseline: `1183819756c3aa6c3e9f5ea7b95531c57bfdf788`, after the search implementation and integration of current main. The audit reviewed all 64 source plugin manifests against current implementation, settings, action declarations, and feature documentation. It found 284 missing owner/query pairs across 51 plugins (278 distinct queries). Every selected pair failed to discover its owner before the metadata changes and succeeds afterward using the production website search helper. This is a focused capability audit, not exhaustive coverage of every natural-language query or every supported language.
 
 Only English `discovery.keywords` and simplified-Chinese `discovery.localizedSynonyms` are extended. Existing translations, use cases, action providers, runtime requirements, and release versions are preserved. Search terms describe a plugin capability; they do not create executable static actions. The 135 existing static actions remain unchanged.
 
@@ -43,7 +43,7 @@ The source link identifies an implementation entry point or feature documentatio
 | Device Battery | AirPods; iPhone; iPad; Apple Watch; low battery notifications | 低电量通知 | [device-battery.md:8](../../../docs/plugins/device-battery.md#L8) |
 | Disk Cleanup | app caches; browser caches; logs; diagnostic reports | 应用缓存; 浏览器缓存; 日志与诊断报告 | [DiskCleanRuleCatalogV2.swift:89](../../../Plugins/DiskClean/Sources/DiskCleanRuleCatalogV2.swift#L89) |
 | Display Brightness | DDC/CI; software brightness | 软件亮度 | [DisplayBrightnessBackends.swift:154](../../../Plugins/DisplayBrightness/Sources/DisplayBrightnessBackends.swift#L154) |
-| Display Resolution | HiDPI; refresh rate | 刷新率 | [DisplayResolutionPlugin.swift:208](../../../Plugins/DisplayResolution/Sources/DisplayResolutionPlugin.swift#L208) |
+| Display Resolution | HiDPI | — | [DisplayResolutionController.swift:153](../../../Plugins/DisplayResolution/Sources/DisplayResolutionController.swift#L153) |
 | Display Sleep | turn off displays | 关闭显示器; 息屏 | [DisplaySleepPlugin.swift:189](../../../Plugins/DisplaySleep/Sources/DisplaySleepPlugin.swift#L189) |
 | Display Volume | monitor volume; DDC/CI | 外接显示器音量; 音量快捷键; 跟随鼠标 | [DisplayVolumePlugin.swift:641](../../../Plugins/DisplayVolume/Sources/DisplayVolumePlugin.swift#L641) |
 | Dock Lock | — | 固定程序坞 | [dock-lock.md:10](../../../docs/features/dock-lock.md#L10) |
@@ -52,7 +52,7 @@ The source link identifies an implementation entry point or feature documentatio
 | Fan Control | RPM; full speed; fan presets | 风扇预设; 自定义转速 | [FanControlModels.swift:32](../../../Plugins/FanControl/Sources/FanControlModels.swift#L32) |
 | Fix Damaged Apps | repair apps | 修复应用 | [FixDamagedAppPlugin.swift:326](../../../Plugins/FixDamagedApp/Sources/FixDamagedAppPlugin.swift#L326) |
 | Homebrew Manager | install packages; uninstall packages; pin version | 安装软件包; 卸载软件包; 锁定版本 | [HomebrewController.swift:547](../../../Plugins/Homebrew/Sources/HomebrewController.swift#L547) |
-| Custom Shortcuts: Keyboard, Trackpad, Mouse | TipTap; trackpad gestures; scroll wheel; mouse side buttons; double-click; long press; single key | 触控板手势; 鼠标侧键; 滚轮; 双击; 长按; 单键 | [InputRemappingPlugin.swift:867](../../../Plugins/InputRemapping/Sources/InputRemappingPlugin.swift#L867) |
+| Custom Shortcuts: Keyboard, Trackpad, Mouse | TipTap; tip tap; trackpad gestures; scroll wheel; mouse side buttons; double-click; long press; single key | 触控板手势; 鼠标侧键; 滚轮; 双击; 长按; 单键 | [InputRemappingPlugin.swift:867](../../../Plugins/InputRemapping/Sources/InputRemappingPlugin.swift#L867) |
 | IP Check | DNS leak test; WebRTC leak test; IPv6; speed test | DNS 泄漏测试; WebRTC 泄露测试; IPv6 地址 | [IPOverviewLeakTestService.swift:25](../../../Plugins/IPOverview/Sources/IPOverviewLeakTestService.swift#L25) |
 | Keep Awake | prevent sleep; closed lid; keep screen sharing awake; keep remote control awake | 防止休眠; 屏幕共享保持唤醒; 远程控制保持唤醒 | [KeepAwakePlugin.swift:837](../../../Plugins/KeepAwake/Sources/KeepAwakePlugin.swift#L837) |
 | Launch Items | launch agents; LaunchAgents; launch daemons; LaunchDaemons; background services | 后台服务 | [LaunchControlScanner.swift:221](../../../Plugins/LaunchControl/Sources/LaunchControlScanner.swift#L221) |
@@ -84,6 +84,7 @@ Dark Mode, Battery Charge Limit, Clear Clipboard, True Tone, Hide Active App on 
 
 ## Capability limits and rejected candidates
 
+- Display Resolution deduplicates modes by logical dimensions and retains the current refresh rate; its UI has no independent Hz selection. `refresh rate` / `刷新率` are excluded (`DisplayResolutionController.swift:145`; `DisplayResolutionPluginTests.swift:47`).
 - Fan Control implements automatic, full-speed, and fixed-RPM presets. Temperature-based fan curves are not implemented and are excluded.
 - Apple Shortcuts has runnable shortcuts and folders. Obsolete folder-sync resource strings do not establish a current sync feature and are excluded.
 - Trackpad Gestures and Input Remapping expose shared TipTap gestures. Unsupported pinch, rotation, swipe, and force-click gestures are excluded. Input Remapping also supports single-key output (`InputRemappingEventTap.swift:453`).
@@ -101,7 +102,7 @@ Dark Mode, Battery Charge Limit, Clear Clipboard, True Tone, Hide Active App on 
 
 - All 64 manifests pass semantic and complete-product-metadata validation.
 - Website generator tests and generated-data freshness pass; static-action projection is byte-identical to baseline.
-- All 285 accepted owner/query pairs pass through the production helper; protected files outside the planned write surfaces remain unchanged.
+- All 284 accepted owner/query pairs pass through the production helper; protected files outside the planned write surfaces remain unchanged.
 - Representative capability regressions and the complete website suite pass.
 - Static build produces 203 pages with no errors, warnings, or hints.
 - Chromium and WebKit verify representative English/Chinese metadata queries, two TipTap owners without invented actions, category filtering, language switching, and owner navigation. Existing action-search/disclosure/navigation/prerequisite checks also pass.

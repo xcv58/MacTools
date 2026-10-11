@@ -53,7 +53,7 @@ ordinary browsing.
 ## Follow-up capability metadata audit
 
 The [source-backed audit](search-metadata-audit.md) reviewed all 64 plugins and
-fixed 285 missing plugin/query pairs across 51 manifests. It records the added
+fixed 284 missing plugin/query pairs across 51 manifests. It records the added
 English and Chinese terms, source evidence, capability limits, excluded claims,
 and validation. The follow-up starts from `1183819756c3aa6c3e9f5ea7b95531c57bfdf788`;
 the earlier comparisons above retain their original capture provenance.

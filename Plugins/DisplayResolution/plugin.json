@@ -109,8 +109,7 @@
     "keywords": [
       "display",
       "resolution",
-      "HiDPI",
-      "refresh rate"
+      "HiDPI"
     ],
     "localizedSynonyms": {
       "ar": [
@@ -144,8 +143,7 @@
         "Ekran Çözünürlüğü"
       ],
       "zh-Hans": [
-        "显示器分辨率",
-        "刷新率"
+        "显示器分辨率"
       ],
       "zh-Hant": [
         "顯示器解析度"
