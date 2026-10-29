@@ -134,6 +134,7 @@ final class DisplayBrightnessPlugin:
     }
 
     private enum Constants {
+        static let setBrightnessActionID = "set-brightness"
         static let displayControlPrefix = "display."
         static let brightnessControlSuffix = ".brightness"
         static let disableBuiltInDisplayActionID = "disable-built-in-display"
@@ -164,6 +165,7 @@ final class DisplayBrightnessPlugin:
     var requestPermissionGuidance: ((String) -> Void)?
     var shortcutBindingResolver: ((String) -> ShortcutBinding?)?
 
+    private var brightnessGeneration = UUID().uuidString
     private let controller: DisplayBrightnessControlling
     private let displayDisableCoordinator: any DisplayDisableCoordinating
     private let showsDisplayDisableControls: Bool
@@ -306,7 +308,7 @@ final class DisplayBrightnessPlugin:
                 capabilities: [.automatic, .background, .foregroundInteractive, .cancellable]
             )
         }
-        return brightnessActions + [
+        return brightnessActions + [voiceSetBrightnessDefinition,
             ActionDefinition(
                 key: ActionKey(
                     providerID: metadata.id,
@@ -359,6 +361,9 @@ final class DisplayBrightnessPlugin:
     }
 
     func actionAvailability(for reference: ActionReference) -> ActionAvailability {
+        if reference.key.actionID == Constants.setBrightnessActionID {
+            return voiceBrightnessTarget(reference) == nil ? .unavailable(PluginKitLocalization.actionUnavailable) : .available
+        }
         if Self.shortcutDirection(for: reference.key.actionID) != nil {
             let snapshot = controller.snapshot()
             return shortcutTargetDisplayIDs(in: snapshot).isEmpty
@@ -391,6 +396,18 @@ final class DisplayBrightnessPlugin:
     }
 
     func beginAction(_ invocation: ActionInvocation) throws -> ActionExecutionHandle {
+        if invocation.reference.key.actionID == Constants.setBrightnessActionID {
+            let reference = invocation.reference
+            return ActionExecutionHandle { [weak self] in
+                guard let self, !Task.isCancelled, let (display, percent) = self.voiceBrightnessTarget(reference) else {
+                    return .failed(message: PluginKitLocalization.actionUnavailable)
+                }
+                switch await self.controller.setBrightnessAndWait(percent / 100, for: display.id) {
+                case .succeeded: return await self.voiceBrightnessWriteResult(displayID: display.id, requestedPercent: percent)
+                case let .failed(message): return .failed(message: message)
+                }
+            }
+        }
         if invocation.reference.key.actionID == Constants.disableBuiltInDisplayActionID {
             let coordinator = displayDisableCoordinator
             let noBuiltInDisplayMessage = noBuiltInDisplayMessage
@@ -494,6 +511,7 @@ final class DisplayBrightnessPlugin:
     }
 
     func refresh() {
+        brightnessGeneration = UUID().uuidString
         controller.refresh()
         displayDisableCoordinator.refreshSnapshot()
     }
@@ -1002,4 +1020,83 @@ extension DisplayBrightnessPlugin: PluginPortablePreferencesProviding,
         onStateChange?()
         return true
     }
+}
+
+
+extension DisplayBrightnessPlugin: PluginVoiceQueryProviding, PluginVoiceParameterizedActionProviding {
+    var voiceParameterizedActionIDs: Set<String> { [Constants.setBrightnessActionID] }
+    var voiceQueries: [PluginVoiceQuery] {
+        [.init(id: "display-state", title: metadata.title,
+               description: "Discover connected displays with fresh brightness observations, target generation and control method. Read again after a write to verify it.")]
+    }
+    private var voiceSetBrightnessDefinition: ActionDefinition {
+        .init(key: .init(providerID: metadata.id, actionID: Constants.setBrightnessActionID),
+              title: localization.string("action.set.title", defaultValue: "设置显示器亮度"),
+              description: localization.string("action.set.description", defaultValue: "将指定显示器调节到目标百分比"),
+              keywords: ["brightness", "display", "percent"], systemImage: "sun.max",
+              parameters: [.init(id: "display-id", title: "display-id", kind: .string, portability: .localOnly),
+                           .init(id: "generation", title: "generation", kind: .string, portability: .localOnly),
+                           .init(id: "percent", title: "percent", kind: .double)],
+              capabilities: [.foregroundInteractive, .background, .cancellable])
+    }
+    private func voiceBrightnessWriteResult(displayID: CGDirectDisplayID, requestedPercent: Double) async -> ActionExecutionResult {
+        var observation = await controller.observeBrightness(for: displayID)
+        for delay in [150, 300] {
+            guard !Task.isCancelled else { return .cancelled }
+            if observation?.backend == .gamma || observation?.backend == .shade { break }
+            if let observation, observation.isHardwareReadback,
+               let value = observation.value, abs(value * 100 - requestedPercent) <= 1 { break }
+            do { try await Task.sleep(for: .milliseconds(delay)) } catch { return .cancelled }
+            observation = await controller.observeBrightness(for: displayID)
+        }
+        guard !Task.isCancelled else { return .cancelled }
+        if let observation, observation.isHardwareReadback, let value = observation.value {
+            if abs(value * 100 - requestedPercent) <= 1 {
+                return .succeeded(message: localization.format("voice.verified", defaultValue: "亮度已验证：%.0f%%", value * 100))
+            }
+            return .failed(message: localization.format("voice.mismatch", defaultValue: "请求 %.0f%%，硬件读回 %.0f%%。", requestedPercent, value * 100))
+        }
+        let software = observation?.backend == .gamma || observation?.backend == .shade
+        return .succeeded(message: software
+            ? localization.string("voice.software", defaultValue: "已调整软件调光，未验证硬件亮度。")
+            : localization.string("voice.unverified", defaultValue: "亮度设置已发送，但未能验证硬件读数。"))
+    }
+    private func voiceBrightnessTarget(_ reference: ActionReference) -> (DisplayInfo, Double)? {
+        guard case let .string(generation)? = reference.parameters["generation"], generation == brightnessGeneration,
+              case let .string(id)? = reference.parameters["display-id"], let rawID = UInt32(id), String(rawID) == id,
+              case let .double(percent)? = reference.parameters["percent"], percent.isFinite, (0...100).contains(percent),
+              let display = controller.snapshot().displays.first(where: { $0.id == rawID })?.display else { return nil }
+        if let concrete = controller as? DisplayBrightnessController, !concrete.isDisplayConnected(display) { return nil }
+        return (display, percent)
+    }
+    func readVoiceQuery(id: String) async throws -> String {
+        guard id == "display-state" else { throw VoiceBrightnessError.unavailable }
+        let generation = brightnessGeneration
+        var values: [VoiceBrightnessDisplay] = []
+        for entry in controller.snapshot().displays {
+            try Task.checkCancellation()
+            let observation = await controller.observeBrightness(for: entry.id)
+            values.append(.init(displayID: String(entry.id), name: entry.display.name,
+                isBuiltIn: entry.display.isBuiltin, isMain: entry.display.isMain,
+                observedPercent: observation?.value.map { $0 * 100 },
+                controlMethod: observation?.backend.rawValue,
+                pending: observation?.isPendingWrite ?? false,
+                hardwareVerified: observation?.isHardwareReadback == true))
+        }
+        guard generation == brightnessGeneration else { throw VoiceBrightnessError.unavailable }
+        return String(decoding: try JSONEncoder().encode(VoiceBrightnessState(generation: generation, displays: values)), as: UTF8.self)
+    }
+}
+
+private enum VoiceBrightnessError: Error { case unavailable }
+private struct VoiceBrightnessState: Encodable { let generation: String; let displays: [VoiceBrightnessDisplay] }
+private struct VoiceBrightnessDisplay: Encodable {
+    let displayID: String
+    let name: String
+    let isBuiltIn: Bool
+    let isMain: Bool
+    let observedPercent: Double?
+    let controlMethod: String?
+    let pending: Bool
+    let hardwareVerified: Bool
 }

@@ -54,6 +54,8 @@ final class MockDisplayBrightnessController: DisplayBrightnessControlling {
 
     var onStateChange: (() -> Void)?
     var snapshotValue = DisplayBrightnessSnapshot(displays: [], errorMessage: nil)
+    var observations: [CGDirectDisplayID: DisplayBrightnessObservation] = [:]
+    func observeBrightness(for displayID: CGDirectDisplayID) async -> DisplayBrightnessObservation? { observations[displayID] }
     var writeResults: [CGDirectDisplayID: DisplayBrightnessWriteResult] = [:]
     private(set) var brightnessWrites: [BrightnessWrite] = []
     private(set) var cancelOutstandingWritesCount = 0

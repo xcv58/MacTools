@@ -8165,6 +8165,70 @@
                     "zh-Hans": "恢复内建显示屏",
                     "zh-Hant": "恢復內建顯示螢幕"
                   }
+                },
+                {
+                  "automaticEligible": false,
+                  "description": {
+                    "ar": "ضبط سطوع الشاشة",
+                    "de": "Bildschirmhelligkeit einstellen",
+                    "en": "Set a selected display to an absolute brightness percentage.",
+                    "es": "Ajustar brillo de pantalla",
+                    "fr": "Régler la luminosité",
+                    "ja": "明るさを設定",
+                    "ko": "디스플레이 밝기 설정",
+                    "pt": "Definir brilho do monitor",
+                    "ru": "Задать яркость дисплея",
+                    "tr": "Seçilen ekranı mutlak bir parlaklık yüzdesine ayarlayın.",
+                    "zh-Hans": "将指定显示器调节到目标百分比",
+                    "zh-Hant": "將指定顯示器調整到目標百分比"
+                  },
+                  "externalInvocation": "unavailable",
+                  "id": "set-brightness",
+                  "keywords": [
+                    "brightness",
+                    "display",
+                    "percent"
+                  ],
+                  "parameters": [
+                    {
+                      "id": "display-id",
+                      "isRequired": true,
+                      "kind": "string",
+                      "portability": "localOnly"
+                    },
+                    {
+                      "id": "generation",
+                      "isRequired": true,
+                      "kind": "string",
+                      "portability": "localOnly"
+                    },
+                    {
+                      "id": "percent",
+                      "isRequired": true,
+                      "kind": "double",
+                      "portability": "portable"
+                    }
+                  ],
+                  "permissionIDs": [],
+                  "risk": "safe",
+                  "surfaces": [
+                    "manual"
+                  ],
+                  "systemImage": "sun.max",
+                  "title": {
+                    "ar": "ضبط سطوع الشاشة",
+                    "de": "Bildschirmhelligkeit einstellen",
+                    "en": "Set Display Brightness",
+                    "es": "Ajustar brillo de pantalla",
+                    "fr": "Régler la luminosité",
+                    "ja": "明るさを設定",
+                    "ko": "디스플레이 밝기 설정",
+                    "pt": "Definir brilho do monitor",
+                    "ru": "Задать яркость дисплея",
+                    "tr": "Ekran parlaklığını ayarla",
+                    "zh-Hans": "设置显示器亮度",
+                    "zh-Hant": "設定顯示器亮度"
+                  }
                 }
               ]
             }
@@ -8371,7 +8435,7 @@
       "releaseNotesURL": null,
       "route": "/plugins/display-brightness/",
       "summary": "快速调节每个显示器的亮度",
-      "version": "2.1.0"
+      "version": "2.1.1"
     },
     {
       "capabilities": {
@@ -19032,7 +19096,7 @@
       "releaseNotesURL": null,
       "route": "/plugins/power-status/",
       "summary": "实时查看系统功耗、电池状态和充电信息",
-      "version": "1.0.0"
+      "version": "1.0.1"
     },
     {
       "capabilities": {
@@ -23494,7 +23558,7 @@
       "releaseNotesURL": null,
       "route": "/plugins/system-status/",
       "summary": "实时查看系统状态",
-      "version": "2.1.0"
+      "version": "2.1.1"
     },
     {
       "capabilities": {

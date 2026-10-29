@@ -209,6 +209,29 @@ final class DisplayBrightnessController: DisplayBrightnessControlling {
         )
     }
 
+    func isDisplayConnected(_ display: DisplayInfo) -> Bool {
+        displayProvider.listConnectedDisplays().contains(display)
+    }
+
+    /// Reads the active backend without presenting a cached or requested value as an observation.
+    /// The backend may change or disappear while the read is running.
+    func observeBrightness(for displayID: CGDirectDisplayID) async -> DisplayBrightnessObservation? {
+        guard let managed = managedDisplays[displayID] else { return nil }
+        let backend = managed.backend
+        let observed = await Task.detached(priority: .userInitiated) { () -> Double? in
+            guard let value = try? backend.readBrightness(), value.isFinite,
+                  (0...1).contains(value) else { return nil }
+            return value
+        }.value
+        guard let current = managedDisplays[displayID], current.backend === backend,
+              current.display == managed.display, isDisplayConnected(managed.display) else { return nil }
+        return DisplayBrightnessObservation(
+            value: observed,
+            backend: backend.kind,
+            isPendingWrite: current.pendingBrightness != nil || current.writeInFlight
+        )
+    }
+
     func setBrightness(
         _ value: Double,
         for displayID: CGDirectDisplayID,

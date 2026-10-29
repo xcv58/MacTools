@@ -6,6 +6,36 @@ import MacToolsPluginKit
 
 @MainActor
 final class DisplayBrightnessPluginTests: XCTestCase {
+    func testVoiceUsesFreshReadbackAndRejectsStaleAbsoluteTargets() async throws {
+        let controller = MockDisplayBrightnessController()
+        let display = makeTestDisplay(id: 7, name: "Display", isBuiltin: true)
+        controller.snapshotValue = .init(displays: [.init(display: display, brightness: 0.8, isPendingWrite: true)], errorMessage: nil)
+        controller.observations[7] = .init(value: 0.35, backend: .appleNative, isPendingWrite: false)
+        let plugin = DisplayBrightnessPlugin(controller: controller)
+        let source = try await plugin.readVoiceQuery(id: "display-state")
+        let state = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(source.utf8)) as? [String: Any])
+        let generation = try XCTUnwrap(state["generation"] as? String)
+        let observed = try XCTUnwrap((state["displays"] as? [[String: Any]])?.first)
+        XCTAssertEqual(observed["observedPercent"] as? Double, 35)
+        XCTAssertEqual(observed["hardwareVerified"] as? Bool, true)
+        let reference = ActionReference(key: .init(providerID: plugin.metadata.id, actionID: "set-brightness"),
+            parameters: try ActionParameterSet(["display-id": .string("7"), "generation": .string(generation), "percent": .double(35)]))
+        let handle = try plugin.beginAction(.init(reference: reference, source: .manual, mode: .foreground))
+        let result = await handle.result()
+        guard case .succeeded = result else { return XCTFail("Matching hardware readback must succeed") }
+        XCTAssertEqual(controller.brightnessWrites.last?.value, 0.35)
+        let mismatch = ActionReference(key: reference.key, parameters: try ActionParameterSet([
+            "display-id": .string("7"), "generation": .string(generation), "percent": .double(50)]))
+        let mismatched = try plugin.beginAction(.init(reference: mismatch, source: .manual, mode: .foreground))
+        let mismatchResult = await mismatched.result()
+        guard case .failed = mismatchResult else { return XCTFail("A different hardware reading must not be reported as verified success") }
+        plugin.refresh()
+        XCTAssertFalse(plugin.actionAvailability(for: reference).isAvailable)
+        let stale = try plugin.beginAction(.init(reference: reference, source: .manual, mode: .foreground))
+        _ = await stale.result()
+        XCTAssertEqual(controller.brightnessWrites.count, 2)
+    }
+
     func testPortableTargetModeIsDurableAndDoesNotWriteHardware() throws {
         let source = DisplayBrightnessShortcutPreferences(storage: DisplayBrightnessMemoryStorage())
         source.targetMode = .allDisplays
