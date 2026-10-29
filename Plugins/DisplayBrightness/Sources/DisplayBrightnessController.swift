@@ -218,12 +218,14 @@ final class DisplayBrightnessController: DisplayBrightnessControlling {
     func observeBrightness(for displayID: CGDirectDisplayID) async -> DisplayBrightnessObservation? {
         guard let managed = managedDisplays[displayID] else { return nil }
         let backend = managed.backend
+        let writeRevision = nextWriteID
         let observed = await Task.detached(priority: .userInitiated) { () -> Double? in
             guard let value = try? backend.readBrightness(), value.isFinite,
                   (0...1).contains(value) else { return nil }
             return value
         }.value
-        guard let current = managedDisplays[displayID], current.backend === backend,
+        guard nextWriteID == writeRevision,
+              let current = managedDisplays[displayID], current.backend === backend,
               current.display == managed.display, isDisplayConnected(managed.display) else { return nil }
         return DisplayBrightnessObservation(
             value: observed,

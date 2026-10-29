@@ -166,6 +166,7 @@ final class DisplayBrightnessPlugin:
     var shortcutBindingResolver: ((String) -> ShortcutBinding?)?
 
     private var brightnessGeneration = UUID().uuidString
+    private var voiceTargetDisplays: [CGDirectDisplayID: DisplayInfo] = [:]
     private let controller: DisplayBrightnessControlling
     private let displayDisableCoordinator: any DisplayDisableCoordinating
     private let showsDisplayDisableControls: Bool
@@ -402,8 +403,9 @@ final class DisplayBrightnessPlugin:
                 guard let self, !Task.isCancelled, let (display, percent) = self.voiceBrightnessTarget(reference) else {
                     return .failed(message: PluginKitLocalization.actionUnavailable)
                 }
+                let generation = self.brightnessGeneration
                 switch await self.controller.setBrightnessAndWait(percent / 100, for: display.id) {
-                case .succeeded: return await self.voiceBrightnessWriteResult(displayID: display.id, requestedPercent: percent)
+                case .succeeded: return await self.voiceBrightnessWriteResult(display: display, generation: generation, requestedPercent: percent)
                 case let .failed(message): return .failed(message: message)
                 }
             }
@@ -512,11 +514,14 @@ final class DisplayBrightnessPlugin:
 
     func refresh() {
         brightnessGeneration = UUID().uuidString
+        voiceTargetDisplays.removeAll()
         controller.refresh()
         displayDisableCoordinator.refreshSnapshot()
     }
 
     func refreshDisplayTopology() {
+        brightnessGeneration = UUID().uuidString
+        voiceTargetDisplays.removeAll()
         controller.refresh()
         displayDisableCoordinator.reconcileTopology()
         let snapshot = displayDisableCoordinator.snapshot
@@ -1039,16 +1044,23 @@ extension DisplayBrightnessPlugin: PluginVoiceQueryProviding, PluginVoiceParamet
                            .init(id: "percent", title: "percent", kind: .double)],
               capabilities: [.foregroundInteractive, .background, .cancellable])
     }
-    private func voiceBrightnessWriteResult(displayID: CGDirectDisplayID, requestedPercent: Double) async -> ActionExecutionResult {
-        var observation = await controller.observeBrightness(for: displayID)
+    private func voiceBrightnessWriteResult(display: DisplayInfo, generation: String, requestedPercent: Double) async -> ActionExecutionResult {
+        @MainActor func targetStillMatches() -> Bool {
+            generation == brightnessGeneration && voiceTargetDisplays[display.id] == display
+                && controller.snapshot().displays.contains { $0.display == display }
+        }
+        guard targetStillMatches() else { return .failed(message: PluginKitLocalization.actionUnavailable) }
+        var observation = await controller.observeBrightness(for: display.id)
         for delay in [150, 300] {
             guard !Task.isCancelled else { return .cancelled }
             if observation?.backend == .gamma || observation?.backend == .shade { break }
             if let observation, observation.isHardwareReadback,
                let value = observation.value, abs(value * 100 - requestedPercent) <= 1 { break }
             do { try await Task.sleep(for: .milliseconds(delay)) } catch { return .cancelled }
-            observation = await controller.observeBrightness(for: displayID)
+            guard targetStillMatches() else { return .failed(message: PluginKitLocalization.actionUnavailable) }
+            observation = await controller.observeBrightness(for: display.id)
         }
+        guard targetStillMatches() else { return .failed(message: PluginKitLocalization.actionUnavailable) }
         guard !Task.isCancelled else { return .cancelled }
         if let observation, observation.isHardwareReadback, let value = observation.value {
             if abs(value * 100 - requestedPercent) <= 1 {
@@ -1065,15 +1077,17 @@ extension DisplayBrightnessPlugin: PluginVoiceQueryProviding, PluginVoiceParamet
         guard case let .string(generation)? = reference.parameters["generation"], generation == brightnessGeneration,
               case let .string(id)? = reference.parameters["display-id"], let rawID = UInt32(id), String(rawID) == id,
               case let .double(percent)? = reference.parameters["percent"], percent.isFinite, (0...100).contains(percent),
-              let display = controller.snapshot().displays.first(where: { $0.id == rawID })?.display else { return nil }
+              let display = controller.snapshot().displays.first(where: { $0.id == rawID })?.display,
+              voiceTargetDisplays[rawID] == display else { return nil }
         if let concrete = controller as? DisplayBrightnessController, !concrete.isDisplayConnected(display) { return nil }
         return (display, percent)
     }
     func readVoiceQuery(id: String) async throws -> String {
         guard id == "display-state" else { throw VoiceBrightnessError.unavailable }
         let generation = brightnessGeneration
+        let displays = controller.snapshot().displays
         var values: [VoiceBrightnessDisplay] = []
-        for entry in controller.snapshot().displays {
+        for entry in displays {
             try Task.checkCancellation()
             let observation = await controller.observeBrightness(for: entry.id)
             values.append(.init(displayID: String(entry.id), name: entry.display.name,
@@ -1083,7 +1097,9 @@ extension DisplayBrightnessPlugin: PluginVoiceQueryProviding, PluginVoiceParamet
                 pending: observation?.isPendingWrite ?? false,
                 hardwareVerified: observation?.isHardwareReadback == true))
         }
-        guard generation == brightnessGeneration else { throw VoiceBrightnessError.unavailable }
+        guard generation == brightnessGeneration,
+              controller.snapshot().displays.map(\.display) == displays.map(\.display) else { throw VoiceBrightnessError.unavailable }
+        voiceTargetDisplays = Dictionary(uniqueKeysWithValues: displays.map { ($0.id, $0.display) })
         return String(decoding: try JSONEncoder().encode(VoiceBrightnessState(generation: generation, displays: values)), as: UTF8.self)
     }
 }

@@ -29,11 +29,32 @@ final class DisplayBrightnessPluginTests: XCTestCase {
         let mismatched = try plugin.beginAction(.init(reference: mismatch, source: .manual, mode: .foreground))
         let mismatchResult = await mismatched.result()
         guard case .failed = mismatchResult else { return XCTFail("A different hardware reading must not be reported as verified success") }
-        plugin.refresh()
+        plugin.refreshDisplayTopology()
         XCTAssertFalse(plugin.actionAvailability(for: reference).isAvailable)
         let stale = try plugin.beginAction(.init(reference: reference, source: .manual, mode: .foreground))
         _ = await stale.result()
         XCTAssertEqual(controller.brightnessWrites.count, 2)
+    }
+
+    func testTopologyReplacementDuringWriteCannotVerifyNewDisplay() async throws {
+        let controller = MockDisplayBrightnessController()
+        let display = makeTestDisplay(id: 8, name: "Original")
+        controller.snapshotValue = .init(displays: [.init(display: display, brightness: 0.35, isPendingWrite: false)], errorMessage: nil)
+        controller.observations[8] = .init(value: 0.35, backend: .appleNative, isPendingWrite: false)
+        let plugin = DisplayBrightnessPlugin(controller: controller)
+        let source = try await plugin.readVoiceQuery(id: "display-state")
+        let state = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(source.utf8)) as? [String: Any])
+        let generation = try XCTUnwrap(state["generation"] as? String)
+        let reference = ActionReference(key: .init(providerID: plugin.metadata.id, actionID: "set-brightness"),
+            parameters: try ActionParameterSet(["display-id": .string("8"), "generation": .string(generation), "percent": .double(35)]))
+        controller.onCompletedWrite = { [weak controller, weak plugin] in
+            let replacement = makeTestDisplay(id: 8, name: "Replacement")
+            controller?.snapshotValue = .init(displays: [.init(display: replacement, brightness: 0.35, isPendingWrite: false)], errorMessage: nil)
+            plugin?.refreshDisplayTopology()
+        }
+        let handle = try plugin.beginAction(.init(reference: reference, source: .manual, mode: .foreground))
+        let result = await handle.result()
+        guard case .failed = result else { return XCTFail("A replacement must not verify the original target's write") }
     }
 
     func testPortableTargetModeIsDurableAndDoesNotWriteHardware() throws {

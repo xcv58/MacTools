@@ -188,6 +188,23 @@ final class DisplayBrightnessControllerTests: XCTestCase {
         XCTAssertEqual(controller.snapshot().displays.first?.brightness, 0.7)
     }
 
+    func testVoiceObservationCrossingWriteIsNotVerified() async {
+        let display = makeTestDisplay(id: 34, name: "External Display")
+        let backend = BlockingReadBrightnessBackend(display: display)
+        let controller = makeController(display: display, backend: backend)
+        controller.refresh()
+        await waitUntil { controller.snapshot().displays.first?.isReady == true }
+        backend.suspendNextRead()
+        defer { backend.releaseRead(); controller.cancelOutstandingWrites() }
+        let read = Task { await controller.observeBrightness(for: display.id) }
+        await waitUntil { backend.readStarted }
+        let write = await controller.setBrightnessAndWait(0.8, for: display.id)
+        XCTAssertEqual(write, .succeeded)
+        backend.releaseRead()
+        let observation = await read.value
+        XCTAssertNil(observation)
+    }
+
     func testInitialHardwareReadKeepsMainThreadResponsiveAndControlsPending() async {
         let display = makeTestDisplay(id: 31, name: "External Display")
         let backend = BlockingReadBrightnessBackend(display: display)
