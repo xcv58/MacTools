@@ -2635,7 +2635,8 @@
         "privacy": {
           "allowsUserConfiguredDomains": false,
           "dataObserved": [
-            "system-appearance"
+            "system-appearance",
+            "requested-plugin-state"
           ],
           "dataPersisted": [],
           "diagnosticExportsContainUserData": false,
@@ -14303,7 +14304,8 @@
         "privacy": {
           "allowsUserConfiguredDomains": false,
           "dataObserved": [
-            "system-state"
+            "system-state",
+            "requested-plugin-state"
           ],
           "dataPersisted": [
             "plugin-configuration"
@@ -18286,7 +18288,8 @@
         "privacy": {
           "allowsUserConfiguredDomains": false,
           "dataObserved": [
-            "display-state"
+            "display-state",
+            "requested-plugin-state"
           ],
           "dataPersisted": [],
           "diagnosticExportsContainUserData": false,
@@ -22341,7 +22344,8 @@
         "privacy": {
           "allowsUserConfiguredDomains": false,
           "dataObserved": [
-            "audio-state"
+            "audio-state",
+            "requested-plugin-state"
           ],
           "dataPersisted": [],
           "diagnosticExportsContainUserData": false,
