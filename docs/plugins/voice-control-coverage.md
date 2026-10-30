@@ -2,6 +2,8 @@
 
 Voice Control discovers commands from enabled plugins at runtime. Existing complete catalog references are available automatically unless a provider excludes voice exposure; the counts below describe source declarations, not a promise that a device currently supports every action. Saved commands depend on the user's configured catalog. Required parameters need a provider adapter.
 
+Manage Features includes **Automatically allow newly installed plugins**, on by default. Turning it off keeps current selections and requires manual approval for later providers. The switch and batch edits are saved with Done, canceled with Cancel, and take effect in the next conversation. Existing explicit exclusions remain blocked when automatic access is on. Allow All and Allow None change the listed providers without changing the automatic policy.
+
 This version adds fresh state queries for display brightness, system metrics, power, appearance, Keep Awake, Night Shift, and system mute. Brightness uses the same canonical controller write as native controls and validates the display generation before dispatch. Readback distinguishes Apple-native/DDC measurements from software dimming, missing observations, and pending writes. Voice excludes cursor-scoped increment shortcuts and uses the discovered display with an absolute percentage.
 
 Every enabled feature also has a setup/review entry through the host. Opening that entry does not complete its operation; plugins without a dedicated settings page may open Marketplace. Features requiring pickers, editors, or native approvals keep those flows. Clipboard history, calendar contents, file contents, credentials, process names, and network addresses are not included in the new device-state queries. Adding private-content queries requires provider declarations and native approval.
@@ -83,6 +85,8 @@ Source inventory: 69 plugins and 136 static command declarations. Actual host av
 ## Acceptance priorities
 
 Direct commands remain available for Window Layouts, appearance, Keep Awake presets, Night Shift, system mute, and named Apple Shortcuts. Read-only voice questions now cover seven providers. App Volume supports its discovered fixed volume presets for running apps; arbitrary volume percentages, generic window geometry, and unsupported parameter combinations require a dedicated adapter rather than invented arguments.
+
+Launchpad currently exposes only its app-grid toggle, not a command to launch an arbitrary installed application by name. App Hotkeys exposes concrete launch commands for its configured application entries, even without a keyboard assignment; its existing launch action hides the target if it is already frontmost. An installed application without a configured entry does not acquire a direct voice launch command merely by allowing Launchpad.
 
 Native interfaces remain necessary for screenshot selection, file pickers, editors, and configuration-only plugins. Opening those interfaces is a successful navigation step, not a completed screenshot, cleanup, upload, or edit. Private clipboard/calendar/file/process queries remain excluded unless a provider declares a query with native approval.
 
