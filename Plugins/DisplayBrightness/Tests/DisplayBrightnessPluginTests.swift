@@ -12,6 +12,9 @@ final class DisplayBrightnessPluginTests: XCTestCase {
         controller.snapshotValue = .init(displays: [.init(display: display, brightness: 0.8, isPendingWrite: true)], errorMessage: nil)
         controller.observations[7] = .init(value: 0.35, backend: .appleNative, isPendingWrite: false)
         let plugin = DisplayBrightnessPlugin(controller: controller)
+        for definition in plugin.actionDefinitions where definition.key.actionID.hasPrefix("display-brightness.") {
+            XCTAssertEqual(plugin.exposurePolicy(for: .init(key: definition.key), on: .init(rawValue: "voice-control")), .excluded)
+        }
         let source = try await plugin.readVoiceQuery(id: "display-state")
         let state = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(source.utf8)) as? [String: Any])
         let generation = try XCTUnwrap(state["generation"] as? String)

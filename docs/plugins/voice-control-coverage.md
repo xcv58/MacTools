@@ -2,7 +2,7 @@
 
 Voice Control discovers commands from enabled plugins at runtime. Existing complete catalog references are available automatically unless a provider excludes voice exposure; the counts below describe source declarations, not a promise that a device currently supports every action. Saved commands depend on the user's configured catalog. Required parameters need a provider adapter.
 
-This version adds fresh state queries for display brightness, system metrics, and power. Brightness uses the same canonical controller write as native controls and validates the display generation before dispatch. Readback distinguishes Apple-native/DDC measurements from software dimming, missing observations, and pending writes.
+This version adds fresh state queries for display brightness, system metrics, and power. Brightness uses the same canonical controller write as native controls and validates the display generation before dispatch. Readback distinguishes Apple-native/DDC measurements from software dimming, missing observations, and pending writes. Voice excludes cursor-scoped increment shortcuts and uses the discovered display with an absolute percentage.
 
 Every enabled feature also has a setup/review entry through the host. Opening that entry does not complete its operation; plugins without a dedicated settings page may open Marketplace. Features requiring pickers, editors, or native approvals keep those flows. Clipboard history, calendar contents, file contents, credentials, process names, and network addresses are not included in the new device-state queries. Adding private-content queries requires provider declarations and native approval.
 

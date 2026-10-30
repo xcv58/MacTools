@@ -1028,7 +1028,12 @@ extension DisplayBrightnessPlugin: PluginPortablePreferencesProviding,
 }
 
 
-extension DisplayBrightnessPlugin: PluginVoiceQueryProviding, PluginVoiceParameterizedActionProviding {
+extension DisplayBrightnessPlugin: PluginVoiceQueryProviding, PluginVoiceParameterizedActionProviding, PluginActionExposureProviding {
+    func exposurePolicy(for reference: ActionReference, on surface: ActionExposureSurface) -> ActionExposurePolicy {
+        // Shortcut increments use cursor/user-configured targets. Voice always resolves its explicit display first.
+        if surface.rawValue == "voice-control", Self.shortcutDirection(for: reference.key.actionID) != nil { return .excluded }
+        return .automatic
+    }
     var voiceParameterizedActionIDs: Set<String> { [Constants.setBrightnessActionID] }
     var voiceQueries: [PluginVoiceQuery] {
         [.init(id: "display-state", title: metadata.title,
