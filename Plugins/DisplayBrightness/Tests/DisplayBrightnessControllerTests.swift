@@ -188,6 +188,26 @@ final class DisplayBrightnessControllerTests: XCTestCase {
         XCTAssertEqual(controller.snapshot().displays.first?.brightness, 0.7)
     }
 
+    func testVoiceObservationStartingDuringWriteRemainsUnverifiedAfterWriteCompletes() async {
+        let display = makeTestDisplay(id: 35, name: "External Display")
+        let backend = ScriptedBrightnessBackend(display: display, results: [.success(())], suspendsFirstWrite: true)
+        let controller = makeController(display: display, backend: backend)
+        controller.refresh()
+        await waitUntil { controller.snapshot().displays.first?.isReady == true }
+        let write = Task { await controller.setBrightnessAndWait(0.8, for: display.id) }
+        await waitUntil { backend.firstWriteStarted }
+        backend.suspendNextRead()
+        defer { backend.releaseRead(); backend.releaseFirstWrite(); controller.cancelOutstandingWrites() }
+        let read = Task { await controller.observeBrightness(for: display.id) }
+        await waitUntil { backend.readStarted }
+        backend.releaseFirstWrite()
+        let writeResult = await write.value
+        XCTAssertEqual(writeResult, .succeeded)
+        backend.releaseRead()
+        let observation = await read.value
+        XCTAssertFalse(observation?.isHardwareReadback == true, "A read overlapping a write must remain unverified even after the write completes")
+    }
+
     func testVoiceObservationCrossingWriteIsNotVerified() async {
         let display = makeTestDisplay(id: 34, name: "External Display")
         let backend = BlockingReadBrightnessBackend(display: display)
@@ -614,6 +634,9 @@ private final class ScriptedBrightnessBackend: DisplayBrightnessBackend, @unchec
 
     private let lock = NSLock()
     private let firstWriteGate = DispatchSemaphore(value: 0)
+    private let readGate = DispatchSemaphore(value: 0)
+    private var suspendRead = false
+    private var startedRead = false
     private var brightness = 1.0
     private var results: [Result<Void, Error>]
     private let suspendsFirstWrite: Bool
@@ -651,10 +674,17 @@ private final class ScriptedBrightnessBackend: DisplayBrightnessBackend, @unchec
         return cleanups
     }
 
+    var readStarted: Bool { lock.withLock { startedRead } }
+    func suspendNextRead() { lock.withLock { suspendRead = true; startedRead = false } }
+    func releaseRead() { readGate.signal() }
     func readBrightness() throws -> Double {
-        lock.lock()
-        defer { lock.unlock() }
-        return brightness
+        let snapshot = lock.withLock { () -> (Double, Bool) in
+            let suspend = suspendRead
+            suspendRead = false; startedRead = true
+            return (brightness, suspend)
+        }
+        if snapshot.1 { readGate.wait() }
+        return snapshot.0
     }
 
     func writeBrightness(_ value: Double) throws {

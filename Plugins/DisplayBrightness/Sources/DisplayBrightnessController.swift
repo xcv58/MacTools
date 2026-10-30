@@ -219,6 +219,7 @@ final class DisplayBrightnessController: DisplayBrightnessControlling {
         guard let managed = managedDisplays[displayID] else { return nil }
         let backend = managed.backend
         let writeRevision = nextWriteID
+        let pendingAtStart = managed.pendingBrightness != nil || managed.writeInFlight
         let observed = await Task.detached(priority: .userInitiated) { () -> Double? in
             guard let value = try? backend.readBrightness(), value.isFinite,
                   (0...1).contains(value) else { return nil }
@@ -230,7 +231,7 @@ final class DisplayBrightnessController: DisplayBrightnessControlling {
         return DisplayBrightnessObservation(
             value: observed,
             backend: backend.kind,
-            isPendingWrite: current.pendingBrightness != nil || current.writeInFlight
+            isPendingWrite: pendingAtStart || current.pendingBrightness != nil || current.writeInFlight
         )
     }
 
