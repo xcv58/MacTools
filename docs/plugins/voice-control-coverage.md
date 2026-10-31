@@ -1,10 +1,10 @@
-# Voice Control capability coverage
+# Voice Assistant capability coverage
 
-Voice Control discovers commands from enabled plugins at runtime. Existing complete catalog references are available automatically unless a provider excludes voice exposure; the counts below describe source declarations, not a promise that a device currently supports every action. Saved commands depend on the user's configured catalog. Required parameters need a provider adapter.
+Voice Assistant discovers commands from enabled plugins at runtime. Existing complete catalog references are available automatically unless a provider excludes voice exposure; the counts below describe source declarations, not a promise that a device currently supports every action. Saved commands depend on the user's configured catalog. Required parameters need a provider adapter.
 
-The main Voice Control settings page includes **Automatically allow newly installed plugins**, on by default. Its changes are saved immediately for future conversations. Turning it off keeps current selections and requires manual approval for later providers; existing explicit exclusions remain blocked when it is on. Manage Features retains searchable selections and batch edits with Cancel/Done. Allow All and Allow None change the listed providers without changing the automatic policy.
+The main Voice Assistant settings page includes **Automatically allow newly installed plugins**, on by default. Its changes are saved immediately for future conversations. Turning it off keeps current selections and requires manual approval for later providers; existing explicit exclusions remain blocked when it is on. Manage Features retains searchable selections and batch edits with Cancel/Done. Allow All and Allow None change the listed providers without changing the automatic policy.
 
-The Voice Control entry exposes two fixed voice commands for this setting. Disabling automatic access applies directly; enabling requires confirmation in the app. Changes never expand an already active conversation's grant. The host's Applications entry can also be allowed or excluded independently of other plugins.
+The Voice Assistant entry exposes two fixed voice commands for this setting. Disabling automatic access applies directly; enabling requires confirmation in the app. Changes never expand an already active conversation's grant. The host's Applications entry can also be allowed or excluded independently of other plugins.
 
 This version adds fresh state queries for display brightness, system metrics, power, appearance, Keep Awake, Night Shift, and system mute. Brightness uses the same canonical controller write as native controls and validates the display generation before dispatch. Readback distinguishes Apple-native/DDC measurements from software dimming, missing observations, and pending writes. Voice excludes cursor-scoped increment shortcuts and uses the discovered display with an absolute percentage.
 
