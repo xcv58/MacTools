@@ -63,7 +63,7 @@ final class VoiceControlPlugin: MacToolsPlugin, PluginSettingsPresenting,
     }
     var shortcutSettingsGroups: [PluginShortcutSettingsGroupConfiguration] {
         [.init(id: "conversation", title: conversation.text("快捷键"),
-               shortcutDefinitionIDs: ["toggle-assistant", "dismiss-assistant"], placementAfterSectionID: "credentials")]
+               shortcutDefinitionIDs: ["toggle-assistant", "dismiss-assistant"])]
     }
     private func shortcut(id: String, title: String) -> PluginShortcutDefinition {
         .init(id: id, title: conversation.text(title), description: conversation.text(id == "dismiss-assistant" ? "可选的独立快捷键，用于停止录音并关闭助手。" : "隐藏时开始聆听，再按一次停止并关闭。"),
@@ -99,7 +99,11 @@ final class VoiceControlPlugin: MacToolsPlugin, PluginSettingsPresenting,
         .form(description: metadata.defaultDescription, sections: [
             .init(id: "credentials", title: conversation.text("OpenAI 连接"), systemImage: "key",
                   footer: conversation.text("密钥仅保存在本机钥匙串，费用由你的 OpenAI 账户承担。")) { [weak self] _ in
-                if let self { VoiceKeySettings(plugin: self, model: conversation) }
+                if let self { VoiceKeySettings(model: conversation) }
+            },
+            .init(id: "conversation", title: conversation.text("对话"), systemImage: "waveform",
+                  embeddedShortcutGroupIDs: ["conversation"]) { [weak self] context in
+                if let self { VoiceConversationSettings(plugin: self, model: conversation, context: context) }
             },
             .init(id: "scope", title: conversation.text("允许的功能"), systemImage: "checkmark.shield",
                   footer: conversation.text("对话音频和请求的功能数据会发送到 OpenAI，使用你的 API 额度。回复由 AI 生成；停止、锁屏或睡眠时结束录音。")) { [weak self] _ in

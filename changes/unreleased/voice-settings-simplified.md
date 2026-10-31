@@ -3,4 +3,4 @@ release: plugin
 type: changed
 ---
 
-Voice Assistant settings group connection, shortcuts, and feature access. Keys use Keychain in every build; developer file loading is removed, and the speaker test moves into connection troubleshooting.
+Voice Assistant settings group connection, conversation, and feature access, with expandable pricing and optional shortcuts. Keys use Keychain; the speaker test stays in troubleshooting.

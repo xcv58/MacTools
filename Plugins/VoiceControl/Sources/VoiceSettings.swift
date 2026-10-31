@@ -4,7 +4,6 @@ import SwiftUI
 
 @MainActor
 struct VoiceKeySettings: View {
-    let plugin: VoiceControlPlugin
     @ObservedObject var model: VoiceConversation
     @State private var draftKey = ""
     @State private var editing = false
@@ -59,34 +58,6 @@ struct VoiceKeySettings: View {
             }
             Divider().padding(.vertical, PluginSettingsTheme.Spacing.rowTitleDescription)
             VoicePricingSettings(model: model)
-            Divider().padding(.vertical, PluginSettingsTheme.Spacing.rowTitleDescription)
-            Toggle(model.text("说话后连接"), isOn: Binding(
-                get: { model.connectOnSpeech }, set: { plugin.setConnectOnSpeech($0) }))
-                .toggleStyle(.switch)
-                .font(PluginSettingsTheme.Typography.rowTitle)
-                .disabled(model.active || model.credentialBusy)
-                .accessibilityIdentifier("voice-control.connect-on-speech")
-            Text(model.text("先在本机检测语音，再连接 OpenAI。连接后正常传输对话音频。"))
-                .font(PluginSettingsTheme.Typography.rowDescription).foregroundStyle(.secondary)
-            Divider().padding(.vertical, PluginSettingsTheme.Spacing.rowTitleDescription)
-            HStack {
-                Text(model.text("自动结束闲置对话"))
-                    .font(PluginSettingsTheme.Typography.rowTitle)
-                Spacer(minLength: 12)
-                Picker("", selection: Binding(get: { model.idleTimeout }, set: { plugin.setIdleTimeout($0) })) {
-                    ForEach(VoiceIdleTimeout.allCases, id: \.rawValue) { timeout in
-                        Text(timeout.duration.formatted(.units(allowed: [.minutes, .seconds], width: .wide)
-                            .locale(PluginRuntimeLocalization.locale))).tag(timeout)
-                    }
-                }
-                .labelsHidden().pickerStyle(.menu)
-                .frame(minWidth: 110, idealWidth: 150, maxWidth: 180)
-                .disabled(model.active || model.credentialBusy)
-                .accessibilityLabel(model.text("自动结束闲置对话"))
-                .accessibilityIdentifier("voice-control.idle-timeout")
-            }
-            Text(model.text("闲置时停止录音并断开连接，浮动面板保持打开。"))
-                .font(PluginSettingsTheme.Typography.rowDescription).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .buttonStyle(.bordered).controlSize(.small)
@@ -101,6 +72,7 @@ struct VoiceKeySettings: View {
 @MainActor
 private struct VoicePricingSettings: View {
     @ObservedObject var model: VoiceConversation
+    @State private var showsDetails = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: PluginSettingsTheme.Spacing.rowTitleDescription) {
@@ -110,31 +82,34 @@ private struct VoicePricingSettings: View {
                 Link(VoiceTools.voiceModelID, destination: modelURL(VoiceTools.voiceModelID))
                     .accessibilityIdentifier("voice-control.voice-model-pricing")
             }
-            Text(model.text("US$0.05/分钟，按秒计费"))
-                .accessibilityIdentifier("voice-control.voice-rate")
             HStack {
                 Text(model.text("指令模型"))
                 Spacer(minLength: 12)
                 Link(VoiceTools.backendModelID, destination: modelURL(VoiceTools.backendModelID))
                     .accessibilityIdentifier("voice-control.command-model-pricing")
             }
-            HStack {
-                Text(model.text("本机语音检测"))
-                Spacer(minLength: 12)
-                Text(verbatim: "Silero VAD")
-                    .accessibilityIdentifier("voice-control.local-speech-model")
-            }
+            Text(model.text("US$0.05/分钟，按秒计费"))
+                .accessibilityIdentifier("voice-control.voice-rate")
             Text(model.text("连接后，即使无声或麦克风静音也计费。指令处理另按 Token 计费。"))
                 .foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-            Text(model.text("连接前的语音检测在本机运行，不产生 OpenAI 费用。"))
-                .foregroundStyle(.secondary)
-            HStack(alignment: .firstTextBaseline) {
-                Link(model.text("查看 OpenAI 价格"), destination: URL(string: "https://developers.openai.com/api/docs/pricing")!)
-                    .accessibilityIdentifier("voice-control.openai-pricing")
-                Spacer(minLength: 12)
-                Text(model.text("参考费率核对日期：2026-10-30。价格可能调整。"))
-                    .foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            DisclosureGroup(model.text("模型与价格…"), isExpanded: $showsDetails) {
+                VStack(alignment: .leading, spacing: PluginSettingsTheme.Spacing.rowTitleDescription) {
+                    HStack {
+                        Text(model.text("本机语音检测"))
+                        Spacer(minLength: 12)
+                        Text(verbatim: "Silero VAD")
+                            .accessibilityIdentifier("voice-control.local-speech-model")
+                    }
+                    Text(model.text("连接前的语音检测在本机运行，不产生 OpenAI 费用。"))
+                        .foregroundStyle(.secondary)
+                    Link(model.text("查看 OpenAI 价格"), destination: URL(string: "https://developers.openai.com/api/docs/pricing")!)
+                        .accessibilityIdentifier("voice-control.openai-pricing")
+                    Text(model.text("参考费率核对日期：2026-10-30。价格可能调整。"))
+                        .foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.top, PluginSettingsTheme.Spacing.rowTitleDescription)
             }
+            .accessibilityIdentifier("voice-control.pricing-details")
         }
         .font(PluginSettingsTheme.Typography.rowDescription)
     }
@@ -145,21 +120,72 @@ private struct VoicePricingSettings: View {
 }
 
 @MainActor
+struct VoiceConversationSettings: View {
+    let plugin: VoiceControlPlugin
+    @ObservedObject var model: VoiceConversation
+    let context: PluginSettingsContext
+    @State private var showsMoreOptions = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: PluginSettingsTheme.Spacing.rowContentControl) {
+            shortcut("toggle-assistant")
+            Divider()
+            PluginSettingsItem(title: model.text("说话后连接")) {
+                Toggle(model.text("说话后连接"), isOn: Binding(
+                    get: { model.connectOnSpeech }, set: { plugin.setConnectOnSpeech($0) }))
+                    .labelsHidden().toggleStyle(.switch)
+                    .disabled(model.active || model.credentialBusy)
+                    .accessibilityIdentifier("voice-control.connect-on-speech")
+            }
+            .help(model.text("先在本机检测语音，再连接 OpenAI。连接后正常传输对话音频。"))
+            PluginSettingsItem(title: model.text("自动结束闲置对话")) {
+                Picker(model.text("自动结束闲置对话"), selection: Binding(
+                    get: { model.idleTimeout }, set: { plugin.setIdleTimeout($0) })) {
+                    ForEach(VoiceIdleTimeout.allCases, id: \.rawValue) { timeout in
+                        Text(timeout.duration.formatted(.units(allowed: [.minutes, .seconds], width: .wide)
+                            .locale(PluginRuntimeLocalization.locale))).tag(timeout)
+                    }
+                }
+                .labelsHidden().pickerStyle(.menu)
+                .frame(minWidth: 110, idealWidth: 150, maxWidth: 180)
+                .disabled(model.active || model.credentialBusy)
+                .accessibilityIdentifier("voice-control.idle-timeout")
+            }
+            .help(model.text("闲置时停止录音并断开连接，浮动面板保持打开。"))
+            DisclosureGroup(model.text("更多选项"), isExpanded: $showsMoreOptions) {
+                shortcut("dismiss-assistant")
+                    .padding(.top, PluginSettingsTheme.Spacing.rowContentControl)
+            }
+            .font(PluginSettingsTheme.Typography.rowDescription)
+            .accessibilityIdentifier("voice-control.more-options")
+        }
+        .controlSize(.small)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    @ViewBuilder
+    private func shortcut(_ definitionID: String) -> some View {
+        if let item = context.shortcutItem(definitionID: definitionID) {
+            PluginSettingsItem(title: item.title, description: item.description) {
+                PluginSettingsShortcutRecorderControl(
+                    title: item.title, displayText: item.bindingText, canClear: item.canClear,
+                    clearTitle: model.text("清除快捷键"),
+                    onRecord: { context.recordShortcut($0, for: item.id) },
+                    onBeginRecording: { context.beginShortcutRecording(for: item.id) },
+                    onClear: { context.clearShortcut(for: item.id) })
+            }
+            .pluginSettingsSearchAnchor(pluginID: context.pluginID, entryID: item.id)
+        }
+    }
+}
+
+@MainActor
 struct VoiceScopeSettings: View {
     let plugin: VoiceControlPlugin
     @ObservedObject var model: VoiceConversation
     @State private var showsFeatures = false
     var body: some View {
         VStack(alignment: .leading, spacing: PluginSettingsTheme.Spacing.rowContentControl) {
-            Toggle(model.text("自动允许新安装的插件"), isOn: Binding(
-                get: { model.featureAccess.automaticallyAllowNewPlugins },
-                set: { plugin.setProviderAccess([:], automaticallyAllowNewPlugins: $0) }))
-                .toggleStyle(.switch)
-                .font(PluginSettingsTheme.Typography.rowTitle)
-                .disabled(model.active || model.credentialBusy)
-                .accessibilityIdentifier("voice-control.automatically-allow-new-plugins")
-            Text(model.text("关闭后保留当前选择，新插件需手动允许。"))
-                .font(PluginSettingsTheme.Typography.rowDescription).foregroundStyle(.secondary)
             HStack {
                 Text(voiceAccessSummary(model)).font(PluginSettingsTheme.Typography.rowTitle)
                 Spacer(minLength: 12)
@@ -167,6 +193,15 @@ struct VoiceScopeSettings: View {
                     .buttonStyle(.bordered).controlSize(.small)
                     .accessibilityIdentifier("voice-control.manage-features")
             }
+            PluginSettingsItem(title: model.text("自动允许新安装的插件")) {
+                Toggle(model.text("自动允许新安装的插件"), isOn: Binding(
+                    get: { model.featureAccess.automaticallyAllowNewPlugins },
+                    set: { plugin.setProviderAccess([:], automaticallyAllowNewPlugins: $0) }))
+                    .labelsHidden().toggleStyle(.switch)
+                    .disabled(model.active || model.credentialBusy)
+                    .accessibilityIdentifier("voice-control.automatically-allow-new-plugins")
+            }
+            .help(model.text("关闭后保留当前选择，新插件需手动允许。"))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .sheet(isPresented: $showsFeatures) { VoiceFeatureAccessSheet(plugin: plugin, model: model) }
