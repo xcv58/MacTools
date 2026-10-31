@@ -220,11 +220,19 @@ final class DisplayBrightnessController: DisplayBrightnessControlling {
         let backend = managed.backend
         let writeRevision = nextWriteID
         let pendingAtStart = managed.pendingBrightness != nil || managed.writeInFlight
-        let observed = await Task.detached(priority: .userInitiated) { () -> Double? in
+        let read: @Sendable () -> Double? = {
             guard let value = try? backend.readBrightness(), value.isFinite,
                   (0...1).contains(value) else { return nil }
             return value
-        }.value
+        }
+        let observed: Double?
+        if backend.kind == .shade {
+            // Shade refreshes AppKit overlays while reading. Keep the same ordering
+            // and pending-write exclusion as scheduleRead instead of detaching it.
+            observed = pendingAtStart ? nil : read()
+        } else {
+            observed = await Task.detached(priority: .userInitiated, operation: read).value
+        }
         guard nextWriteID == writeRevision,
               let current = managedDisplays[displayID], current.backend === backend,
               current.display == managed.display, isDisplayConnected(managed.display) else { return nil }

@@ -6,6 +6,30 @@ import MacToolsPluginKit
 
 @MainActor
 final class DisplayBrightnessControllerTests: XCTestCase {
+    func testShadeObservationKeepsPresentationOnMainAndSkipsInFlightWrites() async {
+        let display = makeTestDisplay(id: 42, name: "Shade Display")
+        let backend = ScriptedBrightnessBackend(display: display, results: [.success(())],
+            suspendsFirstWrite: true, kind: .shade)
+        let controller = makeController(display: display, backend: backend)
+        controller.refresh()
+        let initial = await controller.observeBrightness(for: display.id)
+        XCTAssertEqual(initial?.value, 1)
+        XCTAssertTrue(backend.readWasOnMainThread, "Shade reads refresh overlays and must retain main-actor ordering")
+        let write = Task { await controller.setBrightnessAndWait(0.4, for: display.id) }
+        await waitUntil { backend.firstWriteStarted }
+        let readsBeforeObservation = backend.readCount
+        let pending = await controller.observeBrightness(for: display.id)
+        XCTAssertNil(pending?.value)
+        XCTAssertEqual(pending?.isPendingWrite, true)
+        XCTAssertEqual(backend.readCount, readsBeforeObservation, "A voice query must not enqueue stale Shade presentation during a write")
+        backend.releaseFirstWrite()
+        let result = await write.value
+        XCTAssertEqual(result, .succeeded)
+        let current = await controller.observeBrightness(for: display.id)
+        XCTAssertEqual(current?.value, 0.4)
+        XCTAssertTrue(backend.readWasOnMainThread)
+    }
+
     func testSystemBuilderPreservesSoftwareFallbackWhenMainDisplayChanges() async {
         let display = makeTestDisplay(id: 19, name: "Apple Display", vendorNumber: 0x610)
         let provider = MutableDisplayProvider(displays: [display])
@@ -643,6 +667,8 @@ private final class ScriptedBrightnessBackend: DisplayBrightnessBackend, @unchec
     private var didStartFirstWrite = false
     private var writes: [Double] = []
     private var cleanups = 0
+    private var reads = 0
+    private var lastReadOnMainThread = false
 
     init(
         display: DisplayInfo,
@@ -675,12 +701,15 @@ private final class ScriptedBrightnessBackend: DisplayBrightnessBackend, @unchec
     }
 
     var readStarted: Bool { lock.withLock { startedRead } }
+    var readCount: Int { lock.withLock { reads } }
+    var readWasOnMainThread: Bool { lock.withLock { lastReadOnMainThread } }
     func suspendNextRead() { lock.withLock { suspendRead = true; startedRead = false } }
     func releaseRead() { readGate.signal() }
     func readBrightness() throws -> Double {
         let snapshot = lock.withLock { () -> (Double, Bool) in
             let suspend = suspendRead
             suspendRead = false; startedRead = true
+            reads += 1; lastReadOnMainThread = Thread.isMainThread
             return (brightness, suspend)
         }
         if snapshot.1 { readGate.wait() }
