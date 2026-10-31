@@ -125,7 +125,7 @@ final class VoiceControlPlugin: MacToolsPlugin, PluginSettingsPresenting,
                   confirmation: enabled ? .init(title: conversation.text("自动允许新安装的插件"),
                       message: conversation.text("新插件将在后续对话中自动可用，已禁止的插件和当前对话不受影响。"),
                       confirmButtonTitle: conversation.text("开启")) : nil,
-                  capabilities: [.foregroundInteractive])
+                  capabilities: [.foregroundInteractive, .cancellable])
         }
     }
     var actionCatalogEntries: [ActionCatalogEntry] {
@@ -145,8 +145,10 @@ final class VoiceControlPlugin: MacToolsPlugin, PluginSettingsPresenting,
     }
     func beginAction(_ invocation: ActionInvocation) throws -> ActionExecutionHandle {
         let reference = invocation.reference
+        let revision = conversation.sessionRevision
         return .init { [weak self] in
-            guard let self, actionAvailability(for: reference).isAvailable else { return .cancelled }
+            guard !Task.isCancelled, let self, conversation.sessionRevision == revision,
+                  actionAvailability(for: reference).isAvailable else { return .cancelled }
             var updated = conversation.featureAccess
             updated.setAutomaticallyAllowNewPlugins(reference.key.actionID == AccessAction.enable,
                 currentPluginIDs: Set(conversation.context?.providers().map(\.id) ?? []))

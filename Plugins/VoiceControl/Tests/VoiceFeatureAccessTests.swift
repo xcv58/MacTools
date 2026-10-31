@@ -5,6 +5,28 @@ import XCTest
 
 @MainActor
 final class VoiceFeatureAccessTests: XCTestCase {
+    func testStopCancelsAdmittedPolicyChangesBeforeTheyCommit() async throws {
+        for enabled in [true, false] {
+            let storage = VoiceCredentialTestStorage()
+            storage.set(!enabled, forKey: "automaticallyAllowNewPlugins")
+            let plugin = makePlugin(storage: storage)
+            let action = try XCTUnwrap(plugin.actionDefinitions.first {
+                $0.key.actionID == (enabled ? "automatic-plugin-access-on" : "automatic-plugin-access-off")
+            })
+            XCTAssertTrue(action.capabilities.contains(.cancellable))
+            let invocation = ActionInvocation(reference: .init(key: action.key), source: .test, mode: .foreground)
+            let pending = try plugin.beginAction(invocation)
+            plugin.conversation.stop()
+            let result = await pending.result()
+            XCTAssertEqual(result, .cancelled)
+            XCTAssertEqual(storage.bool(forKey: "automaticallyAllowNewPlugins"), !enabled)
+            // A new native invocation outside a conversation still works after Stop.
+            let fresh = try plugin.beginAction(invocation)
+            guard case .succeeded = await fresh.result() else { return XCTFail("Expected a fresh policy change") }
+            XCTAssertEqual(storage.bool(forKey: "automaticallyAllowNewPlugins"), enabled)
+        }
+    }
+
     private let providers: [PluginVoiceProvider] = [
         .init(id: "brightness", title: "Display Brightness"),
         .init(id: "volume", title: "Display Volume"),
