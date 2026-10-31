@@ -1,3 +1,4 @@
+import AVFoundation
 import Foundation
 import MacToolsPluginKit
 import XCTest
@@ -5,6 +6,109 @@ import XCTest
 
 @MainActor
 final class VoiceReadinessTests: XCTestCase {
+    func testCaptureConversionDoesNotCarryMutedSpeechIntoFreshAudio() async throws {
+        let microphone = VoiceMicrophoneGate()
+        microphone.setMuted(false)
+        let format = try XCTUnwrap(AVAudioFormat(standardFormatWithSampleRate: 48000, channels: 1))
+        let input = try XCTUnwrap(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 4800))
+        input.frameLength = input.frameCapacity
+        let samples = try XCTUnwrap(input.floatChannelData?[0])
+        let pair = AsyncThrowingStream<VoiceInputChunk, Error>.makeStream()
+        let capture = try VoiceCapture(input: format, microphone: microphone, continuation: pair.continuation)
+        samples.update(repeating: 0.25, count: Int(input.frameLength))
+        capture.append(input)
+        microphone.setMuted(true)
+        samples.update(repeating: 0.9, count: Int(input.frameLength))
+        capture.append(input)
+        microphone.setMuted(false)
+        samples.update(repeating: 0, count: Int(input.frameLength))
+        capture.append(input)
+        pair.continuation.finish()
+        var chunks: [VoiceInputChunk] = []
+        for try await chunk in pair.stream { chunks.append(chunk) }
+        XCTAssertEqual(chunks.count, 3)
+        guard chunks.count == 3 else { return }
+        XCTAssertGreaterThan(VoiceAudioMeter.level(chunks[0].data), 0)
+        XCTAssertEqual(VoiceAudioMeter.level(chunks[1].data), 0)
+        XCTAssertEqual(VoiceAudioMeter.level(chunks[2].data), 0, "Unmuting must reset converter history before fresh PCM")
+    }
+
+    func testCaptureGateSilencesMutedPCMAndInvalidatesCaptureAcrossMuteChanges() {
+        let microphone = VoiceMicrophoneGate()
+        let original = microphone.setMuted(false)
+        let pcm = Data([42, 0, 42, 0])
+        XCTAssertEqual(microphone.capture(pcm, revision: original).data, pcm)
+        let muted = microphone.setMuted(true)
+        XCTAssertEqual(microphone.capture(pcm, revision: muted).data, Data(count: pcm.count))
+        let current = microphone.setMuted(false)
+        XCTAssertEqual(microphone.capture(pcm, revision: original).data, Data(count: pcm.count))
+        XCTAssertEqual(microphone.capture(pcm, revision: current).data, pcm)
+    }
+
+    func testMutedCaptureBacklogCannotUploadAfterUnmuting() async throws {
+        let (model, factory, audio, _) = try await makeModel()
+        let socket = try await start(model, factory)
+        socket.holdNextInput = true
+        let before = Data(repeating: 5, count: 2400)
+        let fresh = Data(repeating: 7, count: 2400)
+        audio.push(before)
+        await settle { socket.hasHeldInput }
+        XCTAssertTrue(socket.hasHeldInput)
+        model.toggleMute()
+        audio.push(Data(repeating: 6, count: 2400))
+        model.toggleMute()
+        socket.releaseInput()
+        audio.push(fresh)
+        await settle { socket.inputAudio.last == fresh }
+        XCTAssertEqual(socket.inputAudio, [before, fresh])
+        model.stop(); socket.cancel()
+    }
+
+    func testMuteInvalidatesStartupChunksAlreadyTakenByPendingFlush() async throws {
+        let (model, factory, audio, _) = try await makeModel()
+        model.start()
+        await settle { factory.connections.count == 1 }
+        let socket = try XCTUnwrap(factory.connections.first)
+        socket.holdNextInput = true
+        let before = Data(repeating: 3, count: 2400)
+        let discarded = Data(repeating: 4, count: 2400)
+        audio.push(before); audio.push(discarded)
+        await settle { model.inputLevels.filter { $0 > 0 }.count == 2 }
+        socket.feed(["type": "session.started"])
+        await settle { socket.hasHeldInput }
+        XCTAssertTrue(socket.hasHeldInput)
+        model.toggleMute(); model.toggleMute()
+        socket.releaseInput()
+        await settle { model.connected }
+        let fresh = Data(repeating: 8, count: 2400)
+        audio.push(fresh)
+        await settle { socket.inputAudio.last == fresh }
+        XCTAssertEqual(socket.inputAudio, [before, fresh])
+        model.stop(); socket.cancel()
+    }
+
+    func testOldStartupFlushFailureCannotStopReplacementConversation() async throws {
+        let (model, factory, audio, grants) = try await makeModel()
+        model.start()
+        await settle { factory.connections.count == 1 }
+        let old = try XCTUnwrap(factory.connections.first)
+        old.holdNextInput = true
+        audio.push(Data(repeating: 1, count: 2400))
+        await settle { (model.inputLevels.last ?? 0) > 0 }
+        old.feed(["type": "session.started"])
+        await settle { old.hasHeldInput }
+        XCTAssertTrue(old.hasHeldInput)
+        model.stop()
+        let current = try await start(model, factory)
+        old.releaseInput(throwing: URLError(.networkConnectionLost))
+        await settle { old.completedInputSends == 1 }
+        XCTAssertTrue(model.active)
+        XCTAssertTrue(model.connected)
+        XCTAssertFalse(audio.stopped)
+        XCTAssertEqual(grants.ended.count, 1)
+        model.stop(); old.cancel(); current.cancel()
+    }
+
     func testQuotaFailureStopsAudioAndRevokesControlWithoutRetry() async throws {
         let (model, factory, audio, grants) = try await makeModel()
         let socket = try await start(model, factory)
@@ -276,11 +380,27 @@ final class VoiceReadinessTests: XCTestCase {
     private var cancelled = false
     var outputs = 0
     var inputAudio: [Data] = []
+    var holdNextInput = false
+    private var heldInput: CheckedContinuation<Void, Error>?
+    var hasHeldInput: Bool { heldInput != nil }
+    private(set) var completedInputSends = 0
     func resume() {}
     func send(_ event: [String: Any]) async throws {
         if cancelled { throw URLError(.cancelled) }
-        if event["type"] as? String == "session.input_audio.append", let encoded = event["audio"] as? String, let data = Data(base64Encoded: encoded) { inputAudio.append(data) }
+        if event["type"] as? String == "session.input_audio.append", let encoded = event["audio"] as? String, let data = Data(base64Encoded: encoded) {
+            defer { completedInputSends += 1 }
+            if holdNextInput {
+                holdNextInput = false
+                try await withCheckedThrowingContinuation { heldInput = $0 }
+            }
+            guard !cancelled else { throw URLError(.cancelled) }
+            inputAudio.append(data)
+        }
         if event["type"] as? String == "response.item.create" { outputs += 1 }
+    }
+    func releaseInput(throwing error: Error? = nil) {
+        let pending = heldInput; heldInput = nil
+        if let error { pending?.resume(throwing: error) } else { pending?.resume() }
     }
     func call(_ id: String, name: String, arguments: String) {
         feed(["type": "response.event", "event": ["type": "response.output_item.done", "response_id": id,
@@ -300,16 +420,20 @@ final class VoiceReadinessTests: XCTestCase {
 @MainActor private final class ReadinessAudio: VoiceAudioIO {
     var stopped = false
     var played = 0
-    private var continuation: AsyncThrowingStream<Data, Error>.Continuation?
+    private var continuation: AsyncThrowingStream<VoiceInputChunk, Error>.Continuation?
+    private var microphone: VoiceMicrophoneGate?
     private var playback: ((Bool) -> Void)?
     func observePlayback(_ observer: @escaping (Bool) -> Void) { playback = observer }
-    func start() throws -> AsyncThrowingStream<Data, Error> {
-        stopped = false
-        let pair = AsyncThrowingStream<Data, Error>.makeStream()
+    func start(microphone: VoiceMicrophoneGate) throws -> AsyncThrowingStream<VoiceInputChunk, Error> {
+        stopped = false; self.microphone = microphone
+        let pair = AsyncThrowingStream<VoiceInputChunk, Error>.makeStream(bufferingPolicy: .bufferingOldest(128))
         continuation = pair.continuation
         return pair.stream
     }
-    func push(_ data: Data) { continuation?.yield(data) }
+    func push(_ data: Data) {
+        guard let microphone else { return }
+        continuation?.yield(microphone.capture(data, revision: microphone.revision))
+    }
     func play(_ data: Data) throws { played += 1; playback?(true) }
     func finishPlayback() { playback?(false) }
     func stop() { stopped = true; continuation?.finish(); continuation = nil; playback?(false) }

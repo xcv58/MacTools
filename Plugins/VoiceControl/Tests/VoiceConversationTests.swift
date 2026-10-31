@@ -75,7 +75,7 @@ final class VoiceConversationTests: XCTestCase {
 }
 
 @MainActor private final class NoCaptureAudio: VoiceAudioIO {
-    func start() throws -> AsyncThrowingStream<Data, Error> { XCTFail("Must not capture"); throw VoiceFailure.audio }
+    func start(microphone: VoiceMicrophoneGate) throws -> AsyncThrowingStream<VoiceInputChunk, Error> { XCTFail("Must not capture"); throw VoiceFailure.audio }
     func play(_ data: Data) throws { XCTFail("Must not play") }
     func stop() {}
 }

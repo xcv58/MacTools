@@ -1,19 +1,57 @@
 @preconcurrency import AVFoundation
 import Foundation
 
+struct VoiceInputChunk: Sendable {
+    let data: Data
+    let revision: UUID
+}
+
+/// Capture and UI share only this small synchronized privacy boundary.
+final class VoiceMicrophoneGate: @unchecked Sendable {
+    private let lock = NSLock()
+    private var muted = true
+    private var generation = UUID()
+
+    var revision: UUID { lock.withLock { generation } }
+    @discardableResult
+    func setMuted(_ muted: Bool) -> UUID {
+        lock.withLock {
+            self.muted = muted
+            generation = UUID()
+            return generation
+        }
+    }
+
+    func capture(_ data: Data, revision: UUID) -> VoiceInputChunk {
+        lock.withLock {
+            .init(data: !muted && generation == revision ? data : Data(count: data.count), revision: revision)
+        }
+    }
+}
+
 /// Only the audio tap accesses the converter. Its output crosses threads as immutable PCM data.
-private final class VoiceCapture: @unchecked Sendable {
+final class VoiceCapture: @unchecked Sendable {
     let converter: AVAudioConverter
     let output: AVAudioFormat
-    let continuation: AsyncThrowingStream<Data, Error>.Continuation
+    let continuation: AsyncThrowingStream<VoiceInputChunk, Error>.Continuation
+    let microphone: VoiceMicrophoneGate
+    private var convertedRevision: UUID?
 
-    init(input: AVAudioFormat, continuation: AsyncThrowingStream<Data, Error>.Continuation) throws {
+    init(input: AVAudioFormat, microphone: VoiceMicrophoneGate,
+         continuation: AsyncThrowingStream<VoiceInputChunk, Error>.Continuation) throws {
         guard let output = AVAudioFormat(commonFormat: .pcmFormatInt16, sampleRate: 24000, channels: 1, interleaved: true),
               let converter = AVAudioConverter(from: input, to: output) else { throw VoiceFailure.audio }
         self.output = output; self.converter = converter; self.continuation = continuation
+        self.microphone = microphone
     }
 
     func append(_ input: AVAudioPCMBuffer) {
+        let revision = microphone.revision
+        if convertedRevision != revision {
+            // Resampler history must not carry muted samples into the next generation.
+            converter.reset()
+            convertedRevision = revision
+        }
         let capacity = AVAudioFrameCount(ceil(Double(input.frameLength) * 24000 / input.format.sampleRate) + 32)
         guard let buffer = AVAudioPCMBuffer(pcmFormat: output, frameCapacity: capacity) else { return }
         var consumed = false
@@ -25,13 +63,14 @@ private final class VoiceCapture: @unchecked Sendable {
         guard error == nil, status != .error else { continuation.finish(throwing: VoiceFailure.audio); return }
         guard let samples = buffer.int16ChannelData, buffer.frameLength > 0 else { return }
         let data = Data(bytes: samples[0], count: Int(buffer.frameLength) * 2)
-        if case .dropped = continuation.yield(data) { continuation.finish(throwing: VoiceFailure.overloaded) }
+        let chunk = microphone.capture(data, revision: revision)
+        if case .dropped = continuation.yield(chunk) { continuation.finish(throwing: VoiceFailure.overloaded) }
     }
 }
 
 @MainActor
 protocol VoiceAudioIO {
-    func start() throws -> AsyncThrowingStream<Data, Error>
+    func start(microphone: VoiceMicrophoneGate) throws -> AsyncThrowingStream<VoiceInputChunk, Error>
     func play(_ data: Data) throws
     func stop()
     func observePlayback(_ observer: @escaping (Bool) -> Void)
@@ -67,7 +106,7 @@ enum VoiceAudioMeter {
 final class VoiceAudio: VoiceAudioIO {
     private let engine = AVAudioEngine()
     private let player = AVAudioPlayerNode()
-    private var continuation: AsyncThrowingStream<Data, Error>.Continuation?
+    private var continuation: AsyncThrowingStream<VoiceInputChunk, Error>.Continuation?
     private var installed = false
     private var outputTapInstalled = false
     private var configurationObserver: NSObjectProtocol?
@@ -79,7 +118,7 @@ final class VoiceAudio: VoiceAudioIO {
     func observeOutputLevel(_ observer: @escaping (Float) -> Void) { outputLevelObserver = observer }
     private var playbackGeneration = UUID()
 
-    func start() throws -> AsyncThrowingStream<Data, Error> {
+    func start(microphone: VoiceMicrophoneGate) throws -> AsyncThrowingStream<VoiceInputChunk, Error> {
         stop()
         let input = engine.inputNode
         // System echo cancellation supports speaking over the assistant without feeding its voice back.
@@ -94,9 +133,9 @@ final class VoiceAudio: VoiceAudioIO {
         // input to match. Its default multichannel capture format can differ from
         // the speaker format; use the processed mono channel in both directions.
         engine.connect(engine.mainMixerNode, to: engine.outputNode, format: format)
-        let pair = AsyncThrowingStream<Data, Error>.makeStream(bufferingPolicy: .bufferingOldest(128))
+        let pair = AsyncThrowingStream<VoiceInputChunk, Error>.makeStream(bufferingPolicy: .bufferingOldest(128))
         continuation = pair.continuation
-        let capture = try VoiceCapture(input: format, continuation: pair.continuation)
+        let capture = try VoiceCapture(input: format, microphone: microphone, continuation: pair.continuation)
         input.installTap(onBus: 0, bufferSize: 2400, format: format) { @Sendable [capture] buffer, _ in capture.append(buffer) }
         installed = true
         let generation = playbackGeneration

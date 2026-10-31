@@ -43,6 +43,7 @@ final class VoiceConversation: ObservableObject {
     private let requestMicrophone: () async -> Bool
     private var socket: (any VoiceConnection)?
     private let makeSpeechDetector: () -> any VoiceSpeechDetecting
+    private let microphone = VoiceMicrophoneGate()
     private var microphoneRevision = UUID()
     private var maximumDurationTask: Task<Void, Never>?
     private let makeConnection: ((URLRequest) -> any VoiceConnection)?
@@ -66,6 +67,7 @@ final class VoiceConversation: ObservableObject {
     private var tools: VoiceTools?
     private var startupTimeoutFailure = VoiceFailure.connection
     private var epoch = UUID()
+    var sessionRevision: UUID { epoch }
     private var calls: [String: [[String: String]]] = [:]
     private var delegations: [String: String] = [:]
     private var handled: Set<String> = []
@@ -153,6 +155,7 @@ final class VoiceConversation: ObservableObject {
     func start() {
         guard !active, !credentialBusy, hasCredentials else { return }
         active = true; connected = false; muted = false; status = "正在连接…"
+        microphoneRevision = microphone.setMuted(false)
         captions = VoiceTranscript(); turns = []; pendingInput = VoicePendingInput()
         startupInstant = .now; startupTimings = [:]
         let token = UUID(); epoch = token
@@ -193,7 +196,7 @@ final class VoiceConversation: ObservableObject {
                 guard granted else { throw VoiceFailure.microphone }
                 var request = URLRequest(url: URL(string: "wss://api.openai.com/v1/live/sessions")!)
                 request.setValue("Bearer \(key)", forHTTPHeaderField: "Authorization")
-                let stream = try audio.start()
+                let stream = try audio.start(microphone: microphone)
                 capturing = true; recordStartup("audioReady")
                 let detector: (any VoiceSpeechDetecting)?
                 if connectOnSpeech {
@@ -215,7 +218,7 @@ final class VoiceConversation: ObservableObject {
 
     func toggleMute() {
         guard capturing else { return }
-        muted.toggle(); microphoneRevision = UUID()
+        muted.toggle(); microphoneRevision = microphone.setMuted(muted)
         if muted { pendingInput = VoicePendingInput(); inputLevels = Array(repeating: 0, count: 24) }
     }
     func testSpeaker() { NSSound(named: "Glass")?.play() }
@@ -226,6 +229,7 @@ final class VoiceConversation: ObservableObject {
             recentSessionMetrics = Array(recentSessionMetrics.suffix(4))
         }
         epoch = UUID(); active = false; connected = false; listeningLocally = false; capturing = false; muted = false; speaking = false; activity = nil; startupTimeoutFailure = .connection
+        microphoneRevision = microphone.setMuted(true)
         outputSpeechPending = false
         pendingInput = VoicePendingInput()
         inputLevels = Array(repeating: 0, count: 24); outputLevels = Array(repeating: 0, count: 24)
@@ -313,7 +317,7 @@ final class VoiceConversation: ObservableObject {
         }
     }
 
-    private func consumeAudio(_ stream: AsyncThrowingStream<Data, Error>, token: UUID,
+    private func consumeAudio(_ stream: AsyncThrowingStream<VoiceInputChunk, Error>, token: UUID,
                               detector: (any VoiceSpeechDetecting)?, request: URLRequest) {
         audioTask = Task { @MainActor [weak self] in
             guard let self else { return }
@@ -321,8 +325,10 @@ final class VoiceConversation: ObservableObject {
             var preRoll = VoiceSpeechPreRoll()
             var revision = microphoneRevision
             do {
-                for try await data in stream {
+                for try await chunk in stream {
                     guard epoch == token, active else { return }
+                    guard chunk.revision == microphoneRevision else { continue }
+                    let data = chunk.data
                     let level = muted ? Float.zero : VoiceAudioMeter.level(data)
                     inputLevels = Array(inputLevels.dropFirst()) + [level]
                     if let localDetector = detector {
@@ -349,6 +355,8 @@ final class VoiceConversation: ObservableObject {
                     if !connected { try pendingInput.append(input); continue }
                     if level > 0 { recordStartup("firstInputAudio") }
                     try await flushPendingInput(token: token)
+                    guard epoch == token, active else { return }
+                    guard chunk.revision == microphoneRevision else { continue }
                     let current = muted ? Data(count: input.count) : input
                     try await send(["type": "session.input_audio.append", "audio": current.base64EncodedString()], token: token)
                 }
@@ -357,7 +365,9 @@ final class VoiceConversation: ObservableObject {
     }
 
     private func flushPendingInput(token: UUID) async throws {
+        let revision = microphoneRevision
         for chunk in pendingInput.take() {
+            guard revision == microphoneRevision else { return }
             let buffered = muted ? Data(count: chunk.count) : chunk
             try await send(["type": "session.input_audio.append", "audio": buffered.base64EncodedString()], token: token)
         }
@@ -373,7 +383,7 @@ final class VoiceConversation: ObservableObject {
                     catch {
                         // A rejected service command can leave a healthy socket. Stop
                         // locally, then keep this receiver alive for the close accounting.
-                        fail(error)
+                        if epoch == token, active { fail(error) }
                     }
                 } else if let index = recentSessionMetrics.firstIndex(where: { $0.id == token }) {
                     recentSessionMetrics[index].observe(event)

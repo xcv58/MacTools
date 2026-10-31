@@ -173,7 +173,7 @@ final class VoiceFeatureAccessTests: XCTestCase {
 
 @MainActor
 private final class FeatureAccessNoAudio: VoiceAudioIO {
-    func start() throws -> AsyncThrowingStream<Data, Error> { XCTFail("No microphone capture expected"); throw VoiceFailure.audio }
+    func start(microphone: VoiceMicrophoneGate) throws -> AsyncThrowingStream<VoiceInputChunk, Error> { XCTFail("No microphone capture expected"); throw VoiceFailure.audio }
     func play(_ data: Data) throws { XCTFail("No playback expected") }
     func stop() {}
 }
